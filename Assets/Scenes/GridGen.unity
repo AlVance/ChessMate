@@ -1206,6 +1206,7 @@ MonoBehaviour:
   cell: {fileID: 5263630861743789318, guid: 02471cf59cc7f354da6b3d57f9a32b8c, type: 3}
   size: {x: 8, y: 8}
   offset: {x: 1, y: 1}
+  cells: []
 --- !u!4 &1102833603
 Transform:
   m_ObjectHideFlags: 0
@@ -1236,6 +1237,12 @@ MonoBehaviour:
   _gridGen: {fileID: 0}
   enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
   player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
+  torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
+  posTrr_crd: 0c000000
+  caballo_crd: {fileID: 3797099992817276680, guid: b632a0d44d8703e4ea11779bc1fc9f19, type: 3}
+  posCab_crd: 1b000000
+  alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
+  posAlf_crd: 23000000
 --- !u!1 &1518435662
 GameObject:
   m_ObjectHideFlags: 0

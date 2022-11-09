@@ -9,7 +9,7 @@ public class GridGenerator : MonoBehaviour
     public Vector2 size;
     public Vector2 offset;
 
-    List<GameObject> cells = new List<GameObject>(0);
+    public List<GameObject> cells = new List<GameObject>(0);
 
     Spawner spawner;
 
@@ -35,7 +35,8 @@ public class GridGenerator : MonoBehaviour
                 newCellData.xID = xSz;
                 newCellData.zID = zSz;
                 newCellData.idTotal = cells.Count;
-                newCellData.btn.onClick.AddListener(() => CallPlayer(_newPos, newCellData.idTotal));
+                newCellData.pos = _newPos;
+                newCellData.btn.onClick.AddListener(() => CallPlayer(newCellData));
 
                 newCell.name = "Cell " + cells.Count + " " + xSz + " " + zSz;
                 
@@ -49,22 +50,39 @@ public class GridGenerator : MonoBehaviour
         spawner.StartSpawn();
     }
 
-    public void CallPlayer(Vector3 _newPos, int _total)
+    public void CallPlayer(CellData _cellTarget)
     {
-        _player.Move(_newPos, _total);
+        _player.Move(_cellTarget);
     }
 
     public void ResetBtns()
     {
         for (int i = 0; i < cells.Count; i++)
         {
-            cells[i].GetComponent<CellData>().ActiveBtn(false);
+            cells[i].GetComponent<CellData>().ActiveBtn(false,0);
+            cells[i].GetComponent<CellData>().canMove = false;
         }
     }
 
-    public void ActiveCellBtn(int indx)
+    public void ActiveCellBtn(CellData _cell)
     {
-        cells[indx].GetComponent<CellData>().ActiveBtn(true);
+        _cell.ActiveBtn(true);
+        _cell.canMove = true;
+
+    }
+
+    public void ActiveCellBtn(CellData _cell, int _indx)
+    {
+        _cell.ActiveBtn(true, _indx);
+        _cell.canMove = true;
+
+    }
+
+    public void ActiveCellBtn(CellData _cell, bool _active)
+    {
+        _cell.ActiveBtn(_active);
+        _cell.canMove = _active;
+
     }
 
     GameObject GameObjectFindByID(int _x, int _z)
@@ -87,7 +105,7 @@ public class GridGenerator : MonoBehaviour
     public CellData CellById(Vector2 ids){  return GameObjectFindByID((int)ids.x,(int) ids.y).GetComponent<CellData>(); }
     public CellData CellById(int _cell){    return GameObjectFindByID(cells[_cell].GetComponent<CellData>().xID, cells[_cell].GetComponent<CellData>().zID).GetComponent<CellData>();   }
 
-
+    public PlayerCtrl GetPlayer() { return _player; }
     public void SetPlayer(PlayerCtrl _newPlayer)
     {
         _player = _newPlayer;
