@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -133,5 +134,10 @@ public class GridGenerator : MonoBehaviour
                 _player.ChangeType(PlayerCtrl.Type.Alfil);
                 break;
         }
+    }
+
+    public void ChangeScene(string _scene)
+    {
+        SceneManager.LoadScene(_scene);
     }
 }

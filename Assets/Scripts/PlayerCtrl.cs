@@ -208,6 +208,7 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Move(CellData _cellTarget)
     {
+        if (_cellTarget.isEnemy) _GridGen.ChangeScene("GridGen");
         transform.position = _cellTarget.pos;
         actualPos = new Vector2Int(_cellTarget.xID, _cellTarget.zID);
         actualType = _cellTarget.typeCard;

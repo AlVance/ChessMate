@@ -8,24 +8,75 @@ public class EnemyCtrl : MonoBehaviour
 
     public Vector2Int startPos;
 
-    public Vector2Int[] routePoints;
+    public bool randomWay;
+    public List<Vector2Int> routePoints = new List<Vector2Int>(0);
 
     public GameObject mark;
     public bool stepOn;
 
     public void Start()
     {
-        StartCoroutine(OnRouteByStep());
+        if (randomWay)
+        {
+            RandomWay();
+        }
+        else
+        {
+            StartCoroutine(OnRouteByStep());
+        }
         mark.SetActive(false);
+    }
+
+    public void RandomWay()
+    {
+        routePoints.Clear();
+        routePoints.Add(startPos);
+        int cntStp = Random.Range(5,10);
+        for (int i = 0; i < cntStp; i++)
+        {
+            int op1 = Random.Range(0, 4);
+            switch (op1)
+            {
+                case 0:
+                    if (routePoints[i].x + 1 < _GridGen.size.x)
+                    {
+                        routePoints.Add(new Vector2Int(routePoints[i].x + 1, routePoints[i].y));
+                    }
+                    else i--;
+                    break;
+                case 1:
+                    if (routePoints[i].x - 1 >= 0)
+                    {
+                        routePoints.Add(new Vector2Int(routePoints[i].x - 1, routePoints[i].y));
+                    }
+                    else i--;
+                    break;
+                case 2:
+                    if (routePoints[i].y + 1 < _GridGen.size.y)
+                    {
+                        routePoints.Add(new Vector2Int(routePoints[i].x, routePoints[i].y + 1));
+                    }
+                    else i--;
+                    break;
+                case 3:
+                    if (routePoints[i].y - 1 >= 0)
+                    {
+                        routePoints.Add(new Vector2Int(routePoints[i].x, routePoints[i].y - 1));
+                    }
+                    else i--;
+                    break;
+            }
+        }
+        StartCoroutine(OnRouteByStep());
     }
 
     public IEnumerator OnRoute()
     {
-        for (int i = 0; i < routePoints.Length; i++)
+        for (int i = 1; i < routePoints.Count; i++)
         {
             mark.SetActive(false);
             yield return new WaitForSeconds(1f);
-            if (i + 1 < routePoints.Length)
+            if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
@@ -47,12 +98,12 @@ public class EnemyCtrl : MonoBehaviour
 
     public IEnumerator OnRouteByStep()
     {
-        for (int i = 0; i < routePoints.Length; i++)
+        for (int i = 1; i < routePoints.Count; i++)
         {
             mark.SetActive(false); 
             yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
-            if (i + 1 < routePoints.Length)
+            if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
