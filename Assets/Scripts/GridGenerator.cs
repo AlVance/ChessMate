@@ -92,4 +92,22 @@ public class GridGenerator : MonoBehaviour
     {
         _player = _newPlayer;
     }
+    public void ChangeTypePlayer(int _type)
+    {
+        switch (_type)
+        {
+            case 0:
+                _player.ChangeType(PlayerCtrl.Type.Peon);
+                break;
+            case 1:
+                _player.ChangeType(PlayerCtrl.Type.Torre);
+                break;
+            case 2:
+                _player.ChangeType(PlayerCtrl.Type.Caballo);
+                break;
+            case 3:
+                _player.ChangeType(PlayerCtrl.Type.Alfil);
+                break;
+        }
+    }
 }
