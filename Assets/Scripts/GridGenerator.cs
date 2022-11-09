@@ -33,8 +33,8 @@ public class GridGenerator : MonoBehaviour
                 GameObject newCell = Instantiate(cell, _newPos, transform.rotation);
                 CellData newCellData = newCell.GetComponent<CellData>();
 
-                newCellData.xID = xSz;
-                newCellData.zID = zSz;
+                newCellData.ids.x = xSz;
+                newCellData.ids.y = zSz;
                 newCellData.idTotal = cells.Count;
                 newCellData.pos = _newPos;
                 newCellData.btn.onClick.AddListener(() => CallPlayer(newCellData));
@@ -63,6 +63,14 @@ public class GridGenerator : MonoBehaviour
         {
             cells[i].GetComponent<CellData>().ActiveBtn(false,0);
             cells[i].GetComponent<CellData>().canMove = false;
+            if(cells[i].GetComponent<CellData>().card == null)
+            {
+                cells[i].GetComponent<CellData>().typeCard = PlayerCtrl.Type.Peon;
+            }
+            if(cells[i].GetComponent<CellData>().obst == null)
+            {
+                cells[i].GetComponent<CellData>().obstacle = false;
+            }
         }
     }
 
@@ -92,7 +100,7 @@ public class GridGenerator : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             CellData cellCheck = cells[i].GetComponent<CellData>();
-            if (cellCheck.xID == _x && cellCheck.zID == _z)
+            if (cellCheck.ids.x == _x && cellCheck.ids.y == _z)
             {
                 return cells[i];
             }
@@ -102,10 +110,10 @@ public class GridGenerator : MonoBehaviour
 
     public GameObject FindByID(int _xID, int _zID){ return GameObjectFindByID(_xID, _zID);  }
     public GameObject FindByID(Vector2 ids){    return GameObjectFindByID((int) ids.x,(int) ids.y); }
-    public GameObject FindByID(int cell){   return GameObjectFindByID(cells[cell].GetComponent<CellData>().xID, cells[cell].GetComponent<CellData>().zID);    }
+    public GameObject FindByID(int cell){   return GameObjectFindByID(cells[cell].GetComponent<CellData>().ids.x, cells[cell].GetComponent<CellData>().ids.y);    }
     public CellData CellById(int _x, int _z){   return GameObjectFindByID(_x, _z).GetComponent<CellData>(); }
     public CellData CellById(Vector2 ids){  return GameObjectFindByID((int)ids.x,(int) ids.y).GetComponent<CellData>(); }
-    public CellData CellById(int _cell){    return GameObjectFindByID(cells[_cell].GetComponent<CellData>().xID, cells[_cell].GetComponent<CellData>().zID).GetComponent<CellData>();   }
+    public CellData CellById(int _cell){    return GameObjectFindByID(cells[_cell].GetComponent<CellData>().ids.x, cells[_cell].GetComponent<CellData>().ids.y).GetComponent<CellData>();   }
 
     public PlayerCtrl GetPlayer() { return _player; }
     public void SetPlayer(PlayerCtrl _newPlayer)

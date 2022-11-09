@@ -106,6 +106,7 @@ public class EnemyCtrl : MonoBehaviour
             if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
+                if(i-1 >= 0)_GridGen.CellById(routePoints[i-1]).isEnemy = false;
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
                 mark.SetActive(true);
                 _GridGen.ResetBtns();

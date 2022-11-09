@@ -1481,6 +1481,11 @@ MonoBehaviour:
   alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
   posAlf_crd:
   - {x: 2, y: 6}
+  obst: {fileID: 1379618049465467961, guid: 2bb1e751bdf72824d8d028fef1542126, type: 3}
+  posObst:
+  - {x: 3, y: 4}
+  - {x: 6, y: 2}
+  - {x: 0, y: 7}
 --- !u!4 &1844877147
 Transform:
   m_ObjectHideFlags: 0

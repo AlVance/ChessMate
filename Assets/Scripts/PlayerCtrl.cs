@@ -96,23 +96,71 @@ public class PlayerCtrl : MonoBehaviour
         }
         else if (actualType == Type.Torre)
         {
+            Type _newTypeR = Type.Peon;
+            bool obstR = false;
             for (int r = 1; r < _GridGen.size.x - actualPos.x; r++)
             {
+                if (_GridGen.CellById(actualPos.x + r, actualPos.y).obstacle) { obstR = true; }
+                _GridGen.CellById(actualPos.x + r, actualPos.y).obstacle = obstR;
+                if (_GridGen.CellById(actualPos.x + r, actualPos.y).typeCard != Type.Peon)
+                {
+                    _newTypeR = _GridGen.CellById(actualPos.x + r, actualPos.y).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x + r, actualPos.y).typeCard = _newTypeR;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + r, actualPos.y));
             }
 
+            Type _newTypeL = Type.Peon;
+            bool obstL = false;
             for (int l = 1; l < actualPos.x + 1; l++)
             {
+                if (_GridGen.CellById(actualPos.x - l, actualPos.y).obstacle) { obstL = true; }
+                _GridGen.CellById(actualPos.x - l, actualPos.y).obstacle = obstL;
+                if (_GridGen.CellById(actualPos.x - l, actualPos.y).typeCard != Type.Peon)
+                {
+                    _newTypeL = _GridGen.CellById(actualPos.x - l, actualPos.y).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x - l, actualPos.y).typeCard = _newTypeL;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - l, actualPos.y));
             }
 
+            Type _newTypeU = Type.Peon;
+            bool obstU = false;
             for (int u = 1; u < _GridGen.size.y - actualPos.y; u++)
             {
+                if (_GridGen.CellById(actualPos.x, actualPos.y + u).obstacle) { obstL = true; }
+                _GridGen.CellById(actualPos.x, actualPos.y + u).obstacle = obstL;
+                if (_GridGen.CellById(actualPos.x, actualPos.y + u).typeCard != Type.Peon)
+                {
+                    _newTypeU = _GridGen.CellById(actualPos.x, actualPos.y + u).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x, actualPos.y + u).typeCard = _newTypeU;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x, actualPos.y + u));
             }
 
+            Type _newTypeD = Type.Peon;
+            bool obstD = false;
             for (int d = 1; d < actualPos.y + 1; d++)
             {
+                if (_GridGen.CellById(actualPos.x, actualPos.y - d).obstacle) { obstD = true; }
+                _GridGen.CellById(actualPos.x, actualPos.y - d).obstacle = obstD;
+                if (_GridGen.CellById(actualPos.x, actualPos.y - d).typeCard != Type.Peon)
+                {
+                    _newTypeD = _GridGen.CellById(actualPos.x, actualPos.y - d).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x, actualPos.y - d).typeCard = _newTypeD;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x, actualPos.y - d));
             }
         }
@@ -170,37 +218,86 @@ public class PlayerCtrl : MonoBehaviour
         {
             //Up Right
             int ur_stp = 0;
+            bool obstUR = false;
             if(_GridGen.size.x - actualPos.x < _GridGen.size.y - actualPos.y) { ur_stp = (int) _GridGen.size.x - actualPos.x; }
             else { ur_stp = (int)_GridGen.size.y - actualPos.y; }
+            Type _newTypeUR = Type.Peon;
             for (int ur_i = 1; ur_i < ur_stp; ur_i++)
             {
+                if (_GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i).obstacle) { obstUR = true; }
+                _GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i).obstacle = obstUR;
+                if (_GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i).typeCard != Type.Peon)
+                {
+                    _newTypeUR = _GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i).typeCard = _newTypeUR;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i));
             }
 
             //Right Down
             int rd_stp = 0;
+            bool obstRD = false;
+            Type _newTypeRD = Type.Peon;
             if (_GridGen.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_GridGen.size.x - actualPos.x; }
             else { rd_stp = actualPos.y + 1; }
             for (int rd_i = 1; rd_i < rd_stp; rd_i++)
             {
+                if (_GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i).obstacle) { obstRD = true; }
+                _GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i).obstacle = obstRD;
+                if (_GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i).typeCard != Type.Peon)
+                {
+                    _newTypeRD = _GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i).typeCard = _newTypeRD;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i));
             }
 
             //Down Left
             int dl_stp = 0;
+            bool obstDL = false;
+            Type _newTypeDL = Type.Peon;
             if (actualPos.x + 1 < actualPos.y + 1) { dl_stp = actualPos.x + 1; }
             else { dl_stp = actualPos.y + 1; }
             for (int dl_i = 1; dl_i < dl_stp; dl_i++)
             {
+                if (_GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i).obstacle) { obstDL = true; }
+                _GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i).obstacle = obstDL;
+                if (_GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i).typeCard != Type.Peon)
+                {
+                    _newTypeDL = _GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i).typeCard = _newTypeDL;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i));
             }
 
             //Left Up
             int lu_stp = 0;
+
+            Type _newTypeLU = Type.Peon;
+            bool obstLU = false;
             if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; Debug.Log("X urDiago " + lu_stp); }
             else { lu_stp = (int)_GridGen.size.y - actualPos.y; Debug.Log("Y urDiago " + lu_stp); }
             for (int lu_i = 1; lu_i < lu_stp; lu_i++)
             {
+                if (_GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i).obstacle) { obstLU = true; }
+                _GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i).obstacle = obstLU;
+                if (_GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i).typeCard != Type.Peon)
+                {
+                    _newTypeLU = _GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i).typeCard;
+                }
+                else
+                {
+                    _GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i).typeCard = _newTypeLU;
+                }
                 _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i));
             }
         }
@@ -210,7 +307,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (_cellTarget.isEnemy) _GridGen.ChangeScene("GridGen");
         transform.position = _cellTarget.pos;
-        actualPos = new Vector2Int(_cellTarget.xID, _cellTarget.zID);
+        actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
         actualType = _cellTarget.typeCard;
         _GridGen.ResetBtns();
         CheckCells();
