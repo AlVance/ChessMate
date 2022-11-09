@@ -10,13 +10,13 @@ public class Spawner : MonoBehaviour
     public GameObject player;
 
     public GameObject torre_crd;
-    public int[] posTrr_crd;
+    public Vector2Int[] posTrr_crd;
 
     public GameObject caballo_crd;
-    public int[] posCab_crd;
+    public Vector2Int[] posCab_crd;
 
     public GameObject alfil_crd;
-    public int[] posAlf_crd;
+    public Vector2Int[] posAlf_crd;
 
     public void StartSpawn()
     {
@@ -30,7 +30,8 @@ public class Spawner : MonoBehaviour
         EnemyCtrl _newEnCt = enemy.GetComponent<EnemyCtrl>();
         _newEnCt._GridGen = _gridGen;
         _gridGen.CellById(_newEnCt.startPos).isEnemy = true;
-        Instantiate(enemy, _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
+        GameObject newEne = Instantiate(enemy, _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
+        _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
     }
 
     public void GenPlayer()

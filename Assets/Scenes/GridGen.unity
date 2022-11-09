@@ -1183,7 +1183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1102833603}
   - component: {fileID: 1102833602}
-  - component: {fileID: 1102833604}
   m_Layer: 0
   m_Name: Grid_root
   m_TagString: Untagged
@@ -1207,6 +1206,7 @@ MonoBehaviour:
   size: {x: 8, y: 8}
   offset: {x: 1, y: 1}
   cells: []
+  spawner: {fileID: 1844877146}
 --- !u!4 &1102833603
 Transform:
   m_ObjectHideFlags: 0
@@ -1222,27 +1222,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1102833604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102833601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecb81ec514c8b8429b43a50da483a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gridGen: {fileID: 0}
-  enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
-  player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
-  torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
-  posTrr_crd: 0c000000
-  caballo_crd: {fileID: 3797099992817276680, guid: b632a0d44d8703e4ea11779bc1fc9f19, type: 3}
-  posCab_crd: 1b000000
-  alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
-  posAlf_crd: 23000000
 --- !u!1 &1518435662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1306,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+--- !u!1 &1844877145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1844877147}
+  - component: {fileID: 1844877146}
+  m_Layer: 0
+  m_Name: Spawner_00
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1844877146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844877145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecb81ec514c8b8429b43a50da483a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridGen: {fileID: 0}
+  enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
+  player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
+  torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
+  posTrr_crd:
+  - {x: 3, y: 3}
+  caballo_crd: {fileID: 3797099992817276680, guid: b632a0d44d8703e4ea11779bc1fc9f19, type: 3}
+  posCab_crd:
+  - {x: 5, y: 2}
+  alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
+  posAlf_crd:
+  - {x: 2, y: 6}
+--- !u!4 &1844877147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844877145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935845279
 GameObject:
   m_ObjectHideFlags: 0

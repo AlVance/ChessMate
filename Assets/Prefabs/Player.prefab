@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _GridGen: {fileID: 0}
-  startPos: 2
-  actualPos: 0
-  actualIDs: {x: 0, y: 0}
+  startPos: {x: 2, y: 2}
+  actualPos: {x: 0, y: 0}
   actualType: 0

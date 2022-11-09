@@ -11,13 +11,13 @@ public class GridGenerator : MonoBehaviour
 
     public List<GameObject> cells = new List<GameObject>(0);
 
-    Spawner spawner;
+    public Spawner spawner;
 
     PlayerCtrl _player;
+    EnemyCtrl _enemy;
 
     public void Start()
     {
-        spawner = GetComponent<Spawner>();
         spawner._gridGen = this;
         StartCoroutine(GenGrid());
     }
@@ -52,6 +52,7 @@ public class GridGenerator : MonoBehaviour
 
     public void CallPlayer(CellData _cellTarget)
     {
+        _enemy.stepOn = true;
         _player.Move(_cellTarget);
     }
 
@@ -109,6 +110,11 @@ public class GridGenerator : MonoBehaviour
     public void SetPlayer(PlayerCtrl _newPlayer)
     {
         _player = _newPlayer;
+    }
+    public EnemyCtrl GetEnemy() { return _enemy; }
+    public void SetEnemy(EnemyCtrl _newEnemy)
+    {
+        _enemy = _newEnemy;
     }
     public void ChangeTypePlayer(int _type)
     {
