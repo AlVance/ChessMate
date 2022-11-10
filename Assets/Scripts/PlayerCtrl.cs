@@ -13,12 +13,22 @@ public class PlayerCtrl : MonoBehaviour
 
     public Type actualType = Type.Peon;
 
+    #region Animation variables
+    private bool isMoving = false;
+    private Vector3 cellTargetPos;
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Sprite[] formsSprites;
+    #endregion
     private void Start()
     {
         actualPos = startPos;
         CheckCells();
     }
 
+    private void Update()
+    {
+        Animate();
+    }
     public void CheckCells()
     {
         if (actualType == Type.Peon)
@@ -134,8 +144,8 @@ public class PlayerCtrl : MonoBehaviour
             bool obstU = false;
             for (int u = 1; u < _GridGen.size.y - actualPos.y; u++)
             {
-                if (_GridGen.CellById(actualPos.x, actualPos.y + u).obstacle) { obstL = true; }
-                _GridGen.CellById(actualPos.x, actualPos.y + u).obstacle = obstL;
+                if (_GridGen.CellById(actualPos.x, actualPos.y + u).obstacle) { obstU = true; }
+                _GridGen.CellById(actualPos.x, actualPos.y + u).obstacle = obstU;
                 if (_GridGen.CellById(actualPos.x, actualPos.y + u).typeCard != Type.Peon)
                 {
                     _newTypeU = _GridGen.CellById(actualPos.x, actualPos.y + u).typeCard;
@@ -306,8 +316,9 @@ public class PlayerCtrl : MonoBehaviour
     public void Move(CellData _cellTarget)
     {
         if (_cellTarget.isEnemy) _GridGen.ChangeScene("GridGen");
-        transform.position = _cellTarget.pos;
+        isMoving = true;        
         actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
+        cellTargetPos = _GridGen.CellById(actualPos.x, actualPos.y).pos;
         actualType = _cellTarget.typeCard;
         _GridGen.ResetBtns();
         CheckCells();
@@ -318,5 +329,38 @@ public class PlayerCtrl : MonoBehaviour
         actualType = _newType;
         _GridGen.ResetBtns();
         CheckCells();
+    }
+
+    private void Animate()
+    {
+        if (isMoving)
+        {
+            if(Vector3.Distance(this.transform.position, cellTargetPos) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTargetPos, 10f * Time.deltaTime);
+            else
+            {
+                this.transform.position = cellTargetPos;
+                isMoving = false;
+            }
+            
+        }
+
+        switch (actualType)
+        {
+            case Type.Peon:
+                playerSprite.sprite = formsSprites[0];
+                break;
+
+            case Type.Torre:
+                playerSprite.sprite = formsSprites[1];
+                break;
+
+            case Type.Caballo:
+                playerSprite.sprite = formsSprites[2];
+                break;
+
+            case Type.Alfil:
+                playerSprite.sprite = formsSprites[3];
+                break;
+        }
     }
 }
