@@ -22,7 +22,8 @@ public class EnemyCtrl : MonoBehaviour
         }
         else
         {
-            StartCoroutine(OnRouteByStep());
+            StartCoroutine(ShowWay());
+            //StartCoroutine(OnRouteByStep());
         }
         mark.SetActive(false);
     }
@@ -67,6 +68,19 @@ public class EnemyCtrl : MonoBehaviour
                     break;
             }
         }
+        StartCoroutine(ShowWay());
+    }
+
+    public IEnumerator ShowWay()
+    {
+        for (int loop = 0; loop < 3; loop++)
+        {
+            for (int i = 0; i < routePoints.Count; i++)
+            {
+                _GridGen.CellById(routePoints[i]).ShowCell(true, 1);
+                yield return new WaitForSeconds(.1f);
+            }
+        }
         StartCoroutine(OnRouteByStep());
     }
 
@@ -106,7 +120,7 @@ public class EnemyCtrl : MonoBehaviour
             if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
-                if(i-1 >= 0)_GridGen.CellById(routePoints[i-1]).isEnemy = false;
+                if(i - 1 >= 0)_GridGen.CellById(routePoints[i-1]).isEnemy = false;
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
                 mark.SetActive(true);
                 _GridGen.ResetBtns();

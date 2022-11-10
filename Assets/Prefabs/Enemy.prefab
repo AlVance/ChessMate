@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _GridGen: {fileID: 0}
   startPos: {x: 7, y: 7}
-  randomWay: 1
+  randomWay: 0
   routePoints:
   - {x: 6, y: 7}
   - {x: 5, y: 7}

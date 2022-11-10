@@ -1472,6 +1472,7 @@ MonoBehaviour:
   _gridGen: {fileID: 0}
   enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
   player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
+  random: 0
   torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
   posTrr_crd:
   - {x: 3, y: 3}

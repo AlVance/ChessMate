@@ -41,4 +41,25 @@ public class CellData : MonoBehaviour
         btn.gameObject.SetActive(_active);
         btn.GetComponent<Image>().color = colors[_color];
     }
+    public void ActiveBtn(bool _active, Color _color)
+    {
+        btn.gameObject.SetActive(_active);
+        btn.GetComponent<Image>().color = _color;
+    }
+
+    public void ShowCell(bool _active, int _color, float _time = .5f)
+    {
+        StartCoroutine(ShowCellTime(_active, _color, _time));
+    }
+
+    public IEnumerator ShowCellTime(bool _active, int _color, float _time)
+    {
+        bool playered = btn.gameObject.activeInHierarchy;
+        Color prevColor = btn.GetComponent<Image>().color;
+        ActiveBtn(_active, _color);
+        btn.interactable = false;
+        yield return new WaitForSeconds(_time);
+        btn.interactable = true;
+        ActiveBtn(playered, prevColor);
+    }
 }

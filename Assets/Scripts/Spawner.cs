@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour
 
     public GameObject enemy;
     public GameObject player;
+
+    public bool random;
     
     [Space]
     public GameObject torre_crd;
@@ -36,6 +38,7 @@ public class Spawner : MonoBehaviour
     public void GenEnemy()
     {
         EnemyCtrl _newEnCt = enemy.GetComponent<EnemyCtrl>();
+        _newEnCt.randomWay = random;
         _newEnCt._GridGen = _gridGen;
         _gridGen.CellById(_newEnCt.startPos).isEnemy = true;
         GameObject newEne = Instantiate(enemy, _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
@@ -54,26 +57,47 @@ public class Spawner : MonoBehaviour
     {
         for (int tc = 0; tc < posTrr_crd.Length; tc++)
         {
-            //_gridGen.CellById(posTrr_crd[tc]).typeCard = PlayerCtrl.Type.Torre;
-            Vector2Int rnd = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            _gridGen.CellById(rnd).typeCard = PlayerCtrl.Type.Torre;
-            _gridGen.CellById(rnd).card = Instantiate(torre_crd, _gridGen.FindByID(rnd).transform);
+            Vector2Int select = Vector2Int.zero;
+            if (random)
+            {
+                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
+            }
+            else
+            {
+                select = posTrr_crd[tc];
+            }
+            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Torre;
+            _gridGen.CellById(select).card = Instantiate(torre_crd, _gridGen.FindByID(select).transform);
         }
 
         for (int cc = 0; cc < posCab_crd.Length; cc++)
         {
-            //_gridGen.CellById(posCab_crd[cc]).typeCard = PlayerCtrl.Type.Caballo;
-            Vector2Int rnd = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            _gridGen.CellById(rnd).typeCard = PlayerCtrl.Type.Caballo;
-            _gridGen.CellById(rnd).card = Instantiate(caballo_crd, _gridGen.FindByID(rnd).transform);
+            Vector2Int select = Vector2Int.zero;
+            if (random)
+            {
+                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
+            }
+            else
+            {
+                select = posCab_crd[cc];
+            }
+            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Caballo;
+            _gridGen.CellById(select).card = Instantiate(caballo_crd, _gridGen.FindByID(select).transform);
         }
 
         for (int ac = 0; ac < posAlf_crd.Length; ac++)
         {
-            //_gridGen.CellById(posAlf_crd[ac]).typeCard = PlayerCtrl.Type.Alfil;
-            Vector2Int rnd = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            _gridGen.CellById(rnd).typeCard = PlayerCtrl.Type.Alfil;
-            _gridGen.CellById(rnd).card = Instantiate(alfil_crd, _gridGen.FindByID(rnd).transform);
+            Vector2Int select = Vector2Int.zero;
+            if (random)
+            {
+                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
+            }
+            else
+            {
+                select = posAlf_crd[ac];
+            }
+            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Alfil;
+            _gridGen.CellById(select).card = Instantiate(alfil_crd, _gridGen.FindByID(select).transform);
         }
     }
 
