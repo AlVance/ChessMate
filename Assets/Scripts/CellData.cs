@@ -22,6 +22,7 @@ public class CellData : MonoBehaviour
     public GameObject obst;
     public Color[] colors;
 
+    public List<CellData> prevStep = new List<CellData>(0);
 
     private Animator cellAnim;
     private void Start()

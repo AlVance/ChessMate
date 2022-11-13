@@ -95,7 +95,7 @@ public class EnemyCtrl : MonoBehaviour
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
                 _GridGen.ResetBtns();
-                _GridGen.GetPlayer().CheckCells();
+                //_GridGen.GetPlayer().CheckCells();
                 mark.SetActive(true);
             }
             yield return new WaitForSeconds(1f);
@@ -105,7 +105,7 @@ public class EnemyCtrl : MonoBehaviour
             }
             _GridGen.CellById(routePoints[i]).isEnemy = true;
             _GridGen.ResetBtns();
-            _GridGen.GetPlayer().CheckCells();
+            //_GridGen.GetPlayer().CheckCells();
             transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
         }
     }
@@ -124,7 +124,7 @@ public class EnemyCtrl : MonoBehaviour
                 _GridGen.CellById(routePoints[i]).isEnemy = true;
                 mark.SetActive(true);
                 _GridGen.ResetBtns();
-                _GridGen.GetPlayer().CheckCells();
+                //_GridGen.GetPlayer().CheckCells();
             }
             yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
@@ -134,7 +134,7 @@ public class EnemyCtrl : MonoBehaviour
             }
             _GridGen.CellById(routePoints[i]).isEnemy = true;
             _GridGen.ResetBtns();
-            _GridGen.GetPlayer().CheckCells();
+            //_GridGen.GetPlayer().CheckCells();
             transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
         }
     }

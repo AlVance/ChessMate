@@ -51,6 +51,13 @@ public class GridGenerator : MonoBehaviour
         spawner.StartSpawn();
     }
 
+    public IEnumerator NextStep()
+    {
+        ResetBtns();
+        yield return new WaitForSeconds(.1f);
+        _player.CheckCells();
+    }
+
     public void CallPlayer(CellData _cellTarget)
     {
         _enemy.stepOn = true;
@@ -61,15 +68,21 @@ public class GridGenerator : MonoBehaviour
     {
         for (int i = 0; i < cells.Count; i++)
         {
-            cells[i].GetComponent<CellData>().ActiveBtn(false,0);
-            cells[i].GetComponent<CellData>().canMove = false;
-            if(cells[i].GetComponent<CellData>().card == null)
+            CellData cellToCheck = cells[i].GetComponent<CellData>();
+            cellToCheck.ActiveBtn(false, 0);
+            cellToCheck.canMove = false;
+            cellToCheck.isPlayer = false;
+            if (cellToCheck.card == null)
             {
-                cells[i].GetComponent<CellData>().typeCard = PlayerCtrl.Type.Peon;
+                cellToCheck.typeCard = PlayerCtrl.Type.Peon;
             }
-            if(cells[i].GetComponent<CellData>().obst == null)
+            if (cellToCheck.obst == null)
             {
-                cells[i].GetComponent<CellData>().obstacle = false;
+                cellToCheck.obstacle = false;
+            }
+            if (cellToCheck.prevStep.Count > 0)
+            {
+                cellToCheck.prevStep.Clear();
             }
         }
     }
