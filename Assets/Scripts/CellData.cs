@@ -13,6 +13,7 @@ public class CellData : MonoBehaviour
 
     public bool isPlayer;
     public bool isEnemy;
+    public EnemyCtrl _enemy;
     public bool obstacle;
     public bool canMove;
     public Button btn;
@@ -79,5 +80,18 @@ public class CellData : MonoBehaviour
     {
         if (((canMove && !obstacle) || isEnemy || isPlayer) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
         else if ((!canMove && !isEnemy && !isPlayer) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
+    }
+
+    public void SetEnemy(EnemyCtrl _enemyCtrl)
+    {
+        _enemyCtrl.actualPos = idTotal;
+        _enemy = _enemyCtrl;
+        isEnemy = true;
+    }
+
+    public void ClearEnemy()
+    {
+        _enemy = null;
+        isEnemy = false;
     }
 }

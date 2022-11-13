@@ -25,7 +25,6 @@ public class PlayerCtrl : MonoBehaviour
     {
         actualPos = startPos;
         _GridGen.CellById(actualPos).isPlayer = true;
-        CheckCells();
     }
 
     private void Update()
@@ -118,105 +117,34 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
         }
+
         else if (actualType == Type.Torre)
         {
-            Type _newTypeR = Type.Peon;
             bool obstR = false;
+            Type _newTypeR = Type.Peon;
             List<CellData> cellsR = new List<CellData>(0);
 
-            for (int r = 1; r < _GridGen.size.x - actualPos.x; r++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x + r, actualPos.y);
+            StartCoroutine(CellsDelay(1, 0, (int)_GridGen.size.x - actualPos.x, obstR, _newTypeR, cellsR));
 
-                if (newCell.obstacle) obstR = true;
-
-                newCell.obstacle = obstR;
-
-                if (newCell.typeCard != Type.Peon) _newTypeR = newCell.typeCard;
-                else newCell.typeCard = _newTypeR;
-
-                cellsR.Add(newCell);
-                for (int i = 0; i < cellsR.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsR[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            Type _newTypeL = Type.Peon;
             bool obstL = false;
+            Type _newTypeL = Type.Peon;
             List<CellData> cellsL = new List<CellData>(0);
 
-            for (int l = 1; l < actualPos.x + 1; l++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x - l, actualPos.y);
+            StartCoroutine(CellsDelay(-1, 0, actualPos.x + 1, obstL, _newTypeL, cellsL));
 
-                if (newCell.obstacle) obstL = true;
-
-                newCell.obstacle = obstL;
-
-                if (newCell.typeCard != Type.Peon) _newTypeL = newCell.typeCard;
-                else newCell.typeCard = _newTypeL;
-
-                cellsL.Add(newCell);
-                for (int i = 0; i < cellsL.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsL[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            Type _newTypeU = Type.Peon;
             bool obstU = false;
+            Type _newTypeU = Type.Peon;
             List<CellData> cellsU = new List<CellData>(0);
 
-            for (int u = 1; u < _GridGen.size.y - actualPos.y; u++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x, actualPos.y + u);
+            StartCoroutine(CellsDelay(0, 1, (int) _GridGen.size.y - actualPos.y, obstU, _newTypeU, cellsU));
 
-                if (newCell.obstacle) obstU = true;
-
-                newCell.obstacle = obstU;
-
-                if (newCell.typeCard != Type.Peon) _newTypeU = newCell.typeCard;
-                else newCell.typeCard = _newTypeU;
-
-                cellsU.Add(newCell);
-                Debug.Log(cellsU.Count);
-                for (int i = 0; i < cellsU.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsU[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            Type _newTypeD = Type.Peon;
             bool obstD = false;
+            Type _newTypeD = Type.Peon;
             List<CellData> cellsD = new List<CellData>(0);
 
-            for (int d = 1; d < actualPos.y + 1; d++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x, actualPos.y - d);
-
-                if (newCell.obstacle) obstD = true;
-
-                newCell.obstacle = obstD;
-
-                if (newCell.typeCard != Type.Peon) _newTypeD = newCell.typeCard;
-                else newCell.typeCard = _newTypeD;
-
-                cellsD.Add(newCell);
-                for (int i = 0; i < cellsD.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsD[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
+            StartCoroutine(CellsDelay(0, -1, actualPos.y + 1, obstD, _newTypeD, cellsD));
         }
+
         else if (actualType == Type.Caballo)
         {
             if (actualPos.x + 2 < _GridGen.size.x) //Right
@@ -275,65 +203,32 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
         }
+
         else if (actualType == Type.Alfil)
         {
-            //Up Right
+            //Up Right ( + || + )
             int ur_stp = 0;
             bool obstUR = false;
-            if (_GridGen.size.x - actualPos.x < _GridGen.size.y - actualPos.y) { ur_stp = (int)_GridGen.size.x - actualPos.x; }
-            else { ur_stp = (int)_GridGen.size.y - actualPos.y; }
             Type _newTypeUR = Type.Peon;
             List<CellData> cellsUR = new List<CellData>(0);
 
-            for (int ur_i = 1; ur_i < ur_stp; ur_i++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x + ur_i, actualPos.y + ur_i);
+            if (_GridGen.size.x - actualPos.x < _GridGen.size.y - actualPos.y) { ur_stp = (int)_GridGen.size.x - actualPos.x; }
+            else { ur_stp = (int)_GridGen.size.y - actualPos.y; }
 
-                if (newCell.obstacle) obstUR = true;
+            StartCoroutine(CellsDelay(1, 1, ur_stp, obstUR, _newTypeUR, cellsUR));
 
-                newCell.obstacle = obstUR;
-
-                if (newCell.typeCard != Type.Peon)_newTypeUR = newCell.typeCard;
-                else newCell.typeCard = _newTypeUR;
-
-                cellsUR.Add(newCell);
-                for (int i = 0; i < cellsUR.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsUR[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            //Right Down
+            //Right Down ( + || - )
             int rd_stp = 0;
             bool obstRD = false;
             Type _newTypeRD = Type.Peon;
             List<CellData> cellsRD = new List<CellData>(0);
+
             if (_GridGen.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_GridGen.size.x - actualPos.x; }
             else { rd_stp = actualPos.y + 1; }
 
-            for (int rd_i = 1; rd_i < rd_stp; rd_i++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x + rd_i, actualPos.y - rd_i);
+            StartCoroutine(CellsDelay(1, -1, rd_stp, obstRD, _newTypeRD, cellsRD));
 
-                if (newCell.obstacle) obstRD = true; 
-
-                newCell.obstacle = obstRD;
-
-                if (newCell.typeCard != Type.Peon) _newTypeRD = newCell.typeCard;
-                else newCell.typeCard = _newTypeRD;
-
-                cellsRD.Add(newCell);
-                for (int i = 0; i < cellsRD.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsRD[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            //Down Left
+            //Down Left ( - || - )
             int dl_stp = 0;
             bool obstDL = false;
             Type _newTypeDL = Type.Peon;
@@ -342,27 +237,9 @@ public class PlayerCtrl : MonoBehaviour
             if (actualPos.x + 1 < actualPos.y + 1) { dl_stp = actualPos.x + 1; }
             else { dl_stp = actualPos.y + 1; }
 
-            for (int dl_i = 1; dl_i < dl_stp; dl_i++)
-            {
-                CellData newCell = _GridGen.CellById(actualPos.x - dl_i, actualPos.y - dl_i);
+            StartCoroutine(CellsDelay(-1, -1, dl_stp, obstDL, _newTypeDL, cellsDL));
 
-                if (newCell.obstacle) obstDL = true;
-
-                newCell.obstacle = obstDL;
-
-                if (newCell.typeCard != Type.Peon) _newTypeDL = newCell.typeCard;
-                else newCell.typeCard = _newTypeDL;
-
-                cellsDL.Add(newCell);
-                for (int i = 0; i < cellsDL.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsDL[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
-            }
-
-            //Left Up
+            //Left Up ( - || + )
             int lu_stp = 0;
             bool obstLU = false;
             Type _newTypeLU = Type.Peon;
@@ -371,41 +248,48 @@ public class PlayerCtrl : MonoBehaviour
             if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; Debug.Log("X urDiago " + lu_stp); }
             else { lu_stp = (int)_GridGen.size.y - actualPos.y; Debug.Log("Y urDiago " + lu_stp); }
 
-            for (int lu_i = 1; lu_i < lu_stp; lu_i++)
+            StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, _newTypeLU, cellsLU));
+        }
+    }
+
+
+    public IEnumerator CellsDelay(int _frst, int _scnd, int _stp, bool _obst, Type _type, List<CellData> _cells)
+    {
+        for (int i = 1; i < _stp; i++)
+        {
+
+            CellData newCell = _GridGen.CellById(actualPos.x + (i * _frst), actualPos.y + (i * _scnd));
+
+            if (newCell.obstacle) _obst = true;
+
+            newCell.obstacle = _obst;
+
+            if (newCell.typeCard != Type.Peon) _type = newCell.typeCard;
+            else newCell.typeCard = _type;
+
+            _cells.Add(newCell);
+            for (int e = 0; e < _cells.Count; e++)
             {
-                CellData newCell = _GridGen.CellById(actualPos.x - lu_i, actualPos.y + lu_i);
-
-                if (newCell.obstacle) obstLU = true;
-
-                newCell.obstacle = obstLU;
-
-                if (newCell.typeCard != Type.Peon) _newTypeLU = newCell.typeCard;
-                else newCell.typeCard = _newTypeLU;
-
-                cellsLU.Add(newCell);
-                for (int i = 0; i < cellsLU.Count; i++)
-                {
-                    newCell.prevStep.Add(cellsLU[i]);
-                }
-
-                _GridGen.ActiveCellBtn(newCell);
+                newCell.prevStep.Add(_cells[e]);
             }
+
+            _GridGen.ActiveCellBtn(newCell);
+            yield return new WaitForSeconds(.1f);
         }
     }
 
     public void Move(CellData _cellTarget)
     {
-        if (_cellTarget.isEnemy) _GridGen.ChangeScene("GridGen");
+        finishWalk = false;
         stepsToWalk.Clear();
         for (int i = 0; i < _cellTarget.prevStep.Count; i++)
         {
             stepsToWalk.Add(_cellTarget.prevStep[i]);
         }
-        _GridGen.ResetBtns();
         actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
         //_GridGen.CellById(actualPos).isPlayer = true;
         actualType = _cellTarget.typeCard;
-        StartCoroutine(StartWalk());
+        StartCoroutine(StartWalk(_cellTarget));
     }
 
     public void ChangeType(Type _newType)
@@ -415,10 +299,15 @@ public class PlayerCtrl : MonoBehaviour
         CheckCells();
     }
 
-    public bool finishWalk;
-    public IEnumerator StartWalk()
+    public void SetInCell()
     {
-        finishWalk = false;
+        _GridGen.CellById(actualPos).isPlayer = true;
+        CheckCells();
+    }
+
+    public bool finishWalk;
+    public IEnumerator StartWalk(CellData _cellTarget)
+    {
         for (int i = 0; i < stepsToWalk.Count; i++)
         {
             yield return new WaitUntil(() => isMoving == false);
@@ -426,10 +315,13 @@ public class PlayerCtrl : MonoBehaviour
             cellTargetPos = stepsToWalk[i].pos;
         }
         yield return new WaitUntil(() => isMoving == false);
-        Debug.Log("FINISH");
-        _GridGen.ResetBtns();
         _GridGen.CellById(actualPos).isPlayer = true;
-        CheckCells();
+        finishWalk = true;
+        yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
+        if (_cellTarget._enemy != null)
+        {
+            _GridGen.DestroyEnemy(_cellTarget._enemy);
+        }
     }
 
     private void Animate()

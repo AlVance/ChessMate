@@ -15,7 +15,9 @@ public class GridGenerator : MonoBehaviour
     public Spawner spawner;
 
     PlayerCtrl _player;
-    EnemyCtrl _enemy;
+    public List<EnemyCtrl> _enemies = new List<EnemyCtrl>(0);
+    public int _enemiesFinishWalk = 0;
+    bool recentEat;
 
     public void Start()
     {
@@ -44,24 +46,72 @@ public class GridGenerator : MonoBehaviour
                 cells.Add(newCell);
             }
         }
-
         ResetBtns();
+
         yield return new WaitForSeconds(.1f);
 
-        spawner.StartSpawn();
+        StartCoroutine(spawner.StartSpawn());
+
     }
 
-    public IEnumerator NextStep()
+    public IEnumerator NextStep(CellData _cellTarget)
     {
+        onStepped = true;
+        _enemiesFinishWalk = 0;
+
+        _player.Move(_cellTarget);
+
+        yield return new WaitUntil(() => _player.finishWalk == true);
+        Debug.Log("Comido reciente " + recentEat);
+        if (!recentEat)
+        {
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                _enemies[i].stepOn = true;
+            }
+            yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
+        }
+        else
+        {
+            recentEat = false;
+        }
+
         ResetBtns();
         yield return new WaitForSeconds(.1f);
-        _player.CheckCells();
+        SetPositions();
+        onStepped = false;
     }
 
+    public void DestroyEnemy(EnemyCtrl _enemy)
+    {
+        _enemies.Remove(_enemy);
+        Destroy(_enemy.gameObject);
+        recentEat = true;
+
+        if (_enemies.Count == 0)
+        {
+            ChangeScene("GridGen");
+        }
+    }
+
+    public bool onStepped = false;
     public void CallPlayer(CellData _cellTarget)
     {
-        _enemy.stepOn = true;
-        _player.Move(_cellTarget);
+        if (!onStepped)
+        {
+            DisableCells();
+            StartCoroutine(NextStep(_cellTarget));
+        }
+    }
+
+    public void DisableCells()
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            CellData cellToCheck = cells[i].GetComponent<CellData>();
+            cellToCheck.ActiveBtn(false);
+            cellToCheck.canMove = false;
+        }
     }
 
     public void ResetBtns()
@@ -72,6 +122,7 @@ public class GridGenerator : MonoBehaviour
             cellToCheck.ActiveBtn(false, 0);
             cellToCheck.canMove = false;
             cellToCheck.isPlayer = false;
+            cellToCheck.ClearEnemy();
             if (cellToCheck.card == null)
             {
                 cellToCheck.typeCard = PlayerCtrl.Type.Peon;
@@ -85,6 +136,14 @@ public class GridGenerator : MonoBehaviour
                 cellToCheck.prevStep.Clear();
             }
         }
+    }
+    public void SetPositions()
+    {
+        for (int e = 0; e < _enemies.Count; e++)
+        {
+            _enemies[e].SetInCell();
+        }
+        _player.SetInCell();
     }
 
     public void ActiveCellBtn(CellData _cell)
@@ -133,10 +192,10 @@ public class GridGenerator : MonoBehaviour
     {
         _player = _newPlayer;
     }
-    public EnemyCtrl GetEnemy() { return _enemy; }
+    public EnemyCtrl GetEnemy(int indx) { return _enemies[indx]; }
     public void SetEnemy(EnemyCtrl _newEnemy)
     {
-        _enemy = _newEnemy;
+        _enemies.Add(_newEnemy);
     }
     public void ChangeTypePlayer(int _type)
     {

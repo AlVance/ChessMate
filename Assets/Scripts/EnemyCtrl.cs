@@ -7,6 +7,7 @@ public class EnemyCtrl : MonoBehaviour
     public GridGenerator _GridGen;
 
     public Vector2Int startPos;
+    public int actualPos;
 
     public bool randomWay;
     public List<Vector2Int> routePoints = new List<Vector2Int>(0);
@@ -14,8 +15,12 @@ public class EnemyCtrl : MonoBehaviour
     public GameObject mark;
     public bool stepOn;
 
+    Vector3 cellTarget;
+    bool isMoving;
+
     public void Start()
     {
+        _GridGen.CellById(startPos).SetEnemy(this);
         if (randomWay)
         {
             RandomWay();
@@ -26,6 +31,14 @@ public class EnemyCtrl : MonoBehaviour
             //StartCoroutine(OnRouteByStep());
         }
         mark.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (isMoving)
+        {
+            Animate();
+        }
     }
 
     public void RandomWay()
@@ -73,6 +86,7 @@ public class EnemyCtrl : MonoBehaviour
 
     public IEnumerator ShowWay()
     {
+        /*
         for (int loop = 0; loop < 3; loop++)
         {
             for (int i = 0; i < routePoints.Count; i++)
@@ -81,61 +95,49 @@ public class EnemyCtrl : MonoBehaviour
                 yield return new WaitForSeconds(.1f);
             }
         }
+        */
+                yield return new WaitForSeconds(.1f);
         StartCoroutine(OnRouteByStep());
     }
 
-    public IEnumerator OnRoute()
+    
+    public IEnumerator OnRouteByStep()
     {
-        for (int i = 1; i < routePoints.Count; i++)
+        for (int i = 0; i < routePoints.Count; i++)
         {
             mark.SetActive(false);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(() => stepOn == true);
+            stepOn = false;
             if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
-                _GridGen.CellById(routePoints[i]).isEnemy = true;
-                _GridGen.ResetBtns();
-                //_GridGen.GetPlayer().CheckCells();
+                _GridGen.CellById(routePoints[i]).SetEnemy(this);
+                if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
+                else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
                 mark.SetActive(true);
             }
-            yield return new WaitForSeconds(1f);
-            for (int e = 0; e < _GridGen.cells.Count; e++)
-            {
-                _GridGen.CellById(e).isEnemy = false;
-            }
-            _GridGen.CellById(routePoints[i]).isEnemy = true;
-            _GridGen.ResetBtns();
-            //_GridGen.GetPlayer().CheckCells();
-            transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
+            _GridGen._enemiesFinishWalk++;
+            yield return new WaitUntil(() => stepOn == true);
+            stepOn = false;
+            _GridGen.CellById(routePoints[i]).SetEnemy(this);
+            cellTarget = _GridGen.CellById(routePoints[i]).pos;
+            isMoving = true;
         }
     }
 
-    public IEnumerator OnRouteByStep()
+    public void SetInCell()
     {
-        for (int i = 1; i < routePoints.Count; i++)
+        _GridGen.CellById(actualPos).SetEnemy(this);
+    }
+
+    public void Animate()
+    {
+        if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
+        else
         {
-            mark.SetActive(false); 
-            yield return new WaitUntil(() => stepOn == true);
-            stepOn = false;
-            if (i + 1 < routePoints.Count)
-            {
-                mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
-                if(i - 1 >= 0)_GridGen.CellById(routePoints[i-1]).isEnemy = false;
-                _GridGen.CellById(routePoints[i]).isEnemy = true;
-                mark.SetActive(true);
-                _GridGen.ResetBtns();
-                //_GridGen.GetPlayer().CheckCells();
-            }
-            yield return new WaitUntil(() => stepOn == true);
-            stepOn = false;
-            for (int e = 0; e < _GridGen.cells.Count; e++)
-            {
-                _GridGen.CellById(e).isEnemy = false;
-            }
-            _GridGen.CellById(routePoints[i]).isEnemy = true;
-            _GridGen.ResetBtns();
-            //_GridGen.GetPlayer().CheckCells();
-            transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
+            this.transform.position = cellTarget;
+            _GridGen._enemiesFinishWalk++;
+            isMoving = false;
         }
     }
 }

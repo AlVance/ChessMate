@@ -6,8 +6,8 @@ public class Spawner : MonoBehaviour
 {
     public GridGenerator _gridGen;
 
-    public GameObject enemy;
     public GameObject player;
+    public GameObject[] enemies;
 
     public bool random;
     
@@ -27,22 +27,29 @@ public class Spawner : MonoBehaviour
     public GameObject obst;
     public Vector2Int[] posObst;
 
-    public void StartSpawn()
+    public IEnumerator StartSpawn()
     {
         GenEnemy();
+        yield return new WaitForSeconds(.1f);
         GenPlayer();
+        yield return new WaitForSeconds(.1f);
         GenCards();
+        yield return new WaitForSeconds(.1f);
         GenObstacles();
+        yield return new WaitForSeconds(.1f);
+        _gridGen.SetPositions();
     }
 
     public void GenEnemy()
     {
-        EnemyCtrl _newEnCt = enemy.GetComponent<EnemyCtrl>();
-        _newEnCt.randomWay = random;
-        _newEnCt._GridGen = _gridGen;
-        _gridGen.CellById(_newEnCt.startPos).isEnemy = true;
-        GameObject newEne = Instantiate(enemy, _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
-        _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            EnemyCtrl _newEnCt = enemies[i].GetComponent<EnemyCtrl>();
+            _newEnCt.randomWay = random;
+            _newEnCt._GridGen = _gridGen;
+            GameObject newEne = Instantiate(enemies[i], _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
+            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
     }
 
     public void GenPlayer()

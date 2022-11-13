@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1341,6 +1341,8 @@ MonoBehaviour:
   offset: {x: 1, y: 1}
   cells: []
   spawner: {fileID: 1844877146}
+  _enemiesFinishWalk: 0
+  onStepped: 0
 --- !u!4 &1102833603
 Transform:
   m_ObjectHideFlags: 0
@@ -1433,7 +1435,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518435662}
   m_LocalRotation: {x: 0.4864734, y: -0, z: -0, w: 0.87369543}
-  m_LocalPosition: {x: 3.5, y: 9.99, z: -4.62}
+  m_LocalPosition: {x: 3.5, y: 11.51, z: -6.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1470,8 +1472,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridGen: {fileID: 0}
-  enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
   player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
+  enemies:
+  - {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
+  - {fileID: 8535303172965156408, guid: 4c5f616f164d75b49adf836dad329d92, type: 3}
   random: 0
   torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
   posTrr_crd:
