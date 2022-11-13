@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CellData : MonoBehaviour
 {
     public Vector2Int ids;
+    public MeshRenderer _mesh;
 
     public int idTotal;
 
@@ -93,5 +94,10 @@ public class CellData : MonoBehaviour
     {
         _enemy = null;
         isEnemy = false;
+    }
+
+    public void ChangeMat(Color _color)
+    {
+        _mesh.material.color = _color;
     }
 }

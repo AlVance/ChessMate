@@ -164,7 +164,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c84b1521cd8508a4dae95fed745b7958, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -248,7 +248,9 @@ MonoBehaviour:
   ids: {x: 0, y: 0}
   idTotal: 0
   pos: {x: 0, y: 0, z: 0}
+  isPlayer: 0
   isEnemy: 0
+  _enemy: {fileID: 0}
   obstacle: 0
   canMove: 0
   btn: {fileID: 9072345359027619240}
@@ -258,6 +260,7 @@ MonoBehaviour:
   colors:
   - {r: 0, g: 0.9811321, b: 0.24032602, a: 0.47058824}
   - {r: 0.51428306, g: 0.14848696, b: 0.8113208, a: 0.70980394}
+  prevStep: []
 --- !u!95 &8699935462533517785
 Animator:
   serializedVersion: 4

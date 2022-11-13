@@ -1336,11 +1336,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66f727c609a8ae4f96380b3e121b1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 5263630861743789318, guid: 02471cf59cc7f354da6b3d57f9a32b8c, type: 3}
+  cell: {fileID: 5263630861743789318, guid: 307295d89a4c618439c99c7794a1b2d4, type: 3}
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   size: {x: 8, y: 8}
   offset: {x: 1, y: 1}
   cells: []
   spawner: {fileID: 1844877146}
+  _enemies: []
   _enemiesFinishWalk: 0
   onStepped: 0
 --- !u!4 &1102833603

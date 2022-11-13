@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GridGenerator : MonoBehaviour
 {
     public GameObject cell;
+    public Color[] colors;
 
     public Vector2 size;
     public Vector2 offset;
@@ -18,6 +19,8 @@ public class GridGenerator : MonoBehaviour
     public List<EnemyCtrl> _enemies = new List<EnemyCtrl>(0);
     public int _enemiesFinishWalk = 0;
     bool recentEat;
+
+
 
     public void Start()
     {
@@ -41,8 +44,13 @@ public class GridGenerator : MonoBehaviour
                 newCellData.pos = _newPos;
                 newCellData.btn.onClick.AddListener(() => CallPlayer(newCellData));
 
+                if(xSz % 2 == 0 && zSz % 2 == 0) newCellData.ChangeMat(colors[0]);
+                else if(xSz % 2 == 0 && zSz % 2 != 0) newCellData.ChangeMat(colors[1]);
+                else if (xSz % 2 != 0 && zSz % 2 == 0) newCellData.ChangeMat(colors[1]);
+                else if (xSz % 2 != 0 && zSz % 2 != 0) newCellData.ChangeMat(colors[0]);
+
                 newCell.name = "Cell " + cells.Count + " " + xSz + " " + zSz;
-                
+                                
                 cells.Add(newCell);
             }
         }
@@ -119,21 +127,24 @@ public class GridGenerator : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             CellData cellToCheck = cells[i].GetComponent<CellData>();
-            cellToCheck.ActiveBtn(false, 0);
-            cellToCheck.canMove = false;
-            cellToCheck.isPlayer = false;
-            cellToCheck.ClearEnemy();
-            if (cellToCheck.card == null)
+            if (cellToCheck.btn.gameObject.activeInHierarchy || cellToCheck.isPlayer || cellToCheck.isEnemy || cellToCheck.typeCard != PlayerCtrl.Type.Peon && cellToCheck.card == null || cellToCheck.prevStep.Count != 0)
             {
-                cellToCheck.typeCard = PlayerCtrl.Type.Peon;
-            }
-            if (cellToCheck.obst == null)
-            {
-                cellToCheck.obstacle = false;
-            }
-            if (cellToCheck.prevStep.Count > 0)
-            {
-                cellToCheck.prevStep.Clear();
+                cellToCheck.ActiveBtn(false, 0);
+                cellToCheck.canMove = false;
+                cellToCheck.isPlayer = false;
+                cellToCheck.ClearEnemy();
+                if (cellToCheck.card == null)
+                {
+                    cellToCheck.typeCard = PlayerCtrl.Type.Peon;
+                }
+                if (cellToCheck.obst == null)
+                {
+                    cellToCheck.obstacle = false;
+                }
+                if (cellToCheck.prevStep.Count > 0)
+                {
+                    cellToCheck.prevStep.Clear();
+                }
             }
         }
     }
