@@ -22,6 +22,7 @@ public class PlayerCtrl : MonoBehaviour
     private void Start()
     {
         actualPos = startPos;
+        _GridGen.CellById(actualPos).isPlayer = true;
         CheckCells();
     }
 
@@ -316,8 +317,10 @@ public class PlayerCtrl : MonoBehaviour
     public void Move(CellData _cellTarget)
     {
         if (_cellTarget.isEnemy) _GridGen.ChangeScene("GridGen");
+        _GridGen.CellById(actualPos).isPlayer = false;
         isMoving = true;        
         actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
+        _GridGen.CellById(actualPos).isPlayer = true;
         cellTargetPos = _GridGen.CellById(actualPos.x, actualPos.y).pos;
         actualType = _cellTarget.typeCard;
         _GridGen.ResetBtns();

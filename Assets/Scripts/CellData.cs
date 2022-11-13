@@ -11,6 +11,7 @@ public class CellData : MonoBehaviour
 
     public Vector3 pos;
 
+    public bool isPlayer;
     public bool isEnemy;
     public bool obstacle;
     public bool canMove;
@@ -21,10 +22,19 @@ public class CellData : MonoBehaviour
     public GameObject obst;
     public Color[] colors;
 
+
+    private Animator cellAnim;
     private void Start()
     {
         btn.transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
         btn.GetComponent<Image>().color = colors[0];
+
+        cellAnim = this.GetComponent<Animator>();
+    }
+
+    private void LateUpdate()
+    {
+        AnimateCell();
     }
 
     public void ActiveBtn(bool _active)
@@ -61,5 +71,12 @@ public class CellData : MonoBehaviour
         yield return new WaitForSeconds(_time);
         btn.interactable = true;
         ActiveBtn(playered, prevColor);
+    }
+
+
+    private void AnimateCell()
+    {
+        if (((canMove && !obstacle) || isEnemy || isPlayer) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
+        else if ((!canMove && !isEnemy && !isPlayer) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
     }
 }
