@@ -9,13 +9,14 @@ public class PlayerCtrl : MonoBehaviour
     public Vector2Int startPos;
     public Vector2Int actualPos;
 
-    public enum Type {Peon, Torre, Caballo, Alfil};
+    public enum Type { Peon, Torre, Caballo, Alfil };
 
     public Type actualType = Type.Peon;
 
     List<CellData> stepsToWalk = new List<CellData>(0);
 
     #region Animation variables
+    private Animator playerAnim;
     private bool isMoving = false;
     private Vector3 cellTargetPos;
     [SerializeField] private SpriteRenderer playerSprite;
@@ -23,16 +24,16 @@ public class PlayerCtrl : MonoBehaviour
     #endregion
     private void Start()
     {
-        actualPos = startPos;
+        actualPos = startPos; 
         _GridGen.CellById(actualPos).isPlayer = true;
+        cellTargetPos = _GridGen.CellById(actualPos).transform.position;
+        playerAnim = this.GetComponent<Animator>();        
     }
 
     private void Update()
     {
-        if (isMoving)
-        {
-            Animate();
-        }
+        AnimateMovement();
+
     }
     public void CheckCells()
     {
@@ -136,7 +137,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeU = Type.Peon;
             List<CellData> cellsU = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(0, 1, (int) _GridGen.size.y - actualPos.y, obstU, _newTypeU, cellsU));
+            StartCoroutine(CellsDelay(0, 1, (int)_GridGen.size.y - actualPos.y, obstU, _newTypeU, cellsU));
 
             bool obstD = false;
             Type _newTypeD = Type.Peon;
@@ -289,6 +290,10 @@ public class PlayerCtrl : MonoBehaviour
         actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
         //_GridGen.CellById(actualPos).isPlayer = true;
         actualType = _cellTarget.typeCard;
+
+        if (_cellTarget.transform.position.x < this.transform.position.x) playerSprite.flipX = false;
+        else playerSprite.flipX = true;
+
         StartCoroutine(StartWalk(_cellTarget));
     }
 
@@ -317,6 +322,7 @@ public class PlayerCtrl : MonoBehaviour
         yield return new WaitUntil(() => isMoving == false);
         _GridGen.CellById(actualPos).isPlayer = true;
         finishWalk = true;
+        AnimatePlayerSpriteChange(actualType);
         yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
         if (_cellTarget._enemy != null)
         {
@@ -324,16 +330,26 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
-    private void Animate()
+    private void AnimateMovement()
     {
-        if(Vector3.Distance(this.transform.position, cellTargetPos) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTargetPos, 10f * Time.deltaTime);
+        if (isMoving && Vector3.Distance(this.transform.position, cellTargetPos) > 0.1f)
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, cellTargetPos, 10f * Time.deltaTime);
+            playerAnim.SetBool("IsMoving", true);
+        } 
         else
         {
             this.transform.position = cellTargetPos;
+            if(finishWalk)playerAnim.SetBool("IsMoving", false);
             isMoving = false;
         }
 
-        switch (actualType)
+        
+    }
+
+    private void AnimatePlayerSpriteChange(Type newtype)
+    {
+        switch (newtype)
         {
             case Type.Peon:
                 playerSprite.sprite = formsSprites[0];
