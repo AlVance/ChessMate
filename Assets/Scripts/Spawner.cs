@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Spawner : MonoBehaviour
 {
     public GridGenerator _gridGen;
@@ -27,6 +28,16 @@ public class Spawner : MonoBehaviour
     public GameObject obst;
     public List<Vector2Int> posObst = new List<Vector2Int>(0);
 
+    public void LoadSpawner(NewSpawner _spawner)
+    {
+        player.GetComponent<PlayerCtrl>().startPos = _spawner.startPos;
+        enemies = _spawner.enemies;
+        posTrr_crd = _spawner.posTrr_crd;
+        posCab_crd = _spawner.posCab_crd;
+        posAlf_crd = _spawner.posAlf_crd;
+        posObst = _spawner.posObst;
+    }
+
     public IEnumerator StartSpawn()
     {
         GenEnemy();
@@ -47,7 +58,7 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = enemies[i].GetComponent<EnemyCtrl>();
             _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
-            GameObject newEne = Instantiate(enemies[i], _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation);
+            GameObject newEne = Instantiate(enemies[i], _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation, _gridGen.rootAll);
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
     }
@@ -56,7 +67,7 @@ public class Spawner : MonoBehaviour
     {
         PlayerCtrl _newPlayCt = player.GetComponent<PlayerCtrl>();
         _newPlayCt._GridGen = _gridGen;
-        GameObject newPla = Instantiate(player, _gridGen.FindByID(_newPlayCt.startPos).transform.position, transform.rotation);
+        GameObject newPla = Instantiate(player, _gridGen.FindByID(_newPlayCt.startPos).transform.position, transform.rotation, _gridGen.rootAll);
         _gridGen.SetPlayer(newPla.GetComponent<PlayerCtrl>());
     }
 

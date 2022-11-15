@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -14,13 +15,27 @@ public class GridGenerator : MonoBehaviour
     public List<GameObject> cells = new List<GameObject>(0);
 
     public Spawner spawner;
+    public Transform rootAll;
 
     PlayerCtrl _player;
     public List<EnemyCtrl> _enemies = new List<EnemyCtrl>(0);
     public int _enemiesFinishWalk = 0;
     bool recentEat;
 
-
+    public void ResetMap()
+    {
+        Debug.Log("Lo ha iniciado");
+        cells = new List<GameObject>(0);
+        _enemies = new List<EnemyCtrl>(0);
+        _enemiesFinishWalk = 0;
+        recentEat = false;
+        for (int i = 0; i < rootAll.childCount; i++)
+        {
+            Debug.Log("Destruye hijo");
+            Destroy(rootAll.GetChild(i).gameObject);
+        }
+        StartCoroutine(GenGrid());
+    }
 
     public void Start()
     {
@@ -35,7 +50,7 @@ public class GridGenerator : MonoBehaviour
             for (int zSz = 0; zSz < size.y; zSz++)
             {
                 Vector3 _newPos = new Vector3(transform.position.x + (xSz * offset.x), transform.position.y, transform.position.z + (zSz * offset.y));
-                GameObject newCell = Instantiate(cell, _newPos, transform.rotation);
+                GameObject newCell = Instantiate(cell, _newPos, transform.rotation, rootAll);
                 CellData newCellData = newCell.GetComponent<CellData>();
 
                 newCellData.ids.x = xSz;
@@ -147,6 +162,17 @@ public class GridGenerator : MonoBehaviour
             }
         }
     }
+
+    public void LoadMap(string path)
+    {
+        string fileContents = File.ReadAllText(path);
+
+        NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
+        spawner.LoadSpawner(_newSpawner);
+        Debug.Log("Inicia Reset");
+        ResetMap();
+    }
+
     public void SetPositions()
     {
         for (int e = 0; e < _enemies.Count; e++)

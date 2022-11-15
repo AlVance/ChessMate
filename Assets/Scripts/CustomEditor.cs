@@ -12,12 +12,18 @@ public class CustomEditor : MonoBehaviour
     public GameObject editor;
     public Spawner template;
     public TextMeshProUGUI title_txt;
+    public TextMeshProUGUI plchldr_load;
+    [Space]
+    public GameObject enemyBtn;
+    public GameObject rootEnemies;
+    public GameObject btnAddEnemy;
     GameObject _enemy;
-    Spawner newSpawner;
+    NewSpawner newSpawner;
 
     List<Button> btns = new List<Button>(0);
 
     int actualMap = 0;
+    int actualTypeMap = 0;
     int actualCard = 0;
     int actualEnemySlct = 0;
 
@@ -25,6 +31,18 @@ public class CustomEditor : MonoBehaviour
 
     public Color[] colors;
     public Color[] colorsCard;
+
+    [Space]
+    public GameObject ingame;
+    public GameObject fullEditor;
+    public GameObject subMenu;
+    public GameObject titleMap;
+    public GameObject gridPanel;
+    public GameObject create;
+    public GameObject changeType;
+    public GameObject changeCard;
+    public GameObject enemiesScroll;
+    public GameObject loadPanel;
 
     public void Start()
     {
@@ -38,17 +56,22 @@ public class CustomEditor : MonoBehaviour
             _newBtn.onClick.AddListener(() => OnClickBtn(_i));
             btns.Add(_newBtn);
         }
+
+        if (!Directory.Exists(path + "/Maps"))
+        {
+            Directory.CreateDirectory(path + "/Maps");
+        }
     }
 
     public void OnClickBtn(int _indx)
     {
         EditorCell _cell = btns[_indx].GetComponent<EditorCell>();
-        switch (actualMap)
+        switch (actualTypeMap)
         {
             case 0: // Player 
-                btns[gridGen.CellById(newSpawner.player.GetComponent<PlayerCtrl>().startPos).idTotal].GetComponent<Image>().color = colors[0];
-                btns[gridGen.CellById(newSpawner.player.GetComponent<PlayerCtrl>().startPos).idTotal].GetComponent<EditorCell>().isPlayer = false;
-                newSpawner.player.GetComponent<PlayerCtrl>().startPos = gridGen.CellById(_indx).ids;
+                btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<Image>().color = colors[0];
+                btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().isPlayer = false;
+                newSpawner.startPos = gridGen.CellById(_indx).ids;
                 btns[_indx].GetComponent<Image>().color = colors[1];
                 _cell.isPlayer = true;
                 break;
@@ -185,77 +208,96 @@ public class CustomEditor : MonoBehaviour
                 btns[i].GetComponent<Image>().color = colors[4];
             }
         }
+    }
 
-        /*
-        switch (actualMap)
-        {
-            case 0: // Player 
-                btns[gridGen.CellById(newSpawner.player.GetComponent<PlayerCtrl>().startPos).idTotal].GetComponent<Image>().color = colors[1];
-                btns[gridGen.CellById(newSpawner.player.GetComponent<PlayerCtrl>().startPos).idTotal].GetComponent<EditorCell>().isPlayer = true;
-                break;
-            case 1: // Cartas 
-                for (int ct = 0; ct < newSpawner.posTrr_crd.Count; ct++)
-                {
-                    btns[gridGen.CellById(newSpawner.posTrr_crd[ct]).idTotal].GetComponent<Image>().color = colorsCard[0];
-                    btns[gridGen.CellById(newSpawner.posTrr_crd[ct]).idTotal].GetComponent<EditorCell>().isCard = true;
-                    btns[gridGen.CellById(newSpawner.posTrr_crd[ct]).idTotal].GetComponent<EditorCell>().typeCard = 0;
-                }
-                for (int cc = 0; cc < newSpawner.posCab_crd.Count; cc++)
-                {
-                    btns[gridGen.CellById(newSpawner.posCab_crd[cc]).idTotal].GetComponent<Image>().color = colorsCard[1];
-                    btns[gridGen.CellById(newSpawner.posCab_crd[cc]).idTotal].GetComponent<EditorCell>().isCard = true;
-                    btns[gridGen.CellById(newSpawner.posCab_crd[cc]).idTotal].GetComponent<EditorCell>().typeCard = 1;
-                }
-                for (int ca = 0; ca < newSpawner.posAlf_crd.Count; ca++)
-                {
-                    btns[gridGen.CellById(newSpawner.posAlf_crd[ca]).idTotal].GetComponent<Image>().color = colorsCard[2];
-                    btns[gridGen.CellById(newSpawner.posAlf_crd[ca]).idTotal].GetComponent<EditorCell>().isCard = true;
-                    btns[gridGen.CellById(newSpawner.posAlf_crd[ca]).idTotal].GetComponent<EditorCell>().typeCard = 2;
-                }
-                break;
-            case 2: // Obstaculos 
-                for (int o = 0; o < newSpawner.posObst.Count; o++)
-                {
-                    btns[gridGen.CellById(newSpawner.posObst[o]).idTotal].GetComponent<Image>().color = colors[2];
-                    btns[gridGen.CellById(newSpawner.posObst[o]).idTotal].GetComponent<EditorCell>().isObstacle = true;
-                }
-                break;
-            case 3: // Enemigos 
-                break;
-        }
-        */
+    public void AddEnemy()
+    {
+        GameObject newEnemy = Instantiate(enemyBtn,rootEnemies.transform);
+        newEnemy.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = (rootEnemies.transform.childCount - 1).ToString();
+        btnAddEnemy.transform.SetAsLastSibling();
     }
 
     public void NewMap()
     {
-        if(!Directory.Exists(path + "/Maps"))
-        {
-            Directory.CreateDirectory(path + "/Maps");
-        }
-        string[] files = Directory.GetDirectories(path + "/Maps");
-        if (!Directory.Exists(path + "/Maps/Map_" + files.Length)) Directory.CreateDirectory(path + "/Maps/Map_" + files.Length);
+        string[] files = Directory.GetFiles(path + "/Maps");
 
-        newSpawner = new Spawner();
-        newSpawner.player = template.player;
+        actualMap = files.Length;
+
         _enemy = template.enemies[0];
         _enemy.GetComponent<EnemyCtrl>().routePoints = new List<Vector2Int>(0);
+
+        newSpawner = new NewSpawner();
+        newSpawner.startPos = template.player.GetComponent<PlayerCtrl>().startPos;
         newSpawner.enemies = new List<GameObject>(0);
-        newSpawner.torre_crd = template.torre_crd;
-        newSpawner.caballo_crd = template.caballo_crd;
-        newSpawner.alfil_crd = template.alfil_crd;
-        newSpawner.obst = template.obst;
+        newSpawner.posTrr_crd = new List<Vector2Int>(0);
+        newSpawner.posCab_crd = new List<Vector2Int>(0);
+        newSpawner.posAlf_crd = new List<Vector2Int>(0);
+        newSpawner.posObst = new List<Vector2Int>(0);
+
 
         editor.SetActive(true);
+
+        File.Create(path + "/Maps/map_" + actualMap + ".json");
+    }
+
+    public void PreLoadMap()
+    {
+        string[] files = Directory.GetFiles(path + "/Maps/");
+
+
+        plchldr_load.text = "0 - " +  (files.Length - 1).ToString();
+    }
+
+    public void LoadMap(TextMeshProUGUI _text)
+    {
+        string newTxt = _text.text.Remove(_text.text.Length - 1);
+        string newPath = path + "/Maps/map_" + newTxt + ".json";
+        newPath = newPath.Replace(" ", "");
+        Debug.Log(newPath);
+        if(!File.Exists(newPath))
+        {
+            NewMap();
+            titleMap.SetActive(true);
+            gridPanel.SetActive(true);
+            create.SetActive(false);
+            changeType.SetActive(true);
+            changeCard.SetActive(false);
+            enemiesScroll.SetActive(false);
+            loadPanel.SetActive(false);
+        }
+        else
+        {
+            gridGen.LoadMap(newPath);
+            CloseEditor();
+        }
     }
 
     public void SaveMap()
     {
+        StartCoroutine(SaveMapRoutine());
+    }
 
+    public IEnumerator SaveMapRoutine()
+    {
+        string saveFile = path + "/Maps/map_" + actualMap + ".json";
+        string jsonString = JsonUtility.ToJson(newSpawner);
+        // Does it exist?
+        if (File.Exists(saveFile))
+        {
+            File.WriteAllText(saveFile, jsonString);
+        }
+        else
+        {
+            File.Create(saveFile);
+            yield return new WaitForSeconds(1f);
+            File.WriteAllText(saveFile, jsonString);
+        }
+        CloseEditor();
     }
 
     public void ChangeTypeMap(int _newTypeMap)
     {
-        actualMap = _newTypeMap;
+        actualTypeMap = _newTypeMap;
         switch (_newTypeMap)
         {
             case 0:
@@ -273,6 +315,7 @@ public class CustomEditor : MonoBehaviour
         }
         ReloadMap();
     }
+
     public void ChangeTypeCard(int _newTypeCard)
     {
         actualCard = _newTypeCard;
@@ -289,4 +332,27 @@ public class CustomEditor : MonoBehaviour
                 break;
         }
     }
+    public void CloseEditor()
+    {
+        ingame.SetActive(true);
+        titleMap.SetActive(false);
+        gridPanel.SetActive(false);
+        create.SetActive(true);
+        changeType.SetActive(false);
+        changeCard.SetActive(false);
+        enemiesScroll.SetActive(false);
+        loadPanel.SetActive(false);
+        editor.SetActive(false);
+    }
+}
+
+[System.Serializable]
+public class NewSpawner
+{
+    public Vector2Int startPos;
+    public List<GameObject> enemies = new List<GameObject>(0);
+    public List<Vector2Int> posTrr_crd = new List<Vector2Int>(0);
+    public List<Vector2Int> posCab_crd = new List<Vector2Int>(0);
+    public List<Vector2Int> posAlf_crd = new List<Vector2Int>(0);
+    public List<Vector2Int> posObst = new List<Vector2Int>(0);
 }
