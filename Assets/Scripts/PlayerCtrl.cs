@@ -22,6 +22,7 @@ public class PlayerCtrl : MonoBehaviour
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private Sprite[] formsSprites;
     #endregion
+
     private void Start()
     {
         actualPos = startPos; 
@@ -300,6 +301,7 @@ public class PlayerCtrl : MonoBehaviour
     public void ChangeType(Type _newType)
     {
         actualType = _newType;
+        AnimatePlayerSpriteChange(actualType);
         _GridGen.ResetBtns();
         CheckCells();
     }

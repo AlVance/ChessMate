@@ -7,25 +7,25 @@ public class Spawner : MonoBehaviour
     public GridGenerator _gridGen;
 
     public GameObject player;
-    public GameObject[] enemies;
+    public List<GameObject> enemies = new List<GameObject>(0);
 
     public bool random;
     
     [Space]
     public GameObject torre_crd;
-    public Vector2Int[] posTrr_crd;
+    public List<Vector2Int> posTrr_crd = new List<Vector2Int>(0);
 
     [Space]
     public GameObject caballo_crd;
-    public Vector2Int[] posCab_crd;
+    public List<Vector2Int> posCab_crd = new List<Vector2Int>(0);
 
     [Space]
     public GameObject alfil_crd;
-    public Vector2Int[] posAlf_crd;
+    public List<Vector2Int> posAlf_crd = new List<Vector2Int>(0);
 
     [Space]
     public GameObject obst;
-    public Vector2Int[] posObst;
+    public List<Vector2Int> posObst = new List<Vector2Int>(0);
 
     public IEnumerator StartSpawn()
     {
@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
 
     public void GenEnemy()
     {
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             EnemyCtrl _newEnCt = enemies[i].GetComponent<EnemyCtrl>();
             _newEnCt.randomWay = random;
@@ -62,7 +62,7 @@ public class Spawner : MonoBehaviour
 
     public void GenCards()
     {
-        for (int tc = 0; tc < posTrr_crd.Length; tc++)
+        for (int tc = 0; tc < posTrr_crd.Count; tc++)
         {
             Vector2Int select = Vector2Int.zero;
             if (random)
@@ -77,7 +77,7 @@ public class Spawner : MonoBehaviour
             _gridGen.CellById(select).card = Instantiate(torre_crd, _gridGen.FindByID(select).transform);
         }
 
-        for (int cc = 0; cc < posCab_crd.Length; cc++)
+        for (int cc = 0; cc < posCab_crd.Count; cc++)
         {
             Vector2Int select = Vector2Int.zero;
             if (random)
@@ -92,7 +92,7 @@ public class Spawner : MonoBehaviour
             _gridGen.CellById(select).card = Instantiate(caballo_crd, _gridGen.FindByID(select).transform);
         }
 
-        for (int ac = 0; ac < posAlf_crd.Length; ac++)
+        for (int ac = 0; ac < posAlf_crd.Count; ac++)
         {
             Vector2Int select = Vector2Int.zero;
             if (random)
@@ -110,7 +110,7 @@ public class Spawner : MonoBehaviour
 
     public void GenObstacles()
     {
-        for (int i = 0; i < posObst.Length; i++)
+        for (int i = 0; i < posObst.Count; i++)
         {
             Vector2Int indx = _gridGen.CellById(posObst[i]).ids;
             //Vector2Int indx = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));

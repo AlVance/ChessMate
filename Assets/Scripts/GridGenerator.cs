@@ -59,7 +59,6 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitForSeconds(.1f);
 
         StartCoroutine(spawner.StartSpawn());
-
     }
 
     public IEnumerator NextStep(CellData _cellTarget)
@@ -199,15 +198,9 @@ public class GridGenerator : MonoBehaviour
     public CellData CellById(int _cell){    return GameObjectFindByID(cells[_cell].GetComponent<CellData>().ids.x, cells[_cell].GetComponent<CellData>().ids.y).GetComponent<CellData>();   }
 
     public PlayerCtrl GetPlayer() { return _player; }
-    public void SetPlayer(PlayerCtrl _newPlayer)
-    {
-        _player = _newPlayer;
-    }
+    public void SetPlayer(PlayerCtrl _newPlayer) {  _player = _newPlayer;   }
     public EnemyCtrl GetEnemy(int indx) { return _enemies[indx]; }
-    public void SetEnemy(EnemyCtrl _newEnemy)
-    {
-        _enemies.Add(_newEnemy);
-    }
+    public void SetEnemy(EnemyCtrl _newEnemy) { _enemies.Add(_newEnemy);    }
     public void ChangeTypePlayer(int _type)
     {
         switch (_type)
@@ -226,6 +219,10 @@ public class GridGenerator : MonoBehaviour
                 break;
         }
     }
+
+    public void ActiveInvert(GameObject _geo) { _geo.SetActive(!_geo.activeInHierarchy); }
+    public void OnlyActive(GameObject _geo) { _geo.SetActive(true); }
+    public void OnlyHide(GameObject _geo) { _geo.SetActive(false); }
 
     public void ChangeScene(string _scene)
     {
