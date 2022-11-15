@@ -7,12 +7,19 @@ using System.IO;
 
 public class CustomEditor : MonoBehaviour
 {
+    public Vector2Int size;
+    public TMP_InputField xInput;
+    public TMP_InputField zInput;
+
+    public GameObject cellBtn;
+
     public GridGenerator gridGen;
     public Transform gridParent;
     public GameObject editor;
     public Spawner template;
     public TextMeshProUGUI title_txt;
     public TextMeshProUGUI plchldr_load;
+
     [Space]
     public GameObject enemyBtn;
     public GameObject rootEnemies;
@@ -46,6 +53,8 @@ public class CustomEditor : MonoBehaviour
 
     public void Start()
     {
+        xInput.text = gridGen.size.x.ToString();
+        zInput.text = gridGen.size.y.ToString();
         path = Application.persistentDataPath;
         for (int i = 0; i < gridParent.childCount; i++)
         {
@@ -61,6 +70,24 @@ public class CustomEditor : MonoBehaviour
         {
             Directory.CreateDirectory(path + "/Maps");
         }
+    }
+
+    public void GenGridBtns(bool newMap)
+    {
+        size = new Vector2Int (System.Int32.Parse(xInput.text), System.Int32.Parse(zInput.text));
+        gridParent.GetComponent<GridLayoutGroup>().constraintCount = size.x;
+        for (int i = 0; i < size.x * size.y; i++)
+        {
+            GameObject newBtn = Instantiate(cellBtn, gridParent);
+
+            newBtn.name = i.ToString();
+            newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = i.ToString();
+            Button _newBtn = newBtn.GetComponent<Button>();
+            int _i = i;
+            _newBtn.onClick.AddListener(() => OnClickBtn(_i));
+            btns.Add(_newBtn);
+        }
+        if (newMap) NewMap();
     }
 
     public void OnClickBtn(int _indx)
@@ -227,6 +254,7 @@ public class CustomEditor : MonoBehaviour
         _enemy.GetComponent<EnemyCtrl>().routePoints = new List<Vector2Int>(0);
 
         newSpawner = new NewSpawner();
+        newSpawner.size = size;
         newSpawner.startPos = template.player.GetComponent<PlayerCtrl>().startPos;
         newSpawner.enemies = new List<GameObject>(0);
         newSpawner.posTrr_crd = new List<Vector2Int>(0);
@@ -349,6 +377,7 @@ public class CustomEditor : MonoBehaviour
 [System.Serializable]
 public class NewSpawner
 {
+    public Vector2Int size;
     public Vector2Int startPos;
     public List<GameObject> enemies = new List<GameObject>(0);
     public List<Vector2Int> posTrr_crd = new List<Vector2Int>(0);

@@ -22,6 +22,7 @@ public class GridGenerator : MonoBehaviour
     public int _enemiesFinishWalk = 0;
     bool recentEat;
 
+
     public void ResetMap()
     {
         Debug.Log("Lo ha iniciado");
@@ -169,6 +170,7 @@ public class GridGenerator : MonoBehaviour
 
         NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
         spawner.LoadSpawner(_newSpawner);
+        size = _newSpawner.size;
         Debug.Log("Inicia Reset");
         ResetMap();
     }
