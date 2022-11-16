@@ -22,6 +22,10 @@ public class GridGenerator : MonoBehaviour
     public int _enemiesFinishWalk = 0;
     bool recentEat;
 
+    private int currrentLevelIndex = 0;
+    [SerializeField] private Animator LevelTransitorAnim;
+    [SerializeField] private GameObject[] currentLevelCounterGO;
+    
 
     public void ResetMap()
     {
@@ -42,6 +46,8 @@ public class GridGenerator : MonoBehaviour
     {
         spawner._gridGen = this;
         StartCoroutine(GenGrid());
+
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
 
     public IEnumerator GenGrid()
@@ -147,7 +153,7 @@ public class GridGenerator : MonoBehaviour
 
         if (_enemies.Count == 0)
         {
-            ChangeScene("GridGen");
+            StartCoroutine(ChangeToNextLevel());
         }
     }
 
@@ -213,6 +219,16 @@ public class GridGenerator : MonoBehaviour
         ResetMap();
     }
 
+    public IEnumerator ChangeToNextLevel()
+    {
+        LevelTransitorAnim.SetBool("IsLoadingLevel", true);
+        yield return new WaitForSeconds(1.5f);
+        //LoadMap("ELNIVELQUETOQUE");
+        //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
+        //++currrentLevelIndex;
+        //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
+        ChangeScene("GridGen");
+    }
     public void SetPositions()
     {
         for (int e = 0; e < _enemies.Count; e++)

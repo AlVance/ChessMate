@@ -171,7 +171,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 568c3aa11fcf0dd44b609e7c7f499a47, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8bed287d39f9fc44bfcb0493de93e98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -279,10 +279,10 @@ MonoBehaviour:
   actualType: 0
   playerSprite: {fileID: 5129089982943721991}
   formsSprites:
-  - {fileID: 21300000, guid: 568c3aa11fcf0dd44b609e7c7f499a47, type: 3}
-  - {fileID: 21300000, guid: 2d60e723f2db4e94ca7694203f5a668a, type: 3}
-  - {fileID: 21300000, guid: 9d63c1781f9096d4d9329a7a3b8cbd4f, type: 3}
-  - {fileID: 21300000, guid: b0d9708ed0b593249a2db29933a23a3d, type: 3}
+  - {fileID: 21300000, guid: b8bed287d39f9fc44bfcb0493de93e98, type: 3}
+  - {fileID: 21300000, guid: 83607773c8f72664a8819f4649f54cc2, type: 3}
+  - {fileID: 21300000, guid: c798b2cded8f9b645a83e460d7ba1b51, type: 3}
+  - {fileID: 21300000, guid: ea06c15b8c8553340b2400a30b703242, type: 3}
   finishWalk: 0
 --- !u!95 &4523410216231964915
 Animator:
