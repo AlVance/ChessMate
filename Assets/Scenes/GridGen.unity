@@ -223,6 +223,7 @@ MonoBehaviour:
   changeCard: {fileID: 640916084}
   enemiesScroll: {fileID: 722538275}
   loadPanel: {fileID: 114499186}
+  gridGenerated: 0
 --- !u!1 &84622429
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,7 +4166,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 90, y: 90}
-  m_Spacing: {x: 5, y: 5}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 8
 --- !u!1 &1238151140

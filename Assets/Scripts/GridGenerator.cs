@@ -25,16 +25,16 @@ public class GridGenerator : MonoBehaviour
 
     public void ResetMap()
     {
-        Debug.Log("Lo ha iniciado");
+        Debug.Log("PlayerLoad " + spawner.player.GetComponent<PlayerCtrl>().startPos);
         cells = new List<GameObject>(0);
         _enemies = new List<EnemyCtrl>(0);
         _enemiesFinishWalk = 0;
         recentEat = false;
         for (int i = 0; i < rootAll.childCount; i++)
         {
-            Debug.Log("Destruye hijo");
             Destroy(rootAll.GetChild(i).gameObject);
         }
+        cells.Clear();
         StartCoroutine(GenGrid());
     }
 
@@ -76,6 +76,40 @@ public class GridGenerator : MonoBehaviour
 
         StartCoroutine(spawner.StartSpawn());
     }
+
+    public IEnumerator RegenGridEditor(int xIndx, int zIndx, CustomEditor _editor)
+    {
+        for (int i = 0; i < rootAll.childCount; i++)
+        {
+            Destroy(rootAll.GetChild(i).gameObject);
+        }
+        cells.Clear();
+        Debug.Log("size " + xIndx + " | " + zIndx);
+        for (int xSz = 0; xSz < xIndx; xSz++)
+        {
+            for (int zSz = 0; zSz < zIndx; zSz++)
+            {
+                Vector3 _newPos = new Vector3(transform.position.x + (xSz * offset.x), transform.position.y, transform.position.z + (zSz * offset.y));
+                GameObject newCell = Instantiate(cell, _newPos, transform.rotation, rootAll);
+                CellData newCellData = newCell.GetComponent<CellData>();
+
+                newCellData.ids.x = xSz;
+                newCellData.ids.y = zSz;
+                newCellData.idTotal = cells.Count;
+                newCellData.pos = _newPos;
+
+                newCell.name = "Cell " + cells.Count + " " + xSz + " " + zSz;
+
+                cells.Add(newCell);
+            }
+        }
+        ResetBtns();
+
+        yield return new WaitForSeconds(.1f);
+
+        _editor.gridGenerated = true;
+    }
+
 
     public IEnumerator NextStep(CellData _cellTarget)
     {
@@ -170,8 +204,12 @@ public class GridGenerator : MonoBehaviour
 
         NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
         spawner.LoadSpawner(_newSpawner);
+        spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
         size = _newSpawner.size;
-        Debug.Log("Inicia Reset");
+        Camera.main.transform.position = new Vector3(
+            transform.position.x + (size.x / 2),
+            Camera.main.transform.position.y,
+            Camera.main.transform.position.z);
         ResetMap();
     }
 
@@ -210,6 +248,7 @@ public class GridGenerator : MonoBehaviour
         for (int i = 0; i < cells.Count; i++)
         {
             CellData cellCheck = cells[i].GetComponent<CellData>();
+            //Debug.Log("Buscas " + _x + " | " + _z + " encuentras " +cellCheck);
             if (cellCheck.ids.x == _x && cellCheck.ids.y == _z)
             {
                 return cells[i];
@@ -221,7 +260,7 @@ public class GridGenerator : MonoBehaviour
     public GameObject FindByID(int _xID, int _zID){ return GameObjectFindByID(_xID, _zID);  }
     public GameObject FindByID(Vector2 ids){    return GameObjectFindByID((int) ids.x,(int) ids.y); }
     public GameObject FindByID(int cell){   return GameObjectFindByID(cells[cell].GetComponent<CellData>().ids.x, cells[cell].GetComponent<CellData>().ids.y);    }
-    public CellData CellById(int _x, int _z){   return GameObjectFindByID(_x, _z).GetComponent<CellData>(); }
+    public CellData CellById(int _x, int _z){   return GameObjectFindByID(_x, _z).GetComponent<CellData>();}
     public CellData CellById(Vector2 ids){  return GameObjectFindByID((int)ids.x,(int) ids.y).GetComponent<CellData>(); }
     public CellData CellById(int _cell){    return GameObjectFindByID(cells[_cell].GetComponent<CellData>().ids.x, cells[_cell].GetComponent<CellData>().ids.y).GetComponent<CellData>();   }
 

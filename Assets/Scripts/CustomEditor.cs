@@ -72,20 +72,41 @@ public class CustomEditor : MonoBehaviour
         }
     }
 
+
     public void GenGridBtns(bool newMap)
     {
-        size = new Vector2Int (System.Int32.Parse(xInput.text), System.Int32.Parse(zInput.text));
-        gridParent.GetComponent<GridLayoutGroup>().constraintCount = size.x;
-        for (int i = 0; i < size.x * size.y; i++)
-        {
-            GameObject newBtn = Instantiate(cellBtn, gridParent);
+        StartCoroutine(GenGridBtnsCicle(newMap));
+    }
 
-            newBtn.name = i.ToString();
-            newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = i.ToString();
-            Button _newBtn = newBtn.GetComponent<Button>();
-            int _i = i;
-            _newBtn.onClick.AddListener(() => OnClickBtn(_i));
-            btns.Add(_newBtn);
+    public bool gridGenerated;
+    public IEnumerator GenGridBtnsCicle(bool newMap)
+    {
+        for (int e = 0; e < gridParent.childCount; e++)
+        {
+            Destroy(gridParent.GetChild(e).gameObject);
+        }
+        size = new Vector2Int (System.Int32.Parse(xInput.text), System.Int32.Parse(zInput.text));
+        gridGenerated = false;
+        StartCoroutine(gridGen.RegenGridEditor(size.x,size.y, this));
+        yield return new WaitUntil(() => gridGenerated == true);
+        gridParent.GetComponent<GridLayoutGroup>().constraintCount = size.x;
+        gridParent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(800 / size.x,800 / size.y);
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int z = 0; z < size.y; z++)
+            {
+                GameObject newBtn = Instantiate(cellBtn, gridParent);
+
+                int _x = x;
+                int _z = z;
+                newBtn.name = (gridGen.CellById(_x, _z).idTotal + " | " +_x + " | " + _z).ToString();
+                newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = gridGen.CellById(_x, _z).idTotal.ToString();
+                Button _newBtn = newBtn.GetComponent<Button>();
+                _newBtn.GetComponent<EditorCell>().ids = new Vector2Int(_x,_z);
+                Debug.Log(gridGen.CellById(_x, _z).idTotal);
+                _newBtn.onClick.AddListener(() => OnClickBtn(gridGen.CellById(_x,_z).idTotal));
+                btns.Add(_newBtn);
+            }
         }
         if (newMap) NewMap();
     }
@@ -93,9 +114,11 @@ public class CustomEditor : MonoBehaviour
     public void OnClickBtn(int _indx)
     {
         EditorCell _cell = btns[_indx].GetComponent<EditorCell>();
+        Debug.Log("Indx btn " + _indx);
         switch (actualTypeMap)
         {
             case 0: // Player 
+                Debug.Log("New pos " + newSpawner.startPos + " | " + gridGen.CellById(_indx).ids);
                 btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<Image>().color = colors[0];
                 btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().isPlayer = false;
                 newSpawner.startPos = gridGen.CellById(_indx).ids;
@@ -255,7 +278,7 @@ public class CustomEditor : MonoBehaviour
 
         newSpawner = new NewSpawner();
         newSpawner.size = size;
-        newSpawner.startPos = template.player.GetComponent<PlayerCtrl>().startPos;
+        newSpawner.startPos = new Vector2Int(0,0);
         newSpawner.enemies = new List<GameObject>(0);
         newSpawner.posTrr_crd = new List<Vector2Int>(0);
         newSpawner.posCab_crd = new List<Vector2Int>(0);
@@ -333,6 +356,7 @@ public class CustomEditor : MonoBehaviour
                 break;
             case 1:
                 title_txt.text = "Mapa de Cartas";
+                actualCard = 0;
                 break;
             case 2:
                 title_txt.text = "Mapa de Obstaculos";
@@ -378,7 +402,7 @@ public class CustomEditor : MonoBehaviour
 public class NewSpawner
 {
     public Vector2Int size;
-    public Vector2Int startPos;
+    public Vector2Int startPos = new Vector2Int(0, 0);
     public List<GameObject> enemies = new List<GameObject>(0);
     public List<Vector2Int> posTrr_crd = new List<Vector2Int>(0);
     public List<Vector2Int> posCab_crd = new List<Vector2Int>(0);

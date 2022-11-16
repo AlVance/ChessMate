@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EditorCell : MonoBehaviour
 {
+    public Vector2Int ids;
+    public int total;
     public bool isPlayer;
     public bool isEnemy;
     public bool isCard;
