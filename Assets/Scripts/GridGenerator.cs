@@ -45,7 +45,7 @@ public class GridGenerator : MonoBehaviour
     public void Start()
     {
         spawner._gridGen = this;
-        StartCoroutine(GenGrid());
+        LoadMapByIndx(0);
 
         LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
@@ -204,8 +204,10 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
-    public void LoadMap(string path)
+    string lastMap;
+    public void LoadNewMap(string path)
     {
+        lastMap = path;
         string fileContents = File.ReadAllText(path);
 
         NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
@@ -219,6 +221,17 @@ public class GridGenerator : MonoBehaviour
         ResetMap();
     }
 
+    public void LoadMapByIndx(int _level)
+    {
+        string path = Application.persistentDataPath + "/Maps/";
+        LoadNewMap(path + "map_" + _level +".json");
+    }
+
+    public void ReloadMap()
+    {
+        LoadNewMap(lastMap);
+    }
+
     public IEnumerator ChangeToNextLevel()
     {
         LevelTransitorAnim.SetBool("IsLoadingLevel", true);
@@ -227,7 +240,16 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         //++currrentLevelIndex;
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
-        ChangeScene("GridGen");
+
+        if(currrentLevelIndex < 5)
+        {
+            currrentLevelIndex++;
+        }
+        else
+        {
+            currrentLevelIndex = 0;
+        }
+        LoadMapByIndx(currrentLevelIndex);
     }
     public void SetPositions()
     {

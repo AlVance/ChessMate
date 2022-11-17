@@ -14,6 +14,7 @@ public class CellData : MonoBehaviour
 
     public bool isPlayer;
     public bool isEnemy;
+    public bool isKing;
     public EnemyCtrl _enemy;
     public bool obstacle;
     public bool canMove;

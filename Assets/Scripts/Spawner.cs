@@ -8,7 +8,16 @@ public class Spawner : MonoBehaviour
     public GridGenerator _gridGen;
 
     public GameObject player;
-    public List<GameObject> enemies = new List<GameObject>(0);
+
+    public GameObject king;
+    Vector2Int posKing;
+
+    public GameObject enemy;
+    public List<Vector2Int> enemiesRoute00 = new List<Vector2Int>(0);
+    public List<Vector2Int> enemiesRoute01 = new List<Vector2Int>(0);
+    public List<Vector2Int> enemiesRoute02 = new List<Vector2Int>(0);
+    public List<Vector2Int> enemiesRoute03 = new List<Vector2Int>(0);
+    public List<Vector2Int> enemiesRoute04 = new List<Vector2Int>(0);
 
     public bool random;
     
@@ -31,7 +40,12 @@ public class Spawner : MonoBehaviour
     public void LoadSpawner(NewSpawner _spawner)
     {
         player.GetComponent<PlayerCtrl>().startPos = _spawner.startPos;
-        enemies = _spawner.enemies;
+        posKing = _spawner.kingPos;
+        enemiesRoute00 = _spawner.enemyRoute00;
+        enemiesRoute01 = _spawner.enemyRoute01;
+        enemiesRoute02 = _spawner.enemyRoute02;
+        enemiesRoute03 = _spawner.enemyRoute03;
+        enemiesRoute04 = _spawner.enemyRoute04;
         posTrr_crd = _spawner.posTrr_crd;
         posCab_crd = _spawner.posCab_crd;
         posAlf_crd = _spawner.posAlf_crd;
@@ -40,6 +54,8 @@ public class Spawner : MonoBehaviour
 
     public IEnumerator StartSpawn()
     {
+        GenKing();
+        yield return new WaitForSeconds(.1f);
         GenEnemy();
         yield return new WaitForSeconds(.1f);
         GenPlayer();
@@ -51,14 +67,61 @@ public class Spawner : MonoBehaviour
         _gridGen.SetPositions();
     }
 
+    public void GenKing()
+    {
+        GameObject _king = Instantiate(king, _gridGen.FindByID(posKing).transform.position, transform.rotation, _gridGen.rootAll);
+    }
+
     public void GenEnemy()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        if (enemiesRoute00.Count > 0)
         {
-            EnemyCtrl _newEnCt = enemies[i].GetComponent<EnemyCtrl>();
+            GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute00[0]).transform.position, transform.rotation, _gridGen.rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt.startPos = enemiesRoute00[0];
+            _newEnCt.routePoints = enemiesRoute00;
             _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
-            GameObject newEne = Instantiate(enemies[i], _gridGen.FindByID(_newEnCt.startPos).transform.position, transform.rotation, _gridGen.rootAll);
+            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (enemiesRoute01.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute01[0]).transform.position, transform.rotation, _gridGen.rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt.startPos = enemiesRoute01[0];
+            _newEnCt.routePoints = enemiesRoute01;
+            _newEnCt.randomWay = random;
+            _newEnCt._GridGen = _gridGen;
+            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (enemiesRoute02.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute02[0]).transform.position, transform.rotation, _gridGen.rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt.startPos = enemiesRoute02[0];
+            _newEnCt.routePoints = enemiesRoute02;
+            _newEnCt.randomWay = random;
+            _newEnCt._GridGen = _gridGen;
+            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (enemiesRoute03.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute03[0]).transform.position, transform.rotation, _gridGen.rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt.startPos = enemiesRoute03[0];
+            _newEnCt.routePoints = enemiesRoute03;
+            _newEnCt.randomWay = random;
+            _newEnCt._GridGen = _gridGen;
+            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (enemiesRoute04.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute04[0]).transform.position, transform.rotation, _gridGen.rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt.startPos = enemiesRoute04[0];
+            _newEnCt.routePoints = enemiesRoute04;
+            _newEnCt.randomWay = random;
+            _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
     }

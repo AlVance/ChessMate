@@ -100,10 +100,10 @@ public class EnemyCtrl : MonoBehaviour
         StartCoroutine(OnRouteByStep());
     }
 
-    
+    bool finishRoute;
     public IEnumerator OnRouteByStep()
     {
-        for (int i = 0; i < routePoints.Count; i++)
+        for (int i = 1; i < routePoints.Count; i++)
         {
             mark.SetActive(false);
             yield return new WaitUntil(() => stepOn == true);
@@ -123,6 +123,7 @@ public class EnemyCtrl : MonoBehaviour
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
             isMoving = true;
         }
+        finishRoute = true;
     }
 
     public void SetInCell()
@@ -135,6 +136,7 @@ public class EnemyCtrl : MonoBehaviour
         if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
         else
         {
+            if(finishRoute)_GridGen.ReloadMap();
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;
             isMoving = false;
