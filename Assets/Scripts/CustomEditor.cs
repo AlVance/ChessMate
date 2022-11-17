@@ -394,7 +394,6 @@ public class CustomEditor : MonoBehaviour
         changeCard.SetActive(false);
         enemiesScroll.SetActive(false);
         loadPanel.SetActive(false);
-        editor.SetActive(false);
     }
 }
 

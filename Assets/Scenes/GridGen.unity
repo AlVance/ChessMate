@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7405912}
   - component: {fileID: 7405913}
-  - component: {fileID: 7405914}
   m_Layer: 5
   m_Name: Editor
   m_TagString: Untagged
@@ -177,53 +176,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7405911}
   m_CullTransparentMesh: 1
---- !u!114 &7405914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7405911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26f7b276b88ad714d921d9dfe6d309e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: {x: 8, y: 8}
-  xInput: {fileID: 1289846303}
-  zInput: {fileID: 885390552}
-  cellBtn: {fileID: 1227724151235737521, guid: 873dd01f952a7a5458a517d2efb19396, type: 3}
-  gridGen: {fileID: 1102833602}
-  gridParent: {fileID: 1220147801}
-  editor: {fileID: 1220147800}
-  template: {fileID: 1844877146}
-  title_txt: {fileID: 1696999740}
-  plchldr_load: {fileID: 982305736}
-  enemyBtn: {fileID: 7412934843983104241, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
-  rootEnemies: {fileID: 741527509}
-  btnAddEnemy: {fileID: 703163535166098637}
-  path: 
-  colors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0, g: 0.59481907, b: 1, a: 1}
-  - {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  colorsCard:
-  - {r: 0.40784314, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0.5254902, b: 0, a: 1}
-  - {r: 0, g: 1, b: 0.105882354, a: 1}
-  ingame: {fileID: 632938904}
-  fullEditor: {fileID: 7405911}
-  subMenu: {fileID: 519280336}
-  titleMap: {fileID: 1083632069}
-  gridPanel: {fileID: 1220147800}
-  create: {fileID: 1242253822}
-  changeType: {fileID: 2098348023}
-  changeCard: {fileID: 640916084}
-  enemiesScroll: {fileID: 722538275}
-  loadPanel: {fileID: 114499186}
-  gridGenerated: 0
 --- !u!1 &84622429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1112,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: SaveMap
         m_Mode: 1
@@ -1222,6 +1174,7 @@ GameObject:
   - component: {fileID: 368237476}
   - component: {fileID: 368237475}
   - component: {fileID: 368237474}
+  - component: {fileID: 368237478}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1314,6 +1267,53 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &368237478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368237473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f7b276b88ad714d921d9dfe6d309e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 8, y: 8}
+  xInput: {fileID: 1289846303}
+  zInput: {fileID: 885390552}
+  cellBtn: {fileID: 1227724151235737521, guid: 873dd01f952a7a5458a517d2efb19396, type: 3}
+  gridGen: {fileID: 1102833602}
+  gridParent: {fileID: 1220147801}
+  editor: {fileID: 1220147800}
+  template: {fileID: 1844877146}
+  title_txt: {fileID: 1696999740}
+  plchldr_load: {fileID: 982305736}
+  enemyBtn: {fileID: 7412934843983104241, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
+  rootEnemies: {fileID: 741527509}
+  btnAddEnemy: {fileID: 703163535166098637}
+  path: 
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0.59481907, b: 1, a: 1}
+  - {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  colorsCard:
+  - {r: 0.40784314, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.5254902, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.105882354, a: 1}
+  ingame: {fileID: 632938904}
+  fullEditor: {fileID: 7405911}
+  subMenu: {fileID: 519280336}
+  titleMap: {fileID: 1083632069}
+  gridPanel: {fileID: 1220147800}
+  create: {fileID: 1242253822}
+  changeType: {fileID: 2098348023}
+  changeCard: {fileID: 640916084}
+  enemiesScroll: {fileID: 722538275}
+  loadPanel: {fileID: 114499186}
+  gridGenerated: 0
 --- !u!1001 &386398882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1408,6 +1408,10 @@ PrefabInstance:
     - target: {fileID: 3251658152334855639, guid: c26930a158e8fbb43a9d58217592c1d1, type: 3}
       propertyPath: m_Name
       value: SceneTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251658152334855639, guid: c26930a158e8fbb43a9d58217592c1d1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c26930a158e8fbb43a9d58217592c1d1, type: 3}
@@ -1550,7 +1554,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -1683,7 +1687,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -2068,7 +2072,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -2249,6 +2253,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1102833602}
+        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
+        m_MethodName: OnlyHide
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2040543475}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &601644337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2326,8 +2342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.14400001}
-  m_AnchoredPosition: {x: 0, y: -1.190918}
-  m_SizeDelta: {x: 0, y: -2.381958}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &632938907
 CanvasRenderer:
@@ -2494,7 +2510,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: GenGridBtns
         m_Mode: 6
@@ -2663,7 +2679,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -2821,7 +2837,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: LoadMap
         m_Mode: 2
@@ -3018,6 +3034,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 632938904}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1102833602}
+        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
+        m_MethodName: OnlyActive
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3997,7 +4025,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: PreLoadMap
         m_Mode: 1
@@ -4546,7 +4574,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -4879,7 +4907,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -5828,7 +5856,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -7461,7 +7489,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7405914}
+      - m_Target: {fileID: 368237478}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: AddEnemy
         m_Mode: 1
