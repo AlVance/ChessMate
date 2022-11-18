@@ -286,7 +286,6 @@ public class PlayerCtrl : MonoBehaviour
         stepsToWalk.Clear();
         for (int i = 0; i < _cellTarget.prevStep.Count; i++)
         {
-            _cellTarget.prevStep[i].canMove = true;
             stepsToWalk.Add(_cellTarget.prevStep[i]);
         }
         actualPos = new Vector2Int(_cellTarget.ids.x, _cellTarget.ids.y);
@@ -321,13 +320,12 @@ public class PlayerCtrl : MonoBehaviour
             yield return new WaitUntil(() => isMoving == false);
             isMoving = true;
             cellTargetPos = stepsToWalk[i].pos;
-            yield return new WaitForSeconds(.1f);
-            if (i != 0) stepsToWalk[i - 1].canMove = false;
         }
         yield return new WaitUntil(() => isMoving == false);
         _GridGen.CellById(actualPos).isPlayer = true;
         finishWalk = true;
         AnimatePlayerSpriteChange(actualType);
+        yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
         if (_cellTarget._enemy != null)
         {
             _GridGen.DestroyEnemy(_cellTarget._enemy);
@@ -347,6 +345,8 @@ public class PlayerCtrl : MonoBehaviour
             if(finishWalk)playerAnim.SetBool("IsMoving", false);
             isMoving = false;
         }
+
+        
     }
 
     private void AnimatePlayerSpriteChange(Type newtype)

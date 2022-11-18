@@ -105,21 +105,22 @@ public class EnemyCtrl : MonoBehaviour
     {
         for (int i = 1; i < routePoints.Count; i++)
         {
-            yield return new WaitUntil(() => stepOn == true);
             mark.SetActive(false);
+            yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
             if (i + 1 < routePoints.Count)
             {
                 mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
                 _GridGen.CellById(routePoints[i]).SetEnemy(this);
-                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
+                if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
+                else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
+                mark.SetActive(true);
             }
             _GridGen._enemiesFinishWalk++;
-            //yield return new WaitUntil(() => stepOn == true);
-            _GridGen.CellById(routePoints[i - 1]).ClearEnemy();
+            yield return new WaitUntil(() => stepOn == true);
+            stepOn = false;
             _GridGen.CellById(routePoints[i]).SetEnemy(this);
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
-            _GridGen._enemiesFinishWalk++;
             isMoving = true;
         }
         finishRoute = true;
@@ -136,7 +137,6 @@ public class EnemyCtrl : MonoBehaviour
         else
         {
             if(finishRoute)_GridGen.ReloadMap();
-            //mark.SetActive(true);
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;
             isMoving = false;

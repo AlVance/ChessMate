@@ -51,16 +51,11 @@ public class CustomEditor : MonoBehaviour
     public GameObject enemiesScroll;
     public GameObject loadPanel;
 
-    int currentTouch;
-    public int countTouchDev = 5;
-    public GameObject[] devPanel;
-
     public void Start()
     {
         xInput.text = gridGen.size.x.ToString();
         zInput.text = gridGen.size.y.ToString();
         path = Application.persistentDataPath;
-        Debug.Log("Ruta Mapas " + path);
         for (int i = 0; i < gridParent.childCount; i++)
         {
             gridParent.GetChild(i).gameObject.name = i.ToString();
@@ -70,51 +65,13 @@ public class CustomEditor : MonoBehaviour
             _newBtn.onClick.AddListener(() => OnClickBtn(_i));
             btns.Add(_newBtn);
         }
-    }
 
-    public void CloseDev(GameObject _btn)
-    {
-        currentTouch = 0;
-        for (int d = 0; d < devPanel.Length; d++)
+        if (!Directory.Exists(path + "/Maps"))
         {
-            devPanel[d].SetActive(false);
-        }
-        OpenCloseEditor(false);
-        _btn.SetActive(true);
-    }
-
-    public void TouchDev(GameObject _btn)
-    {
-        if(currentTouch == 0)  StartCoroutine(DevCheck(2f));
-        currentTouch++;
-        if(currentTouch >= countTouchDev)
-        {
-            for (int d = 0; d < devPanel.Length; d++)
-            {
-                devPanel[d].SetActive(true);
-            }
-            _btn.SetActive(false);
-        }
-        else
-        {
-            for (int d = 0; d < devPanel.Length; d++)
-            {
-                devPanel[d].SetActive(false);
-            }
-            _btn.SetActive(true);
+            Directory.CreateDirectory(path + "/Maps");
         }
     }
 
-    public IEnumerator DevCheck(float _time)
-    {
-        yield return new WaitForSeconds(_time);
-        currentTouch = 0;
-    }
-
-    public void GenNewGrid(TMP_InputField _text)
-    {
-        StartCoroutine(GenGridBtnsCicle(true,_text.text));
-    }
 
     public void GenGridBtns(bool newMap)
     {
@@ -122,7 +79,7 @@ public class CustomEditor : MonoBehaviour
     }
 
     public bool gridGenerated;
-    public IEnumerator GenGridBtnsCicle(bool newMap, string _indexLevel = "")
+    public IEnumerator GenGridBtnsCicle(bool newMap)
     {
         for (int e = 0; e < gridParent.childCount; e++)
         {
@@ -148,14 +105,10 @@ public class CustomEditor : MonoBehaviour
                 _newBtn.GetComponent<EditorCell>().ids = new Vector2Int(_x, _z);
                 Debug.Log(gridGen.CellById(_x, _z).idTotal);
                 _newBtn.onClick.AddListener(() => OnClickBtn(gridGen.CellById(_x, _z).idTotal));
-                Debug.Log(gridGen.CellById(_x, _z).idTotal + " A");
                 btns.Add(_newBtn);
             }
         }
-        if (newMap)
-        {
-            NewMap();
-        }
+        if (newMap) NewMap();
     }
 
     public void OnClickBtn(int _indx)
@@ -165,11 +118,8 @@ public class CustomEditor : MonoBehaviour
         switch (actualTypeMap)
         {
             case 0: // Player 
-                Debug.Log("entra en player");
                 if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                 {
-                    Debug.Log("entra en player porque esta vacio a " + newSpawner.startPos);
-                    Debug.Log("entra en player porque esta vacio b " + gridGen.CellById(newSpawner.startPos).idTotal);
                     btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
                     btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().isPlayer = false;
                     newSpawner.startPos = gridGen.CellById(_indx).ids;
@@ -458,7 +408,7 @@ public class CustomEditor : MonoBehaviour
 
     public void NewMap()
     {
-        string[] files = Directory.GetFiles(path);
+        string[] files = Directory.GetFiles(path + "/Maps");
 
         actualMap = files.Length;
 
@@ -479,37 +429,12 @@ public class CustomEditor : MonoBehaviour
 
         editor.SetActive(true);
 
-        File.Create(path + "/map_" + actualMap + ".json");
-    }
-    public void NewMap(string _str)
-    {
-        string[] files = Directory.GetFiles(path);
-
-        actualMap = int.Parse(_str);
-
-
-        newSpawner = new NewSpawner();
-        newSpawner.size = size;
-        newSpawner.startPos = new Vector2Int(0, 0);
-        newSpawner.enemyRoute00 = new List<Vector2Int>(0);
-        newSpawner.enemyRoute01 = new List<Vector2Int>(0);
-        newSpawner.enemyRoute02 = new List<Vector2Int>(0);
-        newSpawner.enemyRoute03 = new List<Vector2Int>(0);
-        newSpawner.enemyRoute04 = new List<Vector2Int>(0);
-        newSpawner.posTrr_crd = new List<Vector2Int>(0);
-        newSpawner.posCab_crd = new List<Vector2Int>(0);
-        newSpawner.posAlf_crd = new List<Vector2Int>(0);
-        newSpawner.posObst = new List<Vector2Int>(0);
-
-
-        editor.SetActive(true);
-
-        File.Create(path + "/map_" + actualMap + ".json");
+        File.Create(path + "/Maps/map_" + actualMap + ".json");
     }
 
     public void PreLoadMap()
     {
-        string[] files = Directory.GetFiles(path);
+        string[] files = Directory.GetFiles(path + "/Maps/");
 
 
         plchldr_load.text = "0 - " +  (files.Length - 1).ToString();
@@ -518,7 +443,7 @@ public class CustomEditor : MonoBehaviour
     public void LoadMap(TextMeshProUGUI _text)
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);
-        string newPath = path + "/map_" + newTxt + ".json";
+        string newPath = path + "/Maps/map_" + newTxt + ".json";
         newPath = newPath.Replace(" ", "");
         Debug.Log(newPath);
         if(!File.Exists(newPath))
@@ -535,7 +460,7 @@ public class CustomEditor : MonoBehaviour
         else
         {
             gridGen.LoadNewMap(newPath);
-            OpenCloseEditor(false);
+            CloseEditor();
         }
     }
 
@@ -552,7 +477,7 @@ public class CustomEditor : MonoBehaviour
         if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
 
-        string saveFile = path + "/map_" + actualMap + ".json";
+        string saveFile = path + "/Maps/map_" + actualMap + ".json";
         string jsonString = JsonUtility.ToJson(newSpawner);
         // Does it exist?
         if (File.Exists(saveFile))
@@ -565,7 +490,7 @@ public class CustomEditor : MonoBehaviour
             yield return new WaitForSeconds(1f);
             File.WriteAllText(saveFile, jsonString);
         }
-        OpenCloseEditor(false);
+        CloseEditor();
     }
 
     public void ChangeTypeMap(int _newTypeMap)
@@ -606,17 +531,16 @@ public class CustomEditor : MonoBehaviour
                 break;
         }
     }
-    public void OpenCloseEditor(bool active)
+    public void CloseEditor()
     {
-        ingame.SetActive(!active);
-        fullEditor.SetActive(active);
-        titleMap.SetActive(active);
-        gridPanel.SetActive(active);
-        create.SetActive(!active);
-        changeType.SetActive(active);
-        changeCard.SetActive(active);
-        enemiesScroll.SetActive(active);
-        loadPanel.SetActive(active);
+        ingame.SetActive(true);
+        titleMap.SetActive(false);
+        gridPanel.SetActive(false);
+        create.SetActive(true);
+        changeType.SetActive(false);
+        changeCard.SetActive(false);
+        enemiesScroll.SetActive(false);
+        loadPanel.SetActive(false);
     }
 }
 

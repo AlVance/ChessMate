@@ -70,7 +70,6 @@ public class Spawner : MonoBehaviour
     public void GenKing()
     {
         GameObject _king = Instantiate(king, _gridGen.FindByID(posKing).transform.position, transform.rotation, _gridGen.rootAll);
-        _gridGen.CellById(posKing).isKing = true;
     }
 
     public void GenEnemy()
