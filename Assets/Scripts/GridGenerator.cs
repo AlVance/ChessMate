@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using UnityEngine.Networking;
 
 public class GridGenerator : MonoBehaviour
 {
@@ -125,7 +126,7 @@ public class GridGenerator : MonoBehaviour
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
-        Debug.Log("Comido reciente " + recentEat);
+
         if (!recentEat)
         {
             for (int i = 0; i < _enemies.Count; i++)
@@ -147,6 +148,7 @@ public class GridGenerator : MonoBehaviour
 
     public void DestroyEnemy(EnemyCtrl _enemy)
     {
+        Debug.Log("Enemy Destruido");
         _enemies.Remove(_enemy);
         Destroy(_enemy.gameObject);
         recentEat = true;
@@ -205,17 +207,15 @@ public class GridGenerator : MonoBehaviour
     }
 
     string lastMap;
-    public void LoadNewMap(string path)
+    public void LoadNewMap(string fileContents)
     {
-        lastMap = path;
-        string fileContents = File.ReadAllText(path);
-
         NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
         spawner.LoadSpawner(_newSpawner);
         spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
         size = _newSpawner.size;
+        Debug.Log("Size " + size);
         Camera.main.transform.position = new Vector3(
-            transform.position.x + (size.x / 2),
+            transform.position.x + (size.x / 2) - .5f,
             Camera.main.transform.position.y,
             Camera.main.transform.position.z);
         ResetMap();
@@ -223,8 +223,22 @@ public class GridGenerator : MonoBehaviour
 
     public void LoadMapByIndx(int _level)
     {
-        string path = Application.persistentDataPath + "/Maps/";
-        LoadNewMap(path + "map_" + _level +".json");
+        string path = Application.persistentDataPath + "/";
+        LoadNewMap(path + "map_" + _level + ".json");
+            //StartCoroutine(LoadMapAsync(path + "map_" + _level + ".json"));
+        lastMap = path;
+    }
+
+    private IEnumerator LoadMapAsync(string path)
+    {
+        Debug.LogWarning(path);
+        using (UnityWebRequest request = UnityWebRequest.Get(path))
+        {
+            yield return request.SendWebRequest();
+
+            Debug.Log(request.error);
+            LoadNewMap(request.downloadHandler.text);
+        }
     }
 
     public void ReloadMap()
@@ -240,8 +254,8 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         //++currrentLevelIndex;
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
-
-        if(currrentLevelIndex < 5)
+        currentLevelCounterGO[currrentLevelIndex].SetActive(false);
+        if (currrentLevelIndex < 5)
         {
             currrentLevelIndex++;
         }
@@ -249,8 +263,11 @@ public class GridGenerator : MonoBehaviour
         {
             currrentLevelIndex = 0;
         }
+        currentLevelCounterGO[currrentLevelIndex].SetActive(true);
         LoadMapByIndx(currrentLevelIndex);
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
+
     public void SetPositions()
     {
         for (int e = 0; e < _enemies.Count; e++)

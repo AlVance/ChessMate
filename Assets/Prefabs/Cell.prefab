@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6575841928011837468
 RectTransform:
   m_ObjectHideFlags: 0
@@ -246,10 +246,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ids: {x: 0, y: 0}
+  _mesh: {fileID: 0}
   idTotal: 0
   pos: {x: 0, y: 0, z: 0}
   isPlayer: 0
   isEnemy: 0
+  isKing: 0
   _enemy: {fileID: 0}
   obstacle: 0
   canMove: 0
