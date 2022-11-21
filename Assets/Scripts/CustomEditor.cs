@@ -55,7 +55,12 @@ public class CustomEditor : MonoBehaviour
     {
         xInput.text = gridGen.size.x.ToString();
         zInput.text = gridGen.size.y.ToString();
+<<<<<<< Updated upstream
         path = Application.persistentDataPath;
+=======
+        path = Application.persistentDataPath + "/Maps";
+>>>>>>> Stashed changes
+        Debug.Log("Ruta Mapas " + path);
         for (int i = 0; i < gridParent.childCount; i++)
         {
             gridParent.GetChild(i).gameObject.name = i.ToString();
@@ -65,6 +70,11 @@ public class CustomEditor : MonoBehaviour
             _newBtn.onClick.AddListener(() => OnClickBtn(_i));
             btns.Add(_newBtn);
         }
+<<<<<<< Updated upstream
+=======
+        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+>>>>>>> Stashed changes
+    }
 
         if (!Directory.Exists(path + "/Maps"))
         {

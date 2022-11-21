@@ -11,8 +11,8 @@ public class EnemyCtrl : MonoBehaviour
 
     public bool randomWay;
     public List<Vector2Int> routePoints = new List<Vector2Int>(0);
+    public CellData futureCell;
 
-    public GameObject mark;
     public bool stepOn;
 
     Vector3 cellTarget;
@@ -30,7 +30,6 @@ public class EnemyCtrl : MonoBehaviour
             StartCoroutine(ShowWay());
             //StartCoroutine(OnRouteByStep());
         }
-        mark.SetActive(false);
     }
 
     private void Update()
@@ -110,15 +109,20 @@ public class EnemyCtrl : MonoBehaviour
             stepOn = false;
             if (i + 1 < routePoints.Count)
             {
-                mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
+                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
+                futureCell = _GridGen.CellById(routePoints[i + 1]);
                 _GridGen.CellById(routePoints[i]).SetEnemy(this);
-                if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
-                else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
-                mark.SetActive(true);
+<<<<<<< Updated upstream
+                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
             }
             _GridGen._enemiesFinishWalk++;
-            yield return new WaitUntil(() => stepOn == true);
-            stepOn = false;
+            //yield return new WaitUntil(() => stepOn == true);
+=======
+                //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
+                //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
+            }
+>>>>>>> Stashed changes
+            _GridGen.CellById(routePoints[i - 1]).ClearEnemy();
             _GridGen.CellById(routePoints[i]).SetEnemy(this);
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
             isMoving = true;
