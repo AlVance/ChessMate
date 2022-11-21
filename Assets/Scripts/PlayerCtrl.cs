@@ -323,13 +323,16 @@ public class PlayerCtrl : MonoBehaviour
         }
         yield return new WaitUntil(() => isMoving == false);
         _GridGen.CellById(actualPos).isPlayer = true;
-        finishWalk = true;
         AnimatePlayerSpriteChange(actualType);
-        yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
+<<<<<<< Updated upstream
+=======
+        //yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
+>>>>>>> Stashed changes
         if (_cellTarget._enemy != null)
         {
             _GridGen.DestroyEnemy(_cellTarget._enemy);
         }
+        finishWalk = true;
     }
 
     private void AnimateMovement()

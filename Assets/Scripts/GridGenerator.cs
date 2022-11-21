@@ -64,6 +64,7 @@ public class GridGenerator : MonoBehaviour
                 newCellData.ids.y = zSz;
                 newCellData.idTotal = cells.Count;
                 newCellData.pos = _newPos;
+                newCellData.ResetCell();
                 newCellData.btn.onClick.AddListener(() => CallPlayer(newCellData));
 
                 if(xSz % 2 == 0 && zSz % 2 == 0) newCellData.ChangeMat(colors[0]);
@@ -121,23 +122,33 @@ public class GridGenerator : MonoBehaviour
     {
         onStepped = true;
         _enemiesFinishWalk = 0;
+        Debug.Log("Comido reciente " + recentEat);
 
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
+<<<<<<< Updated upstream
         Debug.Log("Comido reciente " + recentEat);
+=======
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         if (!recentEat)
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
                 _enemies[i].stepOn = true;
             }
-            yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
         }
         else
         {
             recentEat = false;
+            _enemiesFinishWalk = _enemies.Count;
         }
+        
+        yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
 
         ResetBtns();
         yield return new WaitForSeconds(.1f);
@@ -147,6 +158,14 @@ public class GridGenerator : MonoBehaviour
 
     public void DestroyEnemy(EnemyCtrl _enemy)
     {
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+        Debug.Log("Enemy Destruido");
+=======
+        if(_enemy.futureCell != null) _enemy.futureCell.ClearEnemy();
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         _enemies.Remove(_enemy);
         Destroy(_enemy.gameObject);
         recentEat = true;
@@ -240,8 +259,17 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         //++currrentLevelIndex;
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
+<<<<<<< Updated upstream
 
         if(currrentLevelIndex < 5)
+=======
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
+        currentLevelCounterGO[currrentLevelIndex].SetActive(false);
+        if (currrentLevelIndex < 5)
+>>>>>>> Stashed changes
         {
             currrentLevelIndex++;
         }
@@ -250,6 +278,14 @@ public class GridGenerator : MonoBehaviour
             currrentLevelIndex = 0;
         }
         LoadMapByIndx(currrentLevelIndex);
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+        currentLevelCounterGO[currrentLevelIndex].SetActive(true);
+>>>>>>> Stashed changes
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
+>>>>>>> Stashed changes
     }
     public void SetPositions()
     {

@@ -28,6 +28,17 @@ public class CellData : MonoBehaviour
     public List<CellData> prevStep = new List<CellData>(0);
 
     private Animator cellAnim;
+
+    public void ResetCell()
+    {
+        isPlayer = false;
+        isEnemy = false;
+        isFutureEnemy = false;
+        isKing = false;
+        obstacle = false;
+        canMove = false;
+    }
+
     private void Start()
     {
         btn.transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
@@ -80,8 +91,17 @@ public class CellData : MonoBehaviour
 
     private void AnimateCell()
     {
+<<<<<<< Updated upstream
         if (((canMove && !obstacle) || isEnemy || isPlayer) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
         else if ((!canMove && !isEnemy && !isPlayer) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
+=======
+        if (((canMove && !obstacle) || isEnemy || isPlayer || isKing) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
+        else if ((!canMove && !isEnemy && !isPlayer && !isKing) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     public void SetEnemy(EnemyCtrl _enemyCtrl)
