@@ -55,11 +55,7 @@ public class CustomEditor : MonoBehaviour
     {
         xInput.text = gridGen.size.x.ToString();
         zInput.text = gridGen.size.y.ToString();
-<<<<<<< Updated upstream
-        path = Application.persistentDataPath;
-=======
         path = Application.persistentDataPath + "/Maps";
->>>>>>> Stashed changes
         Debug.Log("Ruta Mapas " + path);
         for (int i = 0; i < gridParent.childCount; i++)
         {
@@ -70,16 +66,7 @@ public class CustomEditor : MonoBehaviour
             _newBtn.onClick.AddListener(() => OnClickBtn(_i));
             btns.Add(_newBtn);
         }
-<<<<<<< Updated upstream
-=======
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
->>>>>>> Stashed changes
-    }
-
-        if (!Directory.Exists(path + "/Maps"))
-        {
-            Directory.CreateDirectory(path + "/Maps");
-        }
     }
 
 
@@ -418,7 +405,7 @@ public class CustomEditor : MonoBehaviour
 
     public void NewMap()
     {
-        string[] files = Directory.GetFiles(path + "/Maps");
+        string[] files = Directory.GetFiles(path);
 
         actualMap = files.Length;
 
@@ -439,12 +426,12 @@ public class CustomEditor : MonoBehaviour
 
         editor.SetActive(true);
 
-        File.Create(path + "/Maps/map_" + actualMap + ".json");
+        File.Create(path + "/map_" + actualMap + ".json");
     }
 
     public void PreLoadMap()
     {
-        string[] files = Directory.GetFiles(path + "/Maps/");
+        string[] files = Directory.GetFiles(path);
 
 
         plchldr_load.text = "0 - " +  (files.Length - 1).ToString();
@@ -453,7 +440,7 @@ public class CustomEditor : MonoBehaviour
     public void LoadMap(TextMeshProUGUI _text)
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);
-        string newPath = path + "/Maps/map_" + newTxt + ".json";
+        string newPath = path + "/map_" + newTxt + ".json";
         newPath = newPath.Replace(" ", "");
         Debug.Log(newPath);
         if(!File.Exists(newPath))
@@ -487,7 +474,7 @@ public class CustomEditor : MonoBehaviour
         if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
 
-        string saveFile = path + "/Maps/map_" + actualMap + ".json";
+        string saveFile = path + "/map_" + actualMap + ".json";
         string jsonString = JsonUtility.ToJson(newSpawner);
         // Does it exist?
         if (File.Exists(saveFile))
@@ -520,6 +507,9 @@ public class CustomEditor : MonoBehaviour
                 break;
             case 3:
                 title_txt.text = "Mapa de Enemigos";
+                break;
+            case 4:
+                title_txt.text = "Mapa de Rey";
                 break;
         }
         ReloadMap();

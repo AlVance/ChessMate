@@ -284,6 +284,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         finishWalk = false;
         stepsToWalk.Clear();
+        _GridGen.CellById(actualPos).isPlayer = false;
         for (int i = 0; i < _cellTarget.prevStep.Count; i++)
         {
             stepsToWalk.Add(_cellTarget.prevStep[i]);
@@ -324,10 +325,7 @@ public class PlayerCtrl : MonoBehaviour
         yield return new WaitUntil(() => isMoving == false);
         _GridGen.CellById(actualPos).isPlayer = true;
         AnimatePlayerSpriteChange(actualType);
-<<<<<<< Updated upstream
-=======
         //yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
->>>>>>> Stashed changes
         if (_cellTarget._enemy != null)
         {
             _GridGen.DestroyEnemy(_cellTarget._enemy);

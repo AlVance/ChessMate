@@ -104,7 +104,6 @@ public class EnemyCtrl : MonoBehaviour
     {
         for (int i = 1; i < routePoints.Count; i++)
         {
-            mark.SetActive(false);
             yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
             if (i + 1 < routePoints.Count)
@@ -112,16 +111,9 @@ public class EnemyCtrl : MonoBehaviour
                 _GridGen.CellById(routePoints[i + 1]).SetMark(true);
                 futureCell = _GridGen.CellById(routePoints[i + 1]);
                 _GridGen.CellById(routePoints[i]).SetEnemy(this);
-<<<<<<< Updated upstream
-                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
-            }
-            _GridGen._enemiesFinishWalk++;
-            //yield return new WaitUntil(() => stepOn == true);
-=======
                 //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
                 //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
             }
->>>>>>> Stashed changes
             _GridGen.CellById(routePoints[i - 1]).ClearEnemy();
             _GridGen.CellById(routePoints[i]).SetEnemy(this);
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
@@ -140,7 +132,7 @@ public class EnemyCtrl : MonoBehaviour
         if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
         else
         {
-            if(finishRoute)_GridGen.ReloadMap();
+            if(finishRoute || _GridGen.CellById(actualPos).isPlayer)_GridGen.ReloadMap();
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;
             isMoving = false;

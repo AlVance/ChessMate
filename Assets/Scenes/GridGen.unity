@@ -1438,11 +1438,6 @@ RectTransform:
   - {fileID: 7405912}
   - {fileID: 2040543476}
   - {fileID: 386398883}
-<<<<<<< Updated upstream
-  - {fileID: 889284675}
-=======
-  - {fileID: 1597037111}
->>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1499,12 +1494,7 @@ MonoBehaviour:
   enemiesScroll: {fileID: 722538275}
   loadPanel: {fileID: 114499186}
   countTouchDev: 5
-<<<<<<< Updated upstream
-  devPanel:
-  - {fileID: 632938904}
-=======
-  devPanel: []
->>>>>>> Stashed changes
+  devPanel: {fileID: 632938904}
   gridGenerated: 0
   _tmp: {fileID: 0}
 --- !u!1001 &386398882

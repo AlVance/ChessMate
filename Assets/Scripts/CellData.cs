@@ -14,7 +14,9 @@ public class CellData : MonoBehaviour
 
     public bool isPlayer;
     public bool isEnemy;
+    public GameObject mark;
     public bool isKing;
+    public bool isFutureEnemy;
     public EnemyCtrl _enemy;
     public bool obstacle;
     public bool canMove;
@@ -91,17 +93,8 @@ public class CellData : MonoBehaviour
 
     private void AnimateCell()
     {
-<<<<<<< Updated upstream
-        if (((canMove && !obstacle) || isEnemy || isPlayer) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
-        else if ((!canMove && !isEnemy && !isPlayer) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
-=======
         if (((canMove && !obstacle) || isEnemy || isPlayer || isKing) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
         else if ((!canMove && !isEnemy && !isPlayer && !isKing) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     public void SetEnemy(EnemyCtrl _enemyCtrl)
@@ -109,12 +102,21 @@ public class CellData : MonoBehaviour
         _enemyCtrl.actualPos = idTotal;
         _enemy = _enemyCtrl;
         isEnemy = true;
+        isFutureEnemy = false;
+    }
+
+    public void SetMark(bool _active)
+    {
+        mark.SetActive(_active);
+        isFutureEnemy = _active;
     }
 
     public void ClearEnemy()
     {
         _enemy = null;
         isEnemy = false;
+        mark.SetActive(false);
+        isFutureEnemy = false;
     }
 
     public void ChangeMat(Color _color)
