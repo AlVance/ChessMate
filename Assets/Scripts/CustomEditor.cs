@@ -437,6 +437,36 @@ public class CustomEditor : MonoBehaviour
         plchldr_load.text = "0 - " +  (files.Length - 1).ToString();
     }
 
+    public void EditMap(TextMeshProUGUI _text)
+    {
+        string newTxt = _text.text.Remove(_text.text.Length - 1);
+        string newPath = path + "/map_" + newTxt + ".json";
+        newPath = newPath.Replace(" ", "");
+        Debug.Log(newPath);
+        if (File.Exists(newPath))
+        {
+            string fileContents = File.ReadAllText(path);
+
+            NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
+
+            newSpawner = new NewSpawner();
+            size = _newSpawner.size;
+            newSpawner.size = _newSpawner.size;
+            newSpawner.startPos = _newSpawner.startPos;
+            newSpawner.enemyRoute00 = _newSpawner.enemyRoute00;
+            newSpawner.enemyRoute01 = _newSpawner.enemyRoute01;
+            newSpawner.enemyRoute02 = _newSpawner.enemyRoute02;
+            newSpawner.enemyRoute03 = _newSpawner.enemyRoute03;
+            newSpawner.enemyRoute04 = _newSpawner.enemyRoute04;
+            newSpawner.posTrr_crd = _newSpawner.posTrr_crd;
+            newSpawner.posCab_crd = _newSpawner.posCab_crd;
+            newSpawner.posAlf_crd = _newSpawner.posAlf_crd;
+            newSpawner.posObst = _newSpawner.posObst;
+
+            GenGridBtns(false);
+        }
+    }
+
     public void LoadMap(TextMeshProUGUI _text)
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);

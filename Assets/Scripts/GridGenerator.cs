@@ -231,7 +231,7 @@ public class GridGenerator : MonoBehaviour
         spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
         size = _newSpawner.size;
         Camera.main.transform.position = new Vector3(
-            transform.position.x + (size.x / 2),
+            transform.position.x + (size.x / 2) - .5f,
             Camera.main.transform.position.y,
             Camera.main.transform.position.z);
        StartCoroutine(ResetMap());  
@@ -259,7 +259,10 @@ public class GridGenerator : MonoBehaviour
         currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         if (currrentLevelIndex < 4)
         {
-            currrentLevelIndex++;
+            if (File.Exists(Application.persistentDataPath + "/Maps/" + "map_" + currrentLevelIndex +1 + ".json"))
+            {
+                currrentLevelIndex++;
+            }
         }
         else
         {
