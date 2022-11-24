@@ -29,7 +29,6 @@ public class GridGenerator : MonoBehaviour
 
     public IEnumerator ResetMap()
     {
-        Debug.Log("PlayerLoad " + spawner.player.GetComponent<PlayerCtrl>().startPos);
         cells = new List<GameObject>(0);
         _enemies = new List<EnemyCtrl>(0);
         _enemiesFinishWalk = 0;
@@ -92,7 +91,6 @@ public class GridGenerator : MonoBehaviour
             Destroy(rootAll.GetChild(i).gameObject);
         }
         cells.Clear();
-        Debug.Log("size " + xIndx + " | " + zIndx);
         for (int xSz = 0; xSz < xIndx; xSz++)
         {
             for (int zSz = 0; zSz < zIndx; zSz++)
@@ -123,7 +121,6 @@ public class GridGenerator : MonoBehaviour
     {
         onStepped = true;
         _enemiesFinishWalk = 0;
-        Debug.Log("Comido reciente " + recentEat);
 
         _player.Move(_cellTarget);
 

@@ -130,7 +130,6 @@ public class Spawner : MonoBehaviour
     {
         PlayerCtrl _newPlayCt = player.GetComponent<PlayerCtrl>();
         _newPlayCt._GridGen = _gridGen;
-        Debug.Log("pos " +_newPlayCt.startPos);
         GameObject newPla = Instantiate(player, _gridGen.FindByID(_newPlayCt.startPos).transform.position, transform.rotation, _gridGen.rootAll);
         _gridGen.SetPlayer(newPla.GetComponent<PlayerCtrl>());
     }

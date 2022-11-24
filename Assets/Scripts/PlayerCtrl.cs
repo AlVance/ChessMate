@@ -36,6 +36,7 @@ public class PlayerCtrl : MonoBehaviour
         AnimateMovement();
 
     }
+
     public void CheckCells()
     {
         if (actualType == Type.Peon)
@@ -123,28 +124,32 @@ public class PlayerCtrl : MonoBehaviour
         else if (actualType == Type.Torre)
         {
             bool obstR = false;
+            bool enemR = false;
             Type _newTypeR = Type.Peon;
             List<CellData> cellsR = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(1, 0, (int)_GridGen.size.x - actualPos.x, obstR, _newTypeR, cellsR));
+            StartCoroutine(CellsDelay(1, 0, (int)_GridGen.size.x - actualPos.x, obstR, enemR, _newTypeR, cellsR));
 
             bool obstL = false;
+            bool enemL = false;
             Type _newTypeL = Type.Peon;
             List<CellData> cellsL = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(-1, 0, actualPos.x + 1, obstL, _newTypeL, cellsL));
+            StartCoroutine(CellsDelay(-1, 0, actualPos.x + 1, obstL,enemL, _newTypeL, cellsL));
 
             bool obstU = false;
+            bool enemU = false;
             Type _newTypeU = Type.Peon;
             List<CellData> cellsU = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(0, 1, (int)_GridGen.size.y - actualPos.y, obstU, _newTypeU, cellsU));
+            StartCoroutine(CellsDelay(0, 1, (int)_GridGen.size.y - actualPos.y, obstU,enemU, _newTypeU, cellsU));
 
             bool obstD = false;
+            bool enemD = false;
             Type _newTypeD = Type.Peon;
             List<CellData> cellsD = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(0, -1, actualPos.y + 1, obstD, _newTypeD, cellsD));
+            StartCoroutine(CellsDelay(0, -1, actualPos.y + 1, obstD, enemD, _newTypeD, cellsD));
         }
 
         else if (actualType == Type.Caballo)
@@ -211,51 +216,55 @@ public class PlayerCtrl : MonoBehaviour
             //Up Right ( + || + )
             int ur_stp = 0;
             bool obstUR = false;
+            bool enemUR = false;
             Type _newTypeUR = Type.Peon;
             List<CellData> cellsUR = new List<CellData>(0);
 
             if (_GridGen.size.x - actualPos.x < _GridGen.size.y - actualPos.y) { ur_stp = (int)_GridGen.size.x - actualPos.x; }
             else { ur_stp = (int)_GridGen.size.y - actualPos.y; }
 
-            StartCoroutine(CellsDelay(1, 1, ur_stp, obstUR, _newTypeUR, cellsUR));
+            StartCoroutine(CellsDelay(1, 1, ur_stp, obstUR,enemUR, _newTypeUR, cellsUR));
 
             //Right Down ( + || - )
             int rd_stp = 0;
             bool obstRD = false;
+            bool enemRD = false;
             Type _newTypeRD = Type.Peon;
             List<CellData> cellsRD = new List<CellData>(0);
 
             if (_GridGen.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_GridGen.size.x - actualPos.x; }
             else { rd_stp = actualPos.y + 1; }
 
-            StartCoroutine(CellsDelay(1, -1, rd_stp, obstRD, _newTypeRD, cellsRD));
+            StartCoroutine(CellsDelay(1, -1, rd_stp, obstRD, enemRD, _newTypeRD, cellsRD));
 
             //Down Left ( - || - )
             int dl_stp = 0;
             bool obstDL = false;
+            bool enemDL = false;
             Type _newTypeDL = Type.Peon;
             List<CellData> cellsDL = new List<CellData>(0);
 
             if (actualPos.x + 1 < actualPos.y + 1) { dl_stp = actualPos.x + 1; }
             else { dl_stp = actualPos.y + 1; }
 
-            StartCoroutine(CellsDelay(-1, -1, dl_stp, obstDL, _newTypeDL, cellsDL));
+            StartCoroutine(CellsDelay(-1, -1, dl_stp, obstDL,enemDL, _newTypeDL, cellsDL));
 
             //Left Up ( - || + )
             int lu_stp = 0;
             bool obstLU = false;
+            bool enemLU = false;
             Type _newTypeLU = Type.Peon;
             List<CellData> cellsLU = new List<CellData>(0);
 
             if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; Debug.Log("X urDiago " + lu_stp); }
             else { lu_stp = (int)_GridGen.size.y - actualPos.y; Debug.Log("Y urDiago " + lu_stp); }
 
-            StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, _newTypeLU, cellsLU));
+            StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, enemLU, _newTypeLU, cellsLU));
         }
     }
 
 
-    public IEnumerator CellsDelay(int _frst, int _scnd, int _stp, bool _obst, Type _type, List<CellData> _cells)
+    public IEnumerator CellsDelay(int _frst, int _scnd, int _stp, bool _obst,bool _enem, Type _type, List<CellData> _cells)
     {
         for (int i = 1; i < _stp; i++)
         {
@@ -265,6 +274,10 @@ public class PlayerCtrl : MonoBehaviour
             if (newCell.obstacle) _obst = true;
 
             newCell.obstacle = _obst;
+            if (_enem) newCell.obstacle = _enem;
+
+            if (newCell.isEnemy) _enem = true;
+
 
             if (newCell.typeCard != Type.Peon) _type = newCell.typeCard;
             else newCell.typeCard = _type;
@@ -318,6 +331,10 @@ public class PlayerCtrl : MonoBehaviour
     {
         for (int i = 0; i < stepsToWalk.Count; i++)
         {
+            if(stepsToWalk[i].typeCard != Type.Peon)
+            {
+                stepsToWalk[i].ClearCard();
+            }
             yield return new WaitUntil(() => isMoving == false);
             isMoving = true;
             cellTargetPos = stepsToWalk[i].pos;

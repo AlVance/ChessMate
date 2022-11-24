@@ -119,6 +119,12 @@ public class CellData : MonoBehaviour
         isFutureEnemy = false;
     }
 
+    public void ClearCard()
+    {
+        Destroy(card);
+        typeCard = PlayerCtrl.Type.Peon;
+    }
+
     public void ChangeMat(Color _color)
     {
         _mesh.material.color = _color;
