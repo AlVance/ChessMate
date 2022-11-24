@@ -192,7 +192,7 @@ public class CustomEditor : MonoBehaviour
                 }
                 break;
             case 3: // Enemigos 
-                if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing && _cell.typeEnemy != actualEnemySlct)
+                if (/*!_cell.isPlayer &&*/ !_cell.isEnemy &&/* !_cell.isCard &&*/ !_cell.isObstacle && !_cell.isKing && _cell.typeEnemy != actualEnemySlct)
                 {
                     if (0 == actualEnemySlct)
                     {
