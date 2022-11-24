@@ -260,11 +260,7 @@ MonoBehaviour:
   obstacle: 0
   canMove: 0
   btn: {fileID: 9072345359027619240}
-<<<<<<< Updated upstream
   mark: {fileID: 7372435258938416774}
-=======
-  mark: {fileID: 6451589700207181908}
->>>>>>> Stashed changes
   typeCard: 0
   card: {fileID: 0}
   obst: {fileID: 0}
