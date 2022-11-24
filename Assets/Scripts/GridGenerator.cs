@@ -27,7 +27,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private GameObject[] currentLevelCounterGO;
     
 
-    public void ResetMap()
+    public IEnumerator ResetMap()
     {
         Debug.Log("PlayerLoad " + spawner.player.GetComponent<PlayerCtrl>().startPos);
         cells = new List<GameObject>(0);
@@ -38,6 +38,7 @@ public class GridGenerator : MonoBehaviour
         {
             Destroy(rootAll.GetChild(i).gameObject);
         }
+        yield return new WaitWhile(() => rootAll.childCount > 0);
         cells.Clear();
         StartCoroutine(GenGrid());
     }
@@ -121,23 +122,25 @@ public class GridGenerator : MonoBehaviour
     {
         onStepped = true;
         _enemiesFinishWalk = 0;
+        Debug.Log("Comido reciente " + recentEat);
 
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
-        Debug.Log("Comido reciente " + recentEat);
         if (!recentEat)
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
                 _enemies[i].stepOn = true;
             }
-            yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
         }
         else
         {
             recentEat = false;
+            _enemiesFinishWalk = _enemies.Count;
         }
+        
+        yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
 
         ResetBtns();
         yield return new WaitForSeconds(.1f);
@@ -147,6 +150,7 @@ public class GridGenerator : MonoBehaviour
 
     public void DestroyEnemy(EnemyCtrl _enemy)
     {
+        if(_enemy.futureCell != null) _enemy.futureCell.ClearEnemy();
         _enemies.Remove(_enemy);
         Destroy(_enemy.gameObject);
         recentEat = true;
@@ -218,7 +222,7 @@ public class GridGenerator : MonoBehaviour
             transform.position.x + (size.x / 2),
             Camera.main.transform.position.y,
             Camera.main.transform.position.z);
-        ResetMap();
+       StartCoroutine(ResetMap());  
     }
 
     public void LoadMapByIndx(int _level)
@@ -240,8 +244,8 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         //++currrentLevelIndex;
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
-
-        if(currrentLevelIndex < 5)
+        currentLevelCounterGO[currrentLevelIndex].SetActive(false);
+        if (currrentLevelIndex < 4)
         {
             currrentLevelIndex++;
         }
@@ -250,6 +254,8 @@ public class GridGenerator : MonoBehaviour
             currrentLevelIndex = 0;
         }
         LoadMapByIndx(currrentLevelIndex);
+        currentLevelCounterGO[currrentLevelIndex].SetActive(true);
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
     public void SetPositions()
     {

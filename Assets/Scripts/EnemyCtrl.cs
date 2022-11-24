@@ -11,8 +11,8 @@ public class EnemyCtrl : MonoBehaviour
 
     public bool randomWay;
     public List<Vector2Int> routePoints = new List<Vector2Int>(0);
+    public CellData futureCell;
 
-    public GameObject mark;
     public bool stepOn;
 
     Vector3 cellTarget;
@@ -30,7 +30,6 @@ public class EnemyCtrl : MonoBehaviour
             StartCoroutine(ShowWay());
             //StartCoroutine(OnRouteByStep());
         }
-        mark.SetActive(false);
     }
 
     private void Update()
@@ -105,20 +104,17 @@ public class EnemyCtrl : MonoBehaviour
     {
         for (int i = 1; i < routePoints.Count; i++)
         {
-            mark.SetActive(false);
             yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
             if (i + 1 < routePoints.Count)
             {
-                mark.transform.position = _GridGen.FindByID(routePoints[i]).transform.position;
+                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
+                futureCell = _GridGen.CellById(routePoints[i + 1]);
                 _GridGen.CellById(routePoints[i]).SetEnemy(this);
-                if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
-                else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
-                mark.SetActive(true);
+                //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
+                //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
             }
-            _GridGen._enemiesFinishWalk++;
-            yield return new WaitUntil(() => stepOn == true);
-            stepOn = false;
+            _GridGen.CellById(routePoints[i - 1]).ClearEnemy();
             _GridGen.CellById(routePoints[i]).SetEnemy(this);
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
             isMoving = true;
@@ -136,7 +132,7 @@ public class EnemyCtrl : MonoBehaviour
         if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
         else
         {
-            if(finishRoute)_GridGen.ReloadMap();
+            if(finishRoute || _GridGen.CellById(actualPos).isPlayer)_GridGen.ReloadMap();
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;
             isMoving = false;

@@ -14,7 +14,9 @@ public class CellData : MonoBehaviour
 
     public bool isPlayer;
     public bool isEnemy;
+    public GameObject mark;
     public bool isKing;
+    public bool isFutureEnemy;
     public EnemyCtrl _enemy;
     public bool obstacle;
     public bool canMove;
@@ -28,6 +30,17 @@ public class CellData : MonoBehaviour
     public List<CellData> prevStep = new List<CellData>(0);
 
     private Animator cellAnim;
+
+    public void ResetCell()
+    {
+        isPlayer = false;
+        isEnemy = false;
+        isFutureEnemy = false;
+        isKing = false;
+        obstacle = false;
+        canMove = false;
+    }
+
     private void Start()
     {
         btn.transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
@@ -80,8 +93,8 @@ public class CellData : MonoBehaviour
 
     private void AnimateCell()
     {
-        if (((canMove && !obstacle) || isEnemy || isPlayer) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
-        else if ((!canMove && !isEnemy && !isPlayer) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
+        if (((canMove && !obstacle) || isEnemy || isPlayer || isKing) && cellAnim.GetBool("Active") == false) cellAnim.SetBool("Active", true);
+        else if ((!canMove && !isEnemy && !isPlayer && !isKing) && cellAnim.GetBool("Active") == true) cellAnim.SetBool("Active", false);
     }
 
     public void SetEnemy(EnemyCtrl _enemyCtrl)
@@ -89,12 +102,21 @@ public class CellData : MonoBehaviour
         _enemyCtrl.actualPos = idTotal;
         _enemy = _enemyCtrl;
         isEnemy = true;
+        isFutureEnemy = false;
+    }
+
+    public void SetMark(bool _active)
+    {
+        mark.SetActive(_active);
+        isFutureEnemy = _active;
     }
 
     public void ClearEnemy()
     {
         _enemy = null;
         isEnemy = false;
+        mark.SetActive(false);
+        isFutureEnemy = false;
     }
 
     public void ChangeMat(Color _color)
