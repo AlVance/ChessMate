@@ -276,7 +276,11 @@ public class PlayerCtrl : MonoBehaviour
             newCell.obstacle = _obst;
             if (_enem) newCell.obstacle = _enem;
 
-            if (newCell.isEnemy) _enem = true;
+            if (newCell.isEnemy)
+            {
+                _enem = true;
+                Debug.Log("IsEnemyOnRoute " + newCell.pos);
+            }
 
 
             if (newCell.typeCard != Type.Peon) _type = newCell.typeCard;
@@ -316,7 +320,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         actualType = _newType;
         AnimatePlayerSpriteChange(actualType);
-        _GridGen.ResetBtns();
+        _GridGen.ResetBtnsPlayer();
         CheckCells();
     }
 

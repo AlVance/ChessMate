@@ -206,6 +206,20 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
+    public void ResetBtnsPlayer()
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            CellData cellToCheck = cells[i].GetComponent<CellData>();
+            if (cellToCheck.btn.gameObject.activeInHierarchy || cellToCheck.isPlayer || cellToCheck.isEnemy || cellToCheck.typeCard != PlayerCtrl.Type.Peon && cellToCheck.card == null || cellToCheck.prevStep.Count != 0)
+            {
+                cellToCheck.ActiveBtn(false, 0);
+                cellToCheck.canMove = false;
+                cellToCheck.isPlayer = false;
+            }
+        }
+    }
+
     string lastMap;
     public void LoadNewMap(string path)
     {
