@@ -65,6 +65,7 @@ public class GridGenerator : MonoBehaviour
                 newCellData.ids.y = zSz;
                 newCellData.idTotal = cells.Count;
                 newCellData.pos = _newPos;
+                newCellData.ResetCell();
                 newCellData.btn.onClick.AddListener(() => CallPlayer(newCellData));
 
                 if(xSz % 2 == 0 && zSz % 2 == 0) newCellData.ChangeMat(colors[0]);
