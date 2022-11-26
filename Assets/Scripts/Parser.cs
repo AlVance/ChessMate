@@ -91,7 +91,7 @@ public class Parser : MonoBehaviour
         return newText;
     }
 
-    public void ParseToJson(string _textToParse)
+    public string ParseToJson(string _textToParse)
     {
         string newText = "{";
 
@@ -111,18 +111,21 @@ public class Parser : MonoBehaviour
 
         for (int i = 0; i < frst.Length; i++)
         {
-            if (frst[i].Contains("s")) _sz = frst[i].Replace("s", "");
-            else if (frst[i].Contains("p")) _pjpos = frst[i].Replace("p", "");
-            else if (frst[i].Contains("k")) _kingpos = frst[i].Replace("k", "");
-            else if (frst[i].Contains("ea")) _enemy00 = frst[i].Replace("e0","").Split("-");
-            else if (frst[i].Contains("eb")) _enemy00 = frst[i].Replace("e1","").Split("-");
-            else if (frst[i].Contains("ec")) _enemy00 = frst[i].Replace("e2","").Split("-");
-            else if (frst[i].Contains("ed")) _enemy00 = frst[i].Replace("e3","").Split("-");
-            else if (frst[i].Contains("ee")) _enemy00 = frst[i].Replace("e4","").Split("-");
-            else if (frst[i].Contains("t")) _trrcrd = frst[i].Replace("t", "").Split("-");
-            else if (frst[i].Contains("c")) _cabcrd = frst[i].Replace("c", "").Split("-");
-            else if (frst[i].Contains("a")) _alfcrd = frst[i].Replace("a", "").Split("-");
-            else if (frst[i].Contains("o")) _obs = frst[i].Replace("o", "").Split("-");
+            Debug.Log("pack " + i + " || " + frst[i]);
+            if (frst[i].Contains("s"))  _sz = frst[i].Replace("s", "");
+            else if (frst[i].Contains("p"))  _pjpos = frst[i].Replace("p", ""); 
+            else if (frst[i].Contains("k"))  _kingpos = frst[i].Replace("k", ""); 
+            else if (frst[i].Contains("ea"))  _enemy00 = frst[i].Replace("ea", "").Split("-"); 
+            else if (frst[i].Contains("eb"))  _enemy01 = frst[i].Replace("eb", "").Split("-"); 
+            else if (frst[i].Contains("ec"))  _enemy02 = frst[i].Replace("ec", "").Split("-"); 
+            else if (frst[i].Contains("ed"))  _enemy03 = frst[i].Replace("ed", "").Split("-"); 
+            else if (frst[i].Contains("ee"))  _enemy04 = frst[i].Replace("ee", "").Split("-"); 
+            else if (frst[i].Contains("t"))  _trrcrd = frst[i].Replace("t", "").Split("-");  
+            else if (frst[i].Contains("c"))  _cabcrd = frst[i].Replace("c", "").Split("-");  
+            else if (frst[i].Contains("a"))  _alfcrd = frst[i].Replace("a", "").Split("-");  
+            else if (frst[i].Contains("o"))  _obs = frst[i].Replace("o", "").Split("-"); 
+
+
         }
 
         newText += "\"size\":{\"x\":" + _sz[0] + ",\"y\":" + _sz[1] + "}";
@@ -134,76 +137,102 @@ public class Parser : MonoBehaviour
         newText += ",\"enemyRoute00" +"\":[";
         for (int e = 0; e < _enemy00.Length; e++)
         {
-            if (e != 0) newText += ",";
-            newText += "{\"x\":" + _enemy00[e][0] + ",\"y\":" + _enemy00[e][1] + "}";
+            if (_enemy00[e].Length > 0)
+            {
+                if (e != 0) newText += ",";
+                newText += "{\"x\":" + _enemy00[e][0] + ",\"y\":" + _enemy00[e][1] + "}";
+            }
         }
         newText += "]";
-
         newText += ",\"enemyRoute01" +"\":[";
         for (int e = 0; e < _enemy01.Length; e++)
         {
-            if (e != 0) newText += ",";
-            newText += "{\"x\":" + _enemy01[e][0] + ",\"y\":" + _enemy01[e][1] + "}";
+            if (_enemy01[e].Length > 0)
+            {
+                if (e != 0) newText += ",";
+                newText += "{\"x\":" + _enemy01[e][0] + ",\"y\":" + _enemy01[e][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"enemyRoute02" +"\":[";
         for (int e = 0; e < _enemy02.Length; e++)
         {
-            if (e != 0) newText += ",";
-            newText += "{\"x\":" + _enemy02[e][0] + ",\"y\":" + _enemy02[e][1] + "}";
+            if (_enemy02[e].Length > 0)
+            {
+                if (e != 0) newText += ",";
+                newText += "{\"x\":" + _enemy02[e][0] + ",\"y\":" + _enemy02[e][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"enemyRoute03" +"\":[";
         for (int e = 0; e < _enemy03.Length; e++)
         {
-            if (e != 0) newText += ",";
-            newText += "{\"x\":" + _enemy03[e][0] + ",\"y\":" + _enemy03[e][1] + "}";
+            if (_enemy03[e].Length > 0)
+            {
+                if (e != 0) newText += ",";
+                newText += "{\"x\":" + _enemy03[e][0] + ",\"y\":" + _enemy03[e][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"enemyRoute04" +"\":[";
         for (int e = 0; e < _enemy04.Length; e++)
         {
-            if (e != 0) newText += ",";
-            newText += "{\"x\":" + _enemy04[e][0] + ",\"y\":" + _enemy04[e][1] + "}";
+            if (_enemy04[e].Length > 0)
+            {
+                if (e != 0) newText += ",";
+                newText += "{\"x\":" + _enemy04[e][0] + ",\"y\":" + _enemy04[e][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"posTrr_crd\":[";
         for (int ti = 0; ti < _trrcrd.Length; ti++)
         {
-            if (ti != 0) newText += ",";
-            newText += "{\"x\":" + _trrcrd[ti][0] + ",\"y\":" + _trrcrd[ti][1] + "}";
+            if (_trrcrd[ti].Length > 0)
+            {
+                if (ti != 0) newText += ",";
+                newText += "{\"x\":" + _trrcrd[ti][0] + ",\"y\":" + _trrcrd[ti][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"posCab_crd\":[";
         for (int ci = 0; ci < _cabcrd.Length; ci++)
         {
-            if (ci != 0) newText += ",";
-            newText += "{\"x\":" + _cabcrd[ci][0] + ",\"y\":" + _cabcrd[ci][1] + "}";
+            if (_cabcrd[ci].Length > 0)
+            {
+                if (ci != 0) newText += ",";
+                newText += "{\"x\":" + _cabcrd[ci][0] + ",\"y\":" + _cabcrd[ci][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"posAlf_crd\":[";
         for (int ai = 0; ai < _alfcrd.Length; ai++)
         {
-            if (ai != 0) newText += ",";
-            newText += "{\"x\":" + _alfcrd[ai][0] + ",\"y\":" + _alfcrd[ai][1] + "}";
+            if (_alfcrd[ai].Length > 0)
+            {
+                if (ai != 0) newText += ",";
+                newText += "{\"x\":" + _alfcrd[ai][0] + ",\"y\":" + _alfcrd[ai][1] + "}";
+            }
         }
         newText += "]";
 
         newText += ",\"posObst\":[";
         for (int oi = 0; oi < _obs.Length; oi++)
         {
-            if (oi != 0) newText += ",";
-            newText += "{\"x\":" + _obs[oi][0] + ",\"y\":" + _obs[oi][1] + "}";
+            if (_obs[oi].Length > 0)
+            {
+                if (oi != 0) newText += ",";
+                newText += "{\"x\":" + _obs[oi][0] + ",\"y\":" + _obs[oi][1] + "}";
+            }
         }
         newText += "]}";
 
-        SetText(newText);
+        return newText;
     }
 
     public void SetText(string _text)

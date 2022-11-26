@@ -12,6 +12,7 @@ public class Server : ScriptableObject
 
     public bool ocupied = false;
     public Response response;
+    public Parser parser;
 
     public IEnumerator UseService(string _name, string[] _data)
     {
@@ -41,6 +42,7 @@ public class Server : ScriptableObject
         else
         {
             Debug.Log(www.downloadHandler.text);
+            
             response = JsonUtility.FromJson<Response>(www.downloadHandler.text);
         }
         ocupied = false;
@@ -60,6 +62,7 @@ public class Response
 {
     public int code;
     public string message;
+    public string response;
 
     public Response()
     {

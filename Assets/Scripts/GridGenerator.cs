@@ -27,6 +27,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private GameObject[] currentLevelCounterGO;
 
     public Parser parser;
+    public ServerCtrl server;
     
 
     public IEnumerator ResetMap()
@@ -245,7 +246,36 @@ public class GridGenerator : MonoBehaviour
     {
 
     } 
-    public void LoadNewMap(string path)
+
+    public void LoadNewMap(string id)
+    {
+        //lastMap = id;
+        StartCoroutine(LoadingMap(id));
+    }
+
+    public IEnumerator LoadingMap(string id)
+    {
+        server.LoadMap(id);
+        yield return new WaitWhile(() => server.serviceFinish == false);
+        string response = server.server.response.response;
+        response = parser.ParseToJson(response);
+        
+        Debug.Log("Cargado " + response);
+
+        NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(response);
+        spawner.LoadSpawner(_newSpawner);
+        spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
+        size = _newSpawner.size;
+        Camera.main.transform.position = new Vector3(
+            transform.position.x + (size.x / 2) - .5f,
+            Camera.main.transform.position.y,
+            Camera.main.transform.position.z);
+
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());
+    }
+
+    /*public void LoadNewMap(string path)
     {
         lastMap = path;
         if (File.Exists(path))
@@ -265,7 +295,7 @@ public class GridGenerator : MonoBehaviour
         Debug.Log("Nuevo mapa " + path);
         StopAllCoroutines();
         StartCoroutine(ResetMap());  
-    }
+    }*/
 
     public void LoadMapByIndx(int _level)
     {
@@ -285,7 +315,8 @@ public class GridGenerator : MonoBehaviour
             }
         }
         string path = Application.persistentDataPath + "/Maps/";
-        LoadNewMap(path + "map_" + _level +".json");
+        //LoadNewMap(path + "map_" + _level +".json");
+        LoadNewMap(_level.ToString());
     }
 
     public void ReloadMap()
@@ -303,11 +334,7 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
         if (currrentLevelIndex < 4)
         {
-            Debug.Log("Busca " + Application.persistentDataPath + "/Maps/" + "map_" + (currrentLevelIndex + 1) + ".json");
-            if (File.Exists(Application.persistentDataPath + "/Maps/" + "map_" + (currrentLevelIndex +1) + ".json"))
-            {
-                currrentLevelIndex++;
-            }
+            currrentLevelIndex++;
         }
         else
         {

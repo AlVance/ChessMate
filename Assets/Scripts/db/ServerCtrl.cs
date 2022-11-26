@@ -20,9 +20,11 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("loadMap", data));
     }
 
-    public void LoadMap(string[] _data)
+    public void LoadMap(string _id)
     {
-        StartCoroutine(UseService("loadMap", _data));
+        string[] data = new string[1];
+        data[0] = _id;
+        StartCoroutine(UseService("loadMap", data));
     }
 
     public void SaveMap()
@@ -47,12 +49,15 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("editMap", data));
     }
 
+    public bool serviceFinish = false;
     IEnumerator UseService(string _service, string[] _data)
     {
+        serviceFinish = false;
         loading.SetActive(true);
         StartCoroutine(server.UseService(_service, _data));
         yield return new WaitForSeconds(.5f);
         yield return new WaitUntil(() => !server.ocupied);
         loading.SetActive(false);
+        serviceFinish = true; 
     }
 }
