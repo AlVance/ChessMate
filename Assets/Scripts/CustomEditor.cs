@@ -51,6 +51,8 @@ public class CustomEditor : MonoBehaviour
     public GameObject enemiesScroll;
     public GameObject loadPanel;
 
+    public ServerCtrl serverCtrl;
+
     public void Start()
     {
         xInput.text = gridGen.size.x.ToString();
@@ -504,10 +506,10 @@ public class CustomEditor : MonoBehaviour
         if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
         if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
-
+        
+        /*
         string saveFile = path + "/map_" + actualMap + ".json";
         string jsonString = JsonUtility.ToJson(newSpawner);
-        // Does it exist?
         if (File.Exists(saveFile))
         {
             File.WriteAllText(saveFile, jsonString);
@@ -517,7 +519,13 @@ public class CustomEditor : MonoBehaviour
             File.Create(saveFile);
             yield return new WaitForSeconds(1f);
             File.WriteAllText(saveFile, jsonString);
-        }
+        }*/
+        yield return new WaitForSeconds(1f);
+        string[] data = new string[2];
+        data[0] = gridGen.parser.ParseCustomMap(newSpawner);
+        data[1] = "prev_00";
+        serverCtrl.SaveMap(data);
+
         CloseEditor();
     }
 

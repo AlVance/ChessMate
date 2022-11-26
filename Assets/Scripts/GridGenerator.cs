@@ -25,6 +25,8 @@ public class GridGenerator : MonoBehaviour
     private int currrentLevelIndex = 0;
     [SerializeField] private Animator LevelTransitorAnim;
     [SerializeField] private GameObject[] currentLevelCounterGO;
+
+    public Parser parser;
     
 
     public IEnumerator ResetMap()
@@ -47,6 +49,7 @@ public class GridGenerator : MonoBehaviour
 
     public void Start()
     {
+        if (parser == null) parser = GetComponent<Parser>();
         spawner._gridGen = this;
         LoadMapByIndx(0);
 

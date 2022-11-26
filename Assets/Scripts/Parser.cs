@@ -11,18 +11,99 @@ public class Parser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Parse(muestra);
+        //ParseToJson(muestra);
     }
 
-    public void Parse(string _textToParse)
+    //size - startpos - kingpos - eneRo00 - eneRo01 - eneRo02 - eneRo03 - eneRo04 - posTrr - posCab - posAlf - posObst
+    public string ParseCustomMap(NewSpawner _newSpawner)
     {
         string newText = "";
+
+        newText += "s" +_newSpawner.size.x + _newSpawner.size.y + "|";
+
+        newText += "p" + _newSpawner.startPos.x + _newSpawner.startPos.y + "|";
+
+        newText += "k" + _newSpawner.kingPos.x + _newSpawner.kingPos.y + "|";
+
+        newText += "ea";
+        for (int i = 0; i < _newSpawner.enemyRoute00.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.enemyRoute00[i].x + "" + _newSpawner.enemyRoute00[i].y;
+        }
+        newText += "|";
+        newText += "eb";
+        for (int i = 0; i < _newSpawner.enemyRoute01.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.enemyRoute01[i].x + "" + _newSpawner.enemyRoute01[i].y;
+        }
+        newText += "|";
+        newText += "ec";
+        for (int i = 0; i < _newSpawner.enemyRoute02.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.enemyRoute02[i].x + "" + _newSpawner.enemyRoute02[i].y;
+        }
+        newText += "|";
+        newText += "ed";
+        for (int i = 0; i < _newSpawner.enemyRoute03.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.enemyRoute03[i].x + "" + _newSpawner.enemyRoute03[i].y;
+        }
+        newText += "|";
+        newText += "ee";
+        for (int i = 0; i < _newSpawner.enemyRoute04.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.enemyRoute04[i].x + "" + _newSpawner.enemyRoute04[i].y;
+        }
+        newText += "|";
+        newText += "t";
+        for (int i = 0; i < _newSpawner.posTrr_crd.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.posTrr_crd[i].x + "" + _newSpawner.posTrr_crd[i].y;
+        }
+        newText += "|";
+        newText += "c";
+        for (int i = 0; i < _newSpawner.posCab_crd.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.posCab_crd[i].x + "" + _newSpawner.posCab_crd[i].y;
+        }
+        newText += "|";
+        newText += "a";
+        for (int i = 0; i < _newSpawner.posAlf_crd.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.posAlf_crd[i].x + "" + _newSpawner.posAlf_crd[i].y;
+        }
+        newText += "|";
+        newText += "o";
+        for (int i = 0; i < _newSpawner.posObst.Count; i++)
+        {
+            if (i != 0) newText += "-";
+            newText += _newSpawner.posObst[i].x + "" + _newSpawner.posObst[i].y;
+        }
+
+        return newText;
+    }
+
+    public void ParseToJson(string _textToParse)
+    {
+        string newText = "{";
 
         string[] frst = _textToParse.Split("|");
         string _sz = "";
         string _pjpos = "";
         string _kingpos = "";
-        List<string[]> _enemies = new List<string[]>(0);
+        string[] _enemy00 = new string[0];
+        string[] _enemy01 = new string[0];
+        string[] _enemy02 = new string[0];
+        string[] _enemy03 = new string[0];
+        string[] _enemy04 = new string[0];
         string[] _trrcrd = new string[0];
         string[] _cabcrd = new string[0];
         string[] _alfcrd = new string[0];
@@ -33,49 +114,94 @@ public class Parser : MonoBehaviour
             if (frst[i].Contains("s")) _sz = frst[i].Replace("s", "");
             else if (frst[i].Contains("p")) _pjpos = frst[i].Replace("p", "");
             else if (frst[i].Contains("k")) _kingpos = frst[i].Replace("k", "");
-            else if (frst[i].Contains("e"))
-            {
-                string[] _route = frst[i].Replace("e", "").Split("-");
-
-                _enemies.Add(_route);
-            }
+            else if (frst[i].Contains("ea")) _enemy00 = frst[i].Replace("e0","").Split("-");
+            else if (frst[i].Contains("eb")) _enemy00 = frst[i].Replace("e1","").Split("-");
+            else if (frst[i].Contains("ec")) _enemy00 = frst[i].Replace("e2","").Split("-");
+            else if (frst[i].Contains("ed")) _enemy00 = frst[i].Replace("e3","").Split("-");
+            else if (frst[i].Contains("ee")) _enemy00 = frst[i].Replace("e4","").Split("-");
             else if (frst[i].Contains("t")) _trrcrd = frst[i].Replace("t", "").Split("-");
             else if (frst[i].Contains("c")) _cabcrd = frst[i].Replace("c", "").Split("-");
             else if (frst[i].Contains("a")) _alfcrd = frst[i].Replace("a", "").Split("-");
             else if (frst[i].Contains("o")) _obs = frst[i].Replace("o", "").Split("-");
         }
 
-        newText += "Size X:" + _sz[0] + " Z:" + _sz[1] + "\n";
-        newText += "PjStart X:" + _pjpos[0] + " Z:" + _pjpos[1] + "\n";
-        newText += "KingPos X:" + _kingpos[0] + " Z:" + _kingpos[1] + "\n";
-        for (int i = 0; i < _enemies.Count; i++)
+        newText += "\"size\":{\"x\":" + _sz[0] + ",\"y\":" + _sz[1] + "}";
+
+        newText += ",\"startPos\":{\"x\":" + _pjpos[0] + ",\"y\":" + _pjpos[1] + "}";
+
+        newText += ",\"kingPos\":{\"x\":" + _kingpos[0] + ",\"y\":" + _kingpos[1] + "}";
+
+        newText += ",\"enemyRoute00" +"\":[";
+        for (int e = 0; e < _enemy00.Length; e++)
         {
-            newText += "- Enemigo " + i + "\n";
-            for (int e = 0; e < _enemies[i].Length; e++)
-            {
-                newText += "     X:" + _enemies[i][e][0] + " Z:" + _enemies[i][e][1] + "\n";
-            }
+            if (e != 0) newText += ",";
+            newText += "{\"x\":" + _enemy00[e][0] + ",\"y\":" + _enemy00[e][1] + "}";
         }
-        newText += "Cartas Torre \n";
+        newText += "]";
+
+        newText += ",\"enemyRoute01" +"\":[";
+        for (int e = 0; e < _enemy01.Length; e++)
+        {
+            if (e != 0) newText += ",";
+            newText += "{\"x\":" + _enemy01[e][0] + ",\"y\":" + _enemy01[e][1] + "}";
+        }
+        newText += "]";
+
+        newText += ",\"enemyRoute02" +"\":[";
+        for (int e = 0; e < _enemy02.Length; e++)
+        {
+            if (e != 0) newText += ",";
+            newText += "{\"x\":" + _enemy02[e][0] + ",\"y\":" + _enemy02[e][1] + "}";
+        }
+        newText += "]";
+
+        newText += ",\"enemyRoute03" +"\":[";
+        for (int e = 0; e < _enemy03.Length; e++)
+        {
+            if (e != 0) newText += ",";
+            newText += "{\"x\":" + _enemy03[e][0] + ",\"y\":" + _enemy03[e][1] + "}";
+        }
+        newText += "]";
+
+        newText += ",\"enemyRoute04" +"\":[";
+        for (int e = 0; e < _enemy04.Length; e++)
+        {
+            if (e != 0) newText += ",";
+            newText += "{\"x\":" + _enemy04[e][0] + ",\"y\":" + _enemy04[e][1] + "}";
+        }
+        newText += "]";
+
+        newText += ",\"posTrr_crd\":[";
         for (int ti = 0; ti < _trrcrd.Length; ti++)
         {
-            newText += "     X:" + _trrcrd[ti][0] + " Z:" + _trrcrd[ti][1] + "\n";
+            if (ti != 0) newText += ",";
+            newText += "{\"x\":" + _trrcrd[ti][0] + ",\"y\":" + _trrcrd[ti][1] + "}";
         }
-        newText += "Cartas Caballo \n";
+        newText += "]";
+
+        newText += ",\"posCab_crd\":[";
         for (int ci = 0; ci < _cabcrd.Length; ci++)
         {
-            newText += "     X:" + _cabcrd[ci][0] + " Z:" + _cabcrd[ci][1] + "\n";
+            if (ci != 0) newText += ",";
+            newText += "{\"x\":" + _cabcrd[ci][0] + ",\"y\":" + _cabcrd[ci][1] + "}";
         }
-        newText += "Cartas Alfil \n";
-        for (int ci = 0; ci < _alfcrd.Length; ci++)
+        newText += "]";
+
+        newText += ",\"posAlf_crd\":[";
+        for (int ai = 0; ai < _alfcrd.Length; ai++)
         {
-            newText += "     X:" + _alfcrd[ci][0] + " Z:" + _alfcrd[ci][1] + "\n";
+            if (ai != 0) newText += ",";
+            newText += "{\"x\":" + _alfcrd[ai][0] + ",\"y\":" + _alfcrd[ai][1] + "}";
         }
-        newText += "Obstaculos \n";
-        for (int ci = 0; ci < _obs.Length; ci++)
+        newText += "]";
+
+        newText += ",\"posObst\":[";
+        for (int oi = 0; oi < _obs.Length; oi++)
         {
-            newText += "     X:" + _obs[ci][0] + " Z:" + _obs[ci][1] + "\n";
+            if (oi != 0) newText += ",";
+            newText += "{\"x\":" + _obs[oi][0] + ",\"y\":" + _obs[oi][1] + "}";
         }
+        newText += "]}";
 
         SetText(newText);
     }

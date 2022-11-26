@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87bd18b8052178e4e9e9bee6d2efe00c, type: 3}
+  m_Name: LevelsDatabase
+  m_EditorClassIdentifier: 
+  server: http://localhost/chessformers
+  services:
+  - name: loadMap
+    URL: check_map.php
+    parameters:
+    - id
+  - name: checkConn
+    URL: check.php
+    parameters: []
+  - name: saveMap
+    URL: save_map.php
+    parameters:
+    - map
+    - preview
+  - name: editMap
+    URL: edit_map.php
+    parameters:
+    - id
+    - map
+    - preview
+  ocupied: 0
+  response:
+    code: 404
+    message: Error
