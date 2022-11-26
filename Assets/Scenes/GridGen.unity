@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7405912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2501,7 +2501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &632938905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5124,7 +5124,7 @@ MonoBehaviour:
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  size: {x: 8, y: 8}
+  size: {x: 5, y: 5}
   offset: {x: 1, y: 1}
   cells: []
   spawner: {fileID: 1844877146}
@@ -6905,7 +6905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520794859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7446,7 +7446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1628234930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8352,8 +8352,14 @@ MonoBehaviour:
   _gridGen: {fileID: 0}
   player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
   king: {fileID: 6803507758537238771, guid: 36993cd368ecac24690990afb83d5cc4, type: 3}
+  posKing: {x: 4, y: 0}
   enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
   enemiesRoute00:
+  - {x: 1, y: 4}
+  - {x: 0, y: 4}
+  - {x: 0, y: 3}
+  - {x: 0, y: 2}
+  - {x: 0, y: 1}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 2, y: 0}
@@ -8363,21 +8369,15 @@ MonoBehaviour:
   enemiesRoute02: []
   enemiesRoute03: []
   enemiesRoute04: []
-  random: 0
   torre_crd: {fileID: 2005400408289448455, guid: afe3f6dba806c334c8672268ac3949b5, type: 3}
-  posTrr_crd:
-  - {x: 3, y: 3}
+  posTrr_crd: []
   caballo_crd: {fileID: 3797099992817276680, guid: b632a0d44d8703e4ea11779bc1fc9f19, type: 3}
   posCab_crd:
-  - {x: 5, y: 2}
+  - {x: 1, y: 1}
   alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
-  posAlf_crd:
-  - {x: 2, y: 6}
+  posAlf_crd: []
   obst: {fileID: 1379618049465467961, guid: 2bb1e751bdf72824d8d028fef1542126, type: 3}
-  posObst:
-  - {x: 3, y: 4}
-  - {x: 6, y: 2}
-  - {x: 0, y: 7}
+  posObst: []
 --- !u!4 &1844877147
 Transform:
   m_ObjectHideFlags: 0

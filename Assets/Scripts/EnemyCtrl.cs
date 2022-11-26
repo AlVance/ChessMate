@@ -9,7 +9,6 @@ public class EnemyCtrl : MonoBehaviour
     public Vector2Int startPos;
     public int actualPos;
 
-    public bool randomWay;
     public List<Vector2Int> routePoints = new List<Vector2Int>(0);
     public CellData futureCell;
 
@@ -21,15 +20,7 @@ public class EnemyCtrl : MonoBehaviour
     public void Start()
     {
         _GridGen.CellById(startPos).SetEnemy(this);
-        if (randomWay)
-        {
-            RandomWay();
-        }
-        else
-        {
-            StartCoroutine(ShowWay());
-            //StartCoroutine(OnRouteByStep());
-        }
+        StartCoroutine(ShowWay(true,true));
     }
 
     private void Update()
@@ -40,82 +31,36 @@ public class EnemyCtrl : MonoBehaviour
         }
     }
 
-    public void RandomWay()
-    {
-        routePoints.Clear();
-        routePoints.Add(startPos);
-        int cntStp = Random.Range(5,10);
-        for (int i = 0; i < cntStp; i++)
-        {
-            int op1 = Random.Range(0, 4);
-            switch (op1)
-            {
-                case 0:
-                    if (routePoints[i].x + 1 < _GridGen.size.x)
-                    {
-                        routePoints.Add(new Vector2Int(routePoints[i].x + 1, routePoints[i].y));
-                    }
-                    else i--;
-                    break;
-                case 1:
-                    if (routePoints[i].x - 1 >= 0)
-                    {
-                        routePoints.Add(new Vector2Int(routePoints[i].x - 1, routePoints[i].y));
-                    }
-                    else i--;
-                    break;
-                case 2:
-                    if (routePoints[i].y + 1 < _GridGen.size.y)
-                    {
-                        routePoints.Add(new Vector2Int(routePoints[i].x, routePoints[i].y + 1));
-                    }
-                    else i--;
-                    break;
-                case 3:
-                    if (routePoints[i].y - 1 >= 0)
-                    {
-                        routePoints.Add(new Vector2Int(routePoints[i].x, routePoints[i].y - 1));
-                    }
-                    else i--;
-                    break;
-            }
-        }
-        StartCoroutine(ShowWay());
-    }
 
-    public IEnumerator ShowWay()
+    public IEnumerator ShowWay(bool _start,bool _active)
     {
-        /*
-        for (int loop = 0; loop < 3; loop++)
+        for (int i = step +1; i < routePoints.Count; i++)
         {
-            for (int i = 0; i < routePoints.Count; i++)
-            {
-                _GridGen.CellById(routePoints[i]).ShowCell(true, 1);
-                yield return new WaitForSeconds(.1f);
-            }
+            _GridGen.CellById(routePoints[i]).SetMark(_active);
+            yield return new WaitForSeconds(.01f);
         }
-        */
-                yield return new WaitForSeconds(.1f);
-        StartCoroutine(OnRouteByStep());
+        yield return new WaitForSeconds(.1f);
+        if(_start) StartCoroutine(OnRouteByStep());
     }
 
     bool finishRoute;
+    int step = 0;
     public IEnumerator OnRouteByStep()
     {
         for (int i = 1; i < routePoints.Count; i++)
         {
             yield return new WaitUntil(() => stepOn == true);
             stepOn = false;
-            if (i + 1 < routePoints.Count)
+            step = i;
+            if (step + 1 < routePoints.Count)
             {
-                _GridGen.CellById(routePoints[i + 1]).SetMark(true);
-                futureCell = _GridGen.CellById(routePoints[i + 1]);
-                _GridGen.CellById(routePoints[i]).SetEnemy(this);
+                futureCell = _GridGen.CellById(routePoints[step + 1]);
+                _GridGen.CellById(routePoints[step]).SetEnemy(this);
                 //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
                 //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
             }
-            _GridGen.CellById(routePoints[i - 1]).ClearEnemy();
-            _GridGen.CellById(routePoints[i]).SetEnemy(this);
+            _GridGen.CellById(routePoints[step - 1]).ClearEnemy();
+            _GridGen.CellById(routePoints[step]).SetEnemy(this);
             cellTarget = _GridGen.CellById(routePoints[i]).pos;
             isMoving = true;
         }
@@ -125,6 +70,7 @@ public class EnemyCtrl : MonoBehaviour
     public void SetInCell()
     {
         _GridGen.CellById(actualPos).SetEnemy(this);
+        _GridGen.CellById(routePoints[step + 1]).SetMark(true);
     }
 
     public void Animate()

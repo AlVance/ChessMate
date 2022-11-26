@@ -471,6 +471,7 @@ public class CustomEditor : MonoBehaviour
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);
         string newPath = path + "/map_" + newTxt + ".json";
+        int indx = int.Parse(newTxt);
         newPath = newPath.Replace(" ", "");
         Debug.Log(newPath);
         if(!File.Exists(newPath))
@@ -486,7 +487,7 @@ public class CustomEditor : MonoBehaviour
         }
         else
         {
-            gridGen.LoadNewMap(newPath);
+            gridGen.LoadMapByIndx(indx);
             CloseEditor();
         }
     }

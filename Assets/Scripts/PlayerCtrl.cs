@@ -55,32 +55,44 @@ public class PlayerCtrl : MonoBehaviour
             {
                 if (!_GridGen.CellById(right_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(right_c));
-                    _GridGen.CellById(right_c).prevStep.Add(_GridGen.CellById(right_c));
+                    if (!_GridGen.CellById(right_c).isKing)
+                    {
+                        _GridGen.ActiveCellBtn(_GridGen.CellById(right_c));
+                        _GridGen.CellById(right_c).prevStep.Add(_GridGen.CellById(right_c));
+                    }
                 }
             }
             if (actualPos.x - 1 >= 0) //Left
             {
                 if (!_GridGen.CellById(left_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(left_c));
-                    _GridGen.CellById(left_c).prevStep.Add(_GridGen.CellById(left_c));
+                    if (!_GridGen.CellById(left_c).isKing)
+                    {
+                        _GridGen.ActiveCellBtn(_GridGen.CellById(left_c));
+                        _GridGen.CellById(left_c).prevStep.Add(_GridGen.CellById(left_c));
+                    }
                 }
             }
             if (actualPos.y + 1 < _GridGen.size.y) //Up
             {
                 if (!_GridGen.CellById(up_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(up_c));
-                    _GridGen.CellById(up_c).prevStep.Add(_GridGen.CellById(up_c));
+                    if (!_GridGen.CellById(up_c).isKing)
+                    {
+                        _GridGen.ActiveCellBtn(_GridGen.CellById(up_c));
+                        _GridGen.CellById(up_c).prevStep.Add(_GridGen.CellById(up_c));
+                    }
                 }
             }
             if (actualPos.y - 1 >= 0) //Down
             {
                 if (!_GridGen.CellById(down_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(down_c));
-                    _GridGen.CellById(down_c).prevStep.Add(_GridGen.CellById(down_c));
+                    if (!_GridGen.CellById(down_c).isKing)
+                    {
+                        _GridGen.ActiveCellBtn(_GridGen.CellById(down_c));
+                        _GridGen.CellById(down_c).prevStep.Add(_GridGen.CellById(down_c));
+                    }
                 }
             }
 

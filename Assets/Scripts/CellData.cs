@@ -58,7 +58,7 @@ public class CellData : MonoBehaviour
     {
         if (!obstacle)
         {
-            btn.gameObject.SetActive(_active);
+            if(!isKing) btn.gameObject.SetActive(_active);
             if (isEnemy) btn.GetComponent<Image>().color = colors[1];
             else btn.GetComponent<Image>().color = colors[0];
         }

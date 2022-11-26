@@ -33,12 +33,15 @@ public class GridGenerator : MonoBehaviour
         _enemies = new List<EnemyCtrl>(0);
         _enemiesFinishWalk = 0;
         recentEat = false;
+        onStepped = false;
         for (int i = 0; i < rootAll.childCount; i++)
         {
+
             Destroy(rootAll.GetChild(i).gameObject);
         }
-        yield return new WaitWhile(() => rootAll.childCount > 0);
+        yield return new WaitUntil(() => rootAll.childCount == 0);
         cells.Clear();
+        yield return new WaitForSeconds(.1f);
         StartCoroutine(GenGrid());
     }
 
@@ -116,11 +119,14 @@ public class GridGenerator : MonoBehaviour
         _editor.gridGenerated = true;
     }
 
-
+    int steps;
+    bool resetBtnsFinish;
     public IEnumerator NextStep(CellData _cellTarget)
     {
         onStepped = true;
+        resetBtnsFinish = false;
         _enemiesFinishWalk = 0;
+        ++steps;
 
         _player.Move(_cellTarget);
 
@@ -129,6 +135,8 @@ public class GridGenerator : MonoBehaviour
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
+                StartCoroutine(_enemies[i].ShowWay(false,false));
+                yield return new WaitForSeconds(.1f);
                 _enemies[i].stepOn = true;
             }
         }
@@ -141,7 +149,14 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
 
         ResetBtns();
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitUntil(() => resetBtnsFinish == true);
+        if(steps % 3 == 0)
+        {
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                StartCoroutine(_enemies[i].ShowWay(false, true));
+            }
+        }
         SetPositions();
         onStepped = false;
     }
@@ -204,6 +219,7 @@ public class GridGenerator : MonoBehaviour
                 }
             }
         }
+        resetBtnsFinish = true;
     }
 
     public void ResetBtnsPlayer()
@@ -221,24 +237,50 @@ public class GridGenerator : MonoBehaviour
     }
 
     string lastMap;
+
+    public void LoadMapByString(string path)
+    {
+
+    } 
     public void LoadNewMap(string path)
     {
         lastMap = path;
-        string fileContents = File.ReadAllText(path);
+        if (File.Exists(path))
+        {
+            string fileContents = File.ReadAllText(path);
 
-        NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
-        spawner.LoadSpawner(_newSpawner);
-        spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
-        size = _newSpawner.size;
-        Camera.main.transform.position = new Vector3(
-            transform.position.x + (size.x / 2) - .5f,
-            Camera.main.transform.position.y,
-            Camera.main.transform.position.z);
-       StartCoroutine(ResetMap());  
+            NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
+            spawner.LoadSpawner(_newSpawner);
+            spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
+            size = _newSpawner.size;
+            Camera.main.transform.position = new Vector3(
+                transform.position.x + (size.x / 2) - .5f,
+                Camera.main.transform.position.y,
+                Camera.main.transform.position.z);
+        }
+
+        Debug.Log("Nuevo mapa " + path);
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());  
     }
 
     public void LoadMapByIndx(int _level)
     {
+        if (_level < 4)
+        {
+            currrentLevelIndex = _level;
+            for (int i = 0; i < currentLevelCounterGO.Length; i++)
+            {
+                if(i == currrentLevelIndex)
+                {
+                    currentLevelCounterGO[i].SetActive(true);
+                }
+                else
+                {
+                    currentLevelCounterGO[i].SetActive(false);
+                }
+            }
+        }
         string path = Application.persistentDataPath + "/Maps/";
         LoadNewMap(path + "map_" + _level +".json");
     }
@@ -256,10 +298,10 @@ public class GridGenerator : MonoBehaviour
         //currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         //++currrentLevelIndex;
         //currentLevelCounterGO[currrentLevelIndex].SetActive(true);
-        currentLevelCounterGO[currrentLevelIndex].SetActive(false);
         if (currrentLevelIndex < 4)
         {
-            if (File.Exists(Application.persistentDataPath + "/Maps/" + "map_" + currrentLevelIndex +1 + ".json"))
+            Debug.Log("Busca " + Application.persistentDataPath + "/Maps/" + "map_" + (currrentLevelIndex + 1) + ".json");
+            if (File.Exists(Application.persistentDataPath + "/Maps/" + "map_" + (currrentLevelIndex +1) + ".json"))
             {
                 currrentLevelIndex++;
             }
@@ -268,8 +310,8 @@ public class GridGenerator : MonoBehaviour
         {
             currrentLevelIndex = 0;
         }
+        Debug.Log("Cambio de nivel a " + currrentLevelIndex);
         LoadMapByIndx(currrentLevelIndex);
-        currentLevelCounterGO[currrentLevelIndex].SetActive(true);
         LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
     public void SetPositions()

@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     public GameObject player;
 
     public GameObject king;
-    Vector2Int posKing;
+    public Vector2Int posKing;
 
     public GameObject enemy;
     public List<Vector2Int> enemiesRoute00 = new List<Vector2Int>(0);
@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour
     public List<Vector2Int> enemiesRoute03 = new List<Vector2Int>(0);
     public List<Vector2Int> enemiesRoute04 = new List<Vector2Int>(0);
 
-    public bool random;
     
     [Space]
     public GameObject torre_crd;
@@ -70,6 +69,7 @@ public class Spawner : MonoBehaviour
     public void GenKing()
     {
         GameObject _king = Instantiate(king, _gridGen.FindByID(posKing).transform.position, transform.rotation, _gridGen.rootAll);
+        _gridGen.CellById(posKing).isKing = true;
     }
 
     public void GenEnemy()
@@ -80,7 +80,6 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
             _newEnCt.startPos = enemiesRoute00[0];
             _newEnCt.routePoints = enemiesRoute00;
-            _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
@@ -90,7 +89,6 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
             _newEnCt.startPos = enemiesRoute01[0];
             _newEnCt.routePoints = enemiesRoute01;
-            _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
@@ -100,7 +98,6 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
             _newEnCt.startPos = enemiesRoute02[0];
             _newEnCt.routePoints = enemiesRoute02;
-            _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
@@ -110,7 +107,6 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
             _newEnCt.startPos = enemiesRoute03[0];
             _newEnCt.routePoints = enemiesRoute03;
-            _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
@@ -120,7 +116,6 @@ public class Spawner : MonoBehaviour
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
             _newEnCt.startPos = enemiesRoute04[0];
             _newEnCt.routePoints = enemiesRoute04;
-            _newEnCt.randomWay = random;
             _newEnCt._GridGen = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
@@ -138,47 +133,20 @@ public class Spawner : MonoBehaviour
     {
         for (int tc = 0; tc < posTrr_crd.Count; tc++)
         {
-            Vector2Int select = Vector2Int.zero;
-            if (random)
-            {
-                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            }
-            else
-            {
-                select = posTrr_crd[tc];
-            }
-            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Torre;
-            _gridGen.CellById(select).card = Instantiate(torre_crd, _gridGen.FindByID(select).transform);
+            _gridGen.CellById(posTrr_crd[tc]).typeCard = PlayerCtrl.Type.Torre;
+            _gridGen.CellById(posTrr_crd[tc]).card = Instantiate(torre_crd, _gridGen.FindByID(posTrr_crd[tc]).transform);
         }
 
         for (int cc = 0; cc < posCab_crd.Count; cc++)
         {
-            Vector2Int select = Vector2Int.zero;
-            if (random)
-            {
-                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            }
-            else
-            {
-                select = posCab_crd[cc];
-            }
-            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Caballo;
-            _gridGen.CellById(select).card = Instantiate(caballo_crd, _gridGen.FindByID(select).transform);
+            _gridGen.CellById(posCab_crd[cc]).typeCard = PlayerCtrl.Type.Caballo;
+            _gridGen.CellById(posCab_crd[cc]).card = Instantiate(caballo_crd, _gridGen.FindByID(posCab_crd[cc]).transform);
         }
 
         for (int ac = 0; ac < posAlf_crd.Count; ac++)
         {
-            Vector2Int select = Vector2Int.zero;
-            if (random)
-            {
-                select = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
-            }
-            else
-            {
-                select = posAlf_crd[ac];
-            }
-            _gridGen.CellById(select).typeCard = PlayerCtrl.Type.Alfil;
-            _gridGen.CellById(select).card = Instantiate(alfil_crd, _gridGen.FindByID(select).transform);
+            _gridGen.CellById(posAlf_crd[ac]).typeCard = PlayerCtrl.Type.Alfil;
+            _gridGen.CellById(posAlf_crd[ac]).card = Instantiate(alfil_crd, _gridGen.FindByID(posAlf_crd[ac]).transform);
         }
     }
 
