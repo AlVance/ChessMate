@@ -56,9 +56,12 @@ public class CustomEditor : MonoBehaviour
 
     public ServerCtrl serverCtrl;
 
+    public TextMeshProUGUI user_idTxt;
+
 
     public void Start()
     {
+        user_idTxt.text = SystemInfo.deviceUniqueIdentifier;
         xInput.text = gridGen.size.x.ToString();
         zInput.text = gridGen.size.y.ToString();
         path = Application.persistentDataPath + "/Maps";
@@ -186,7 +189,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posTrr_crd.Add(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[0]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(2);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(2);
                             _cell.isCard = true;
                             _cell.typeCard = 0;
                         }
@@ -194,7 +197,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posTrr_crd.Remove(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(0);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                             _cell.isCard = false;
                             _cell.typeCard = 0;
                         }
@@ -204,7 +207,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posCab_crd.Add(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[1]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(3);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(3);
                             _cell.isCard = true;
                             _cell.typeCard = 1;
                         }
@@ -212,7 +215,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posCab_crd.Remove(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(0);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                             _cell.isCard = false;
                             _cell.typeCard = 0;
                         }
@@ -222,7 +225,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posAlf_crd.Add(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[2]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(4);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(4);
                             _cell.isCard = true;
                             _cell.typeCard = 2;
                         }
@@ -230,7 +233,7 @@ public class CustomEditor : MonoBehaviour
                         {
                             newSpawner.posAlf_crd.Remove(gridGen.CellById(_indx).ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                            btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(0);
+                            btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                             _cell.isCard = false;
                             _cell.typeCard = 0;
                         }
@@ -242,14 +245,14 @@ public class CustomEditor : MonoBehaviour
                 {
                     newSpawner.posObst.Add(gridGen.CellById(_indx).ids);
                     //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[2]);
-                    btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(5);
+                    btns[_indx].GetComponent<EditorCell>().ChangeImage(5);
                     _cell.isObstacle = true;
                 }
                 else if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && _cell.isObstacle && !_cell.isKing)
                 {
                     newSpawner.posObst.Remove(gridGen.CellById(_indx).ids);
                     //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                    btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeImage(0);
+                    btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                     _cell.isObstacle = false;
                 }
                 break;
