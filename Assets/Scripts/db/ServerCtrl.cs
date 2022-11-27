@@ -12,6 +12,14 @@ public class ServerCtrl : MonoBehaviour
 
     public GameObject loading;
 
+    public void Start()
+    {
+    }
+
+    public void CheckConnection()
+    {
+        StartCoroutine(UseService("checkConn", new string[0]));
+    }
 
     public void LoadMap()
     {

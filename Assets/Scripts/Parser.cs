@@ -93,6 +93,7 @@ public class Parser : MonoBehaviour
 
     public string ParseToJson(string _textToParse)
     {
+        Debug.Log("To Parse " + _textToParse);
         string newText = "{";
 
         string[] frst = _textToParse.Split("|");

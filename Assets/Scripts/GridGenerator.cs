@@ -258,9 +258,9 @@ public class GridGenerator : MonoBehaviour
         server.LoadMap(id);
         yield return new WaitWhile(() => server.serviceFinish == false);
         string response = server.server.response.response;
+        Debug.Log("Cargado " + response);
         response = parser.ParseToJson(response);
         
-        Debug.Log("Cargado " + response);
         if (JsonUtility.FromJson<NewSpawner>(response) != null)
         {
             NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(response);

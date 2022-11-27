@@ -24,8 +24,8 @@ MonoBehaviour:
   - name: saveMap
     URL: save_map.php
     parameters:
+    - user_id
     - map
-    - preview
   - name: editMap
     URL: edit_map.php
     parameters:
@@ -34,5 +34,7 @@ MonoBehaviour:
     - preview
   ocupied: 0
   response:
-    code: 404
-    message: Error
+    code: 200
+    message: Conectado correctamente
+    response: 
+  parser: {fileID: 0}

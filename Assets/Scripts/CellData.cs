@@ -15,6 +15,7 @@ public class CellData : MonoBehaviour
     public bool isPlayer;
     public bool isEnemy;
     public GameObject mark;
+    public GameObject[] marks;
     public bool isKing;
     public bool isFutureEnemy;
     public EnemyCtrl _enemy;
@@ -105,9 +106,14 @@ public class CellData : MonoBehaviour
         isFutureEnemy = false;
     }
 
-    public void SetMark(bool _active)
+    public void SetMark(bool _active, int _dir, Color _color)
     {
-        mark.SetActive(_active);
+        if (_dir != -1)
+        {
+            marks[_dir].SetActive(_active);
+            marks[_dir].GetComponent<SpriteRenderer>().color = _color;
+        }
+        //mark.SetActive(_active);
         isFutureEnemy = _active;
     }
 

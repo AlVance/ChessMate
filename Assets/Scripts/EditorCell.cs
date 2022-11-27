@@ -19,6 +19,7 @@ public class EditorCell : MonoBehaviour
 
     TextMeshProUGUI _tmp;
     Image _img;
+    public Sprite[] typeImg;
 
     private void Start()
     {
@@ -29,6 +30,11 @@ public class EditorCell : MonoBehaviour
     public void ChangeColor(Color _color)
     {
         _img.color = _color;
+    }
+
+    public void ChangeImage(int indx)
+    {
+        _img.sprite = typeImg[indx];
     }
 
     public void SetRoute(int _indx)
@@ -47,7 +53,7 @@ public class EditorCell : MonoBehaviour
         onRoute = true;
     }
 
-    public void ClearRoute(int _indx, Color _color)
+    public void ClearRoute(int _indx)
     {
         Debug.Log("Busco " + _indx + " en " + typeEnemy);
         if (typeEnemy.Contains(_indx.ToString()))
@@ -59,12 +65,12 @@ public class EditorCell : MonoBehaviour
         if(typeEnemy.Length == 0)
         {
             onRoute = false;
-            ChangeColor(new Color(255,255,255));
+            ChangeImage(0);
         }
         else
         {
             onRoute = true;
-            ChangeColor(_color);
+            ChangeImage(7);
         }
     }
 }

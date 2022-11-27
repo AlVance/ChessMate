@@ -2972,7 +2972,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 340, y: -74.8}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &680839924
 MonoBehaviour:
@@ -3086,7 +3086,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: bcada56f58c6ead49856d81a29513503, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5339,7 +5339,7 @@ MonoBehaviour:
   - {fileID: 1479479269}
   - {fileID: 2134444819}
   - {fileID: 565613852}
-  parser: {fileID: 0}
+  parser: {fileID: 1102833604}
   server: {fileID: 1102833605}
   onStepped: 0
 --- !u!4 &1102833603
@@ -6947,7 +6947,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450296073
 MonoBehaviour:
@@ -8909,6 +8909,12 @@ MonoBehaviour:
   king: {fileID: 6803507758537238771, guid: 36993cd368ecac24690990afb83d5cc4, type: 3}
   posKing: {x: 4, y: 0}
   enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
+  enemiesColor:
+  - {r: 1, g: 0.3915094, b: 0.3915094, a: 1}
+  - {r: 1, g: 0.4669811, b: 0.8913061, a: 1}
+  - {r: 1, g: 0.79877913, b: 0.4764151, a: 1}
+  - {r: 0.9925268, g: 1, b: 0.5235849, a: 1}
+  - {r: 0.5831855, g: 0.4764151, b: 1, a: 1}
   enemiesRoute00:
   - {x: 1, y: 4}
   - {x: 0, y: 4}

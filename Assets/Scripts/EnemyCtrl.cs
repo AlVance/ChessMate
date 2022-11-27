@@ -12,6 +12,9 @@ public class EnemyCtrl : MonoBehaviour
     public List<Vector2Int> routePoints = new List<Vector2Int>(0);
     public CellData futureCell;
 
+    public SpriteRenderer _sprite;
+    public Color _enemColor;
+
     public bool stepOn;
 
     Vector3 cellTarget;
@@ -19,6 +22,7 @@ public class EnemyCtrl : MonoBehaviour
 
     public void Start()
     {
+        _sprite.color = _enemColor;
         _GridGen.CellById(startPos).SetEnemy(this);
         StartCoroutine(ShowWay(true,true));
     }
@@ -36,7 +40,16 @@ public class EnemyCtrl : MonoBehaviour
     {
         for (int i = step +1; i < routePoints.Count; i++)
         {
-            _GridGen.CellById(routePoints[i]).SetMark(_active);
+            int dir = 0;
+            if (i + 1 < routePoints.Count)
+            {
+                if (routePoints[i + 1].x > routePoints[i].x) dir = 1;
+                else if (routePoints[i + 1].x < routePoints[i].x) dir = 3;
+                if (routePoints[i + 1].y > routePoints[i].y) dir = 0;
+                else if (routePoints[i + 1].y < routePoints[i].y) dir = 2;
+            }
+            else dir = -1;
+            _GridGen.CellById(routePoints[i]).SetMark(_active, dir, _enemColor);
             yield return new WaitForSeconds(.01f);
         }
         yield return new WaitForSeconds(.1f);
@@ -70,7 +83,21 @@ public class EnemyCtrl : MonoBehaviour
     public void SetInCell()
     {
         _GridGen.CellById(actualPos).SetEnemy(this);
-        _GridGen.CellById(routePoints[step + 1]).SetMark(true);
+
+        int dir = 0;
+        if (step + 2 < routePoints.Count)
+        {
+            if (routePoints[step + 2].x > routePoints[step + 1].x) dir = 1;
+            else if (routePoints[step + 2].x < routePoints[step + 1].x) dir = 3;
+            if (routePoints[step + 2].y > routePoints[step + 1].y) dir = 0;
+            else if (routePoints[step + 2].y < routePoints[step + 1].y) dir = 2;
+        }
+        else dir = -1;
+
+        if (step + 1 < routePoints.Count)
+        {
+            _GridGen.CellById(routePoints[step + 1]).SetMark(true, dir, _enemColor);
+        }
     }
 
     public void Animate()

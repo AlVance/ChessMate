@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     public Vector2Int posKing;
 
     public GameObject enemy;
+    public Color[] enemiesColor;
     public List<Vector2Int> enemiesRoute00 = new List<Vector2Int>(0);
     public List<Vector2Int> enemiesRoute01 = new List<Vector2Int>(0);
     public List<Vector2Int> enemiesRoute02 = new List<Vector2Int>(0);
@@ -78,6 +79,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute00[0]).transform.position, transform.rotation, _gridGen.rootAll);
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[0];
             _newEnCt.startPos = enemiesRoute00[0];
             _newEnCt.routePoints = enemiesRoute00;
             _newEnCt._GridGen = _gridGen;
@@ -87,6 +89,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute01[0]).transform.position, transform.rotation, _gridGen.rootAll);
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[1];
             _newEnCt.startPos = enemiesRoute01[0];
             _newEnCt.routePoints = enemiesRoute01;
             _newEnCt._GridGen = _gridGen;
@@ -96,6 +99,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute02[0]).transform.position, transform.rotation, _gridGen.rootAll);
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[2];
             _newEnCt.startPos = enemiesRoute02[0];
             _newEnCt.routePoints = enemiesRoute02;
             _newEnCt._GridGen = _gridGen;
@@ -105,6 +109,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute03[0]).transform.position, transform.rotation, _gridGen.rootAll);
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[3];
             _newEnCt.startPos = enemiesRoute03[0];
             _newEnCt.routePoints = enemiesRoute03;
             _newEnCt._GridGen = _gridGen;
@@ -114,6 +119,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newEne = Instantiate(enemy, _gridGen.FindByID(enemiesRoute04[0]).transform.position, transform.rotation, _gridGen.rootAll);
             EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[4];
             _newEnCt.startPos = enemiesRoute04[0];
             _newEnCt.routePoints = enemiesRoute04;
             _newEnCt._GridGen = _gridGen;
