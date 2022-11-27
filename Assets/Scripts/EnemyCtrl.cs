@@ -43,10 +43,10 @@ public class EnemyCtrl : MonoBehaviour
             int dir = 0;
             if (i + 1 < routePoints.Count)
             {
-                if (routePoints[i + 1].x > routePoints[i].x) dir = 1;
-                else if (routePoints[i + 1].x < routePoints[i].x) dir = 3;
-                if (routePoints[i + 1].y > routePoints[i].y) dir = 0;
-                else if (routePoints[i + 1].y < routePoints[i].y) dir = 2;
+                if (routePoints[i + 1].x > routePoints[i].x) dir = 0;
+                else if (routePoints[i + 1].x < routePoints[i].x) dir = 2;
+                if (routePoints[i + 1].y > routePoints[i].y) dir = 1;
+                else if (routePoints[i + 1].y < routePoints[i].y) dir = 3;
             }
             else dir = -1;
             _GridGen.CellById(routePoints[i]).SetMark(_active, dir, _enemColor);
@@ -87,10 +87,10 @@ public class EnemyCtrl : MonoBehaviour
         int dir = 0;
         if (step + 2 < routePoints.Count)
         {
-            if (routePoints[step + 2].x > routePoints[step + 1].x) dir = 1;
-            else if (routePoints[step + 2].x < routePoints[step + 1].x) dir = 3;
-            if (routePoints[step + 2].y > routePoints[step + 1].y) dir = 0;
-            else if (routePoints[step + 2].y < routePoints[step + 1].y) dir = 2;
+            if (routePoints[step + 2].x > routePoints[step + 1].x) dir = 0;
+            else if (routePoints[step + 2].x < routePoints[step + 1].x) dir = 2;
+            if (routePoints[step + 2].y > routePoints[step + 1].y) dir = 1;
+            else if (routePoints[step + 2].y < routePoints[step + 1].y) dir = 3;
         }
         else dir = -1;
 

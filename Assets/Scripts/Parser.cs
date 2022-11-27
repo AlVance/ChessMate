@@ -93,7 +93,6 @@ public class Parser : MonoBehaviour
 
     public string ParseToJson(string _textToParse)
     {
-        Debug.Log("To Parse " + _textToParse);
         string newText = "{";
 
         string[] frst = _textToParse.Split("|");
@@ -112,7 +111,6 @@ public class Parser : MonoBehaviour
 
         for (int i = 0; i < frst.Length; i++)
         {
-            Debug.Log("pack " + i + " || " + frst[i]);
             if (frst[i].Contains("s"))  _sz = frst[i].Replace("s", "");
             else if (frst[i].Contains("p"))  _pjpos = frst[i].Replace("p", ""); 
             else if (frst[i].Contains("k"))  _kingpos = frst[i].Replace("k", ""); 

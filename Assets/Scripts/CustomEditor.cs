@@ -150,7 +150,6 @@ public class CustomEditor : MonoBehaviour
                 newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = gridGen.CellById(_x, _z).idTotal.ToString();
                 Button _newBtn = newBtn.GetComponent<Button>();
                 _newBtn.GetComponent<EditorCell>().ids = new Vector2Int(_x, _z);
-                Debug.Log(gridGen.CellById(_x, _z).idTotal);
                 _newBtn.onClick.AddListener(() => OnClickBtn(gridGen.CellById(_x, _z).idTotal));
                 btns.Add(_newBtn);
             }

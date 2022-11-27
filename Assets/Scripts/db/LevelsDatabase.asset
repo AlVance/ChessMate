@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87bd18b8052178e4e9e9bee6d2efe00c, type: 3}
   m_Name: LevelsDatabase
   m_EditorClassIdentifier: 
-  server: http://localhost/chessformers
+  server: http://kiwiteam.es
   services:
   - name: loadMap
     URL: check_map.php
@@ -34,7 +34,7 @@ MonoBehaviour:
     - preview
   ocupied: 0
   response:
-    code: 200
-    message: Conectado correctamente
+    code: 201
+    message: Mapa creado correctamente
     response: 
   parser: {fileID: 0}

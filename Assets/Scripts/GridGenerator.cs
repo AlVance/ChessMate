@@ -67,8 +67,8 @@ public class GridGenerator : MonoBehaviour
                 GameObject newCell = Instantiate(cell, _newPos, transform.rotation, rootAll);
                 CellData newCellData = newCell.GetComponent<CellData>();
 
-                newCellData.ids.x = xSz;
-                newCellData.ids.y = zSz;
+                newCellData.ids.x = zSz;
+                newCellData.ids.y = xSz;
                 newCellData.idTotal = cells.Count;
                 newCellData.pos = _newPos;
                 newCellData.ResetCell();
@@ -258,8 +258,9 @@ public class GridGenerator : MonoBehaviour
         server.LoadMap(id);
         yield return new WaitWhile(() => server.serviceFinish == false);
         string response = server.server.response.response;
-        Debug.Log("Cargado " + response);
+        Debug.Log("Cargado  preParse" + response);
         response = parser.ParseToJson(response);
+        Debug.Log("Cargado  postParse" + response);
         
         if (JsonUtility.FromJson<NewSpawner>(response) != null)
         {
@@ -268,9 +269,9 @@ public class GridGenerator : MonoBehaviour
             spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
             size = _newSpawner.size;
             Camera.main.transform.position = new Vector3(
-                transform.position.x + (size.x / 2) - .5f,
-                Camera.main.transform.position.y,
-                Camera.main.transform.position.z);
+                transform.position.x + (size.x /2) - .5f + size.x,
+                transform.position.y + 15,
+                transform.position.z + (size.x / 2) - .5f);
             lastMap = id;
         }
         StopAllCoroutines();

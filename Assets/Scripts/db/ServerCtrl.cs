@@ -14,6 +14,7 @@ public class ServerCtrl : MonoBehaviour
 
     public void Start()
     {
+        //CheckConnection();
     }
 
     public void CheckConnection()
@@ -38,8 +39,8 @@ public class ServerCtrl : MonoBehaviour
     public void SaveMap()
     {
         string[] data = new string[2];
-        data[0] = inpMap.text;
-        data[1] = inpPreview.text;
+        data[0] = SystemInfo.deviceUniqueIdentifier;
+        data[1] = inpMap.text;
         StartCoroutine(UseService("saveMap", data));
     }
 

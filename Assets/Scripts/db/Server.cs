@@ -34,7 +34,6 @@ public class Server : ScriptableObject
         UnityWebRequest www = UnityWebRequest.Post(server + "/" + s.URL, form);
         Debug.Log(server + "/" + s.URL);
         yield return www.SendWebRequest();
-        Debug.Log(www.downloadHandler.text);
         if(www.result != UnityWebRequest.Result.Success)
         {
             response = new Response();
