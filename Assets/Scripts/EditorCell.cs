@@ -10,7 +10,7 @@ public class EditorCell : MonoBehaviour
     public int total;
     public bool isPlayer;
     public bool isEnemy;
-    public int typeEnemy;
+    public string typeEnemy;
     public bool isKing;
     public bool isCard;
     public int typeCard;
@@ -33,15 +33,38 @@ public class EditorCell : MonoBehaviour
 
     public void SetRoute(int _indx)
     {
-        typeEnemy = _indx;
+        if (typeEnemy == "") typeEnemy = _indx.ToString();
+        else typeEnemy += _indx.ToString();
         if (_tmp.gameObject.activeInHierarchy)
         {
-            _tmp.text += " "+ typeEnemy;
+            _tmp.text = typeEnemy;
         }
         else
         {
             _tmp.gameObject.SetActive(true);
             _tmp.text = typeEnemy.ToString();
+        }
+        onRoute = true;
+    }
+
+    public void ClearRoute(int _indx, Color _color)
+    {
+        Debug.Log("Busco " + _indx + " en " + typeEnemy);
+        if (typeEnemy.Contains(_indx.ToString()))
+        {
+            typeEnemy = typeEnemy.Replace(_indx.ToString(), "");
+        }
+        _tmp.text = typeEnemy;
+        Debug.Log("typeEnemy " + typeEnemy + " " + typeEnemy.Length);
+        if(typeEnemy.Length == 0)
+        {
+            onRoute = false;
+            ChangeColor(new Color(255,255,255));
+        }
+        else
+        {
+            onRoute = true;
+            ChangeColor(_color);
         }
     }
 }

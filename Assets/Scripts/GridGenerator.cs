@@ -261,16 +261,18 @@ public class GridGenerator : MonoBehaviour
         response = parser.ParseToJson(response);
         
         Debug.Log("Cargado " + response);
-
-        NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(response);
-        spawner.LoadSpawner(_newSpawner);
-        spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
-        size = _newSpawner.size;
-        Camera.main.transform.position = new Vector3(
-            transform.position.x + (size.x / 2) - .5f,
-            Camera.main.transform.position.y,
-            Camera.main.transform.position.z);
-
+        if (JsonUtility.FromJson<NewSpawner>(response) != null)
+        {
+            NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(response);
+            spawner.LoadSpawner(_newSpawner);
+            spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
+            size = _newSpawner.size;
+            Camera.main.transform.position = new Vector3(
+                transform.position.x + (size.x / 2) - .5f,
+                Camera.main.transform.position.y,
+                Camera.main.transform.position.z);
+            lastMap = id;
+        }
         StopAllCoroutines();
         StartCoroutine(ResetMap());
     }

@@ -275,7 +275,7 @@ MonoBehaviour:
   total: 0
   isPlayer: 0
   isEnemy: 0
-  typeEnemy: 0
+  typeEnemy: 
   isKing: 0
   isCard: 0
   typeCard: 0
