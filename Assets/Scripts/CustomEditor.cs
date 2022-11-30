@@ -54,7 +54,7 @@ public class CustomEditor : MonoBehaviour
     public GameObject[] slctEnemy;
     public GameObject loadPanel;
 
-    public ServerCtrl serverCtrl;
+    public ServerCtrl server;
 
     public TextMeshProUGUI user_idTxt;
 
@@ -546,6 +546,7 @@ public class CustomEditor : MonoBehaviour
             CloseEditor();
     }
 
+
     public void SaveMap()
     {
         StartCoroutine(SaveMapRoutine());
@@ -573,10 +574,32 @@ public class CustomEditor : MonoBehaviour
             File.WriteAllText(saveFile, jsonString);
         }*/
         yield return new WaitForSeconds(1f);
-        string[] data = new string[2];
+
+
+        server.GetCountTotal();
+        yield return new WaitWhile(() => server.serviceFinish == false);
+        string response = server.server.response.response;
+        Debug.Log("Total hay " + response);
+        int _indx = int.Parse(response) - 1;
+        gridGen.LoadNewMap(_indx.ToString());
+        yield return new WaitWhile(() => gridGen.finishedGen == false);
+        ScreenshotHandler.TakeScreenshot_Static(128, 128);
+        yield return new WaitForSeconds(1f);
+        
+
+        byte[] previewByte = ScreenshotHandler.instance.lastScreenshot;
+        string resultByte = System.Text.Encoding.UTF8.GetString(previewByte);
+
+        string[] data = new string[3];
         data[0] = SystemInfo.deviceUniqueIdentifier;
         data[1] = gridGen.parser.ParseCustomMap(newSpawner);
-        serverCtrl.SaveMap(data);
+        data[2] = resultByte;
+        server.SaveMap(data);
+        for (int i = 0; i < data.Length; i++)
+        {
+            Debug.Log("Data " + i + " | " + data[i]);
+        }
+        yield return new WaitWhile(() => server.serviceFinish == false);
 
         CloseEditor();
     }
@@ -624,8 +647,9 @@ public class CustomEditor : MonoBehaviour
     }
     public void CloseEditor()
     {
-        ingame.SetActive(true);
+        ingame.SetActive(false);
         titleMap.SetActive(false);
+        fullEditor.SetActive(false);
         gridPanel.SetActive(false);
         create.SetActive(true);
         changeType.SetActive(false);

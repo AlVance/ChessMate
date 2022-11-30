@@ -28,7 +28,8 @@ public class GridGenerator : MonoBehaviour
 
     public Parser parser;
     public ServerCtrl server;
-    
+
+    public bool finishedGen;
 
     public IEnumerator ResetMap()
     {
@@ -53,6 +54,7 @@ public class GridGenerator : MonoBehaviour
         if (parser == null) parser = GetComponent<Parser>();
         spawner._gridGen = this;
         LoadMapByIndx(0);
+        //LoadNewMap(SystemInfo.deviceUniqueIdentifier);
 
         LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
@@ -255,7 +257,9 @@ public class GridGenerator : MonoBehaviour
 
     public IEnumerator LoadingMap(string id)
     {
-        server.LoadMap(id);
+        finishedGen = false;
+        server.LoadMapId(id);
+        //server.LoadMapId(id);
         yield return new WaitWhile(() => server.serviceFinish == false);
         string response = server.server.response.response;
         Debug.Log("Cargado  preParse" + response);
@@ -276,6 +280,19 @@ public class GridGenerator : MonoBehaviour
         }
         StopAllCoroutines();
         StartCoroutine(ResetMap());
+    }
+
+    public void GetCountTotal()
+    {
+        StartCoroutine(LoadCountTotalGallery());
+    }
+
+    public IEnumerator LoadCountTotalGallery()
+    {
+        server.GetCountTotal();
+        yield return new WaitWhile(() => server.serviceFinish == false);
+        string response = server.server.response.response;
+        Debug.Log("Total hay " + response);
     }
 
     /*public void LoadNewMap(string path)
@@ -354,6 +371,7 @@ public class GridGenerator : MonoBehaviour
             _enemies[e].SetInCell();
         }
         _player.SetInCell();
+        finishedGen = true;
     }
 
     public void ActiveCellBtn(CellData _cell)

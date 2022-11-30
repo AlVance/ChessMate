@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7527323607757345238}
   - component: {fileID: 6342018429978927166}
   - component: {fileID: 5086004999298298108}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5327658850084450889}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torre_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 6539855018291528989}
   - component: {fileID: 1683168169879866299}
   - component: {fileID: 1530602410028584735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CardSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1918312448802652142}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3398091009199572159}
   - component: {fileID: 4538779399003294345}
   - component: {fileID: 3691024193624421334}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CardSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8254228714986066514}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Caballo_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 7456484010186674984}
   - component: {fileID: 7615474614937190573}
   - component: {fileID: 7068449283938706836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759405641258385838}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}

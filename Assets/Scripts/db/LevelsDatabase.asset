@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   server: http://kiwiteam.es
   services:
-  - name: loadMap
-    URL: check_map.php
+  - name: loadMapId
+    URL: load_map_id.php
     parameters:
     - id
+  - name: loadMapUserid
+    URL: load_map_userid.php
+    parameters:
+    - user_id
   - name: checkConn
     URL: check.php
     parameters: []
@@ -26,15 +30,19 @@ MonoBehaviour:
     parameters:
     - user_id
     - map
+    - preview
   - name: editMap
     URL: edit_map.php
     parameters:
     - id
     - map
     - preview
+  - name: getCountId
+    URL: get_count_id.php
+    parameters: []
   ocupied: 0
   response:
-    code: 201
-    message: Mapa creado correctamente
-    response: 
+    code: 202
+    message: Se han cargado estos mapas
+    response: 19
   parser: {fileID: 0}

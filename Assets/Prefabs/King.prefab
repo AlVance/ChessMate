@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5251728739121652713}
   - component: {fileID: 4946636280093181422}
   - component: {fileID: 4881387749174419198}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1628917544135685890}
   - component: {fileID: 5129089982943721991}
   - component: {fileID: 4353311029239213777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4118357253365752894}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerSpriteParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4455368281052756736}
   - component: {fileID: 4523410216231964915}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}

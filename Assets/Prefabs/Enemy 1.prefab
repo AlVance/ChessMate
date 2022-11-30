@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5604077213842915291}
   - component: {fileID: 5814449731619513254}
   - component: {fileID: 7015109523155639910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 2353971464467195729}
   - component: {fileID: 5315030850423180661}
   - component: {fileID: 472448826963264923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemySprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2352304774270415437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemySpriteParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 6298676992134819601}
   - component: {fileID: 2125813493000682367}
   - component: {fileID: 4744074028207546045}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8535303172965156409}
   - component: {fileID: 7893529613679470432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,6 @@ MonoBehaviour:
   _GridGen: {fileID: 0}
   startPos: {x: 0, y: 0}
   actualPos: 0
-  randomWay: 0
   routePoints:
   - {x: 0, y: 1}
   - {x: 0, y: 2}
@@ -388,5 +387,7 @@ MonoBehaviour:
   - {x: 6, y: 5}
   - {x: 6, y: 6}
   - {x: 6, y: 7}
-  mark: {fileID: 7587507377875553896}
+  futureCell: {fileID: 0}
+  _sprite: {fileID: 0}
+  _enemColor: {r: 0, g: 0, b: 0, a: 0}
   stepOn: 0

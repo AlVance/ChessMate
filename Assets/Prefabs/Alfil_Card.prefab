@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1547581954696518091}
   - component: {fileID: 6103049455163604289}
   - component: {fileID: 2340142067524091082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432407034528154220}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Alfil_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4610350185577492474}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 2502053306888758325}
   - component: {fileID: 3800010936624551894}
   - component: {fileID: 3344445748754072004}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CardSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,14 @@ public class ServerCtrl : MonoBehaviour
 
     public void Start()
     {
-        //CheckConnection();
+        
+        
+    }
+
+    public void GetCountTotal()
+    {
+        string[] data = new string[0];
+        StartCoroutine(UseService("getCountId", data));
     }
 
     public void CheckConnection()
@@ -22,18 +29,25 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("checkConn", new string[0]));
     }
 
-    public void LoadMap()
+    public void LoadMapId()
     {
         string[] data = new string[1];
         data[0] = inpId.text;
-        StartCoroutine(UseService("loadMap", data));
+        StartCoroutine(UseService("loadMapId", data));
     }
 
-    public void LoadMap(string _id)
+    public void LoadMapId(string _id)
     {
         string[] data = new string[1];
         data[0] = _id;
-        StartCoroutine(UseService("loadMap", data));
+        StartCoroutine(UseService("loadMapId", data));
+    }
+
+    public void LoadMapUserid(string _userid)
+    {
+        string[] data = new string[1];
+        data[0] = _userid;
+        StartCoroutine(UseService("loadMapUserid", data));
     }
 
     public void SaveMap()

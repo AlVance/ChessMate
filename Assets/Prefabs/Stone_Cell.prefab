@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7455350020566595225}
   - component: {fileID: 4589295881647730864}
   - component: {fileID: 6388370084719480652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8083978673045251754}
   - component: {fileID: 5194171052268665756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4064660309511819683}
   - component: {fileID: 29516455346667943}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 3804008815028367305}
   - component: {fileID: 448051984407214361}
   - component: {fileID: 848064142200769870}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 3031976566050929182}
   - component: {fileID: 1768505644631782008}
   - component: {fileID: 8699935462533517785}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stone_Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 9057580635941797447}
   - component: {fileID: 360078019307136563}
   - component: {fileID: 7678089363899703496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3986439318638010220}
   - component: {fileID: 8599229914516346735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark_UP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 2885529819729467226}
   - component: {fileID: 4645426336849925639}
   - component: {fileID: 9072345359027619240}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6631886807796950566}
   - component: {fileID: 8397114015412754619}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mark_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -921,6 +921,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f9ca2804216faaf4285d00d6d7c869a7, type: 3}
       propertyPath: m_Name
       value: box_low
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f9ca2804216faaf4285d00d6d7c869a7, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9ca2804216faaf4285d00d6d7c869a7, type: 3}
