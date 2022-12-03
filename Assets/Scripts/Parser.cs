@@ -5,17 +5,46 @@ using TMPro;
 
 public class Parser : MonoBehaviour
 {
+    public static Parser instance { get; private set; }
     public TextMeshProUGUI text;
     public string muestra;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //ParseToJson(muestra);
+        instance = this;
     }
 
+    public string GenerationCode()
+    {
+        string code = GenCode();
+        ServerCtrl.Instance.CheckCode(code);
+        while (ServerCtrl.Instance.server.response.response == "1")
+        {
+            code = GenCode();
+            ServerCtrl.Instance.CheckCode(code);
+        }
+
+        return code;
+    }
+
+    public string GenCode()
+    {
+        //string st = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string st = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string c1 = st[Random.Range(0, 10)].ToString();
+        string c2 = st[Random.Range(0, 10)].ToString();
+        string c3 = st[Random.Range(0, 10)].ToString();
+        string c4 = st[Random.Range(0, st.Length)].ToString();
+        string c5 = st[Random.Range(0, st.Length)].ToString();
+        string c6 = st[Random.Range(0, st.Length)].ToString();
+        string result = c1 + c2 + c3 + c4 + c5 + c6;
+
+        return result;
+    }
+
+
     //size - startpos - kingpos - eneRo00 - eneRo01 - eneRo02 - eneRo03 - eneRo04 - posTrr - posCab - posAlf - posObst
-    public string ParseCustomMap(NewSpawner _newSpawner)
+    public string ParseJsonToCustom(NewMap _newSpawner)
     {
         string newText = "";
 
@@ -91,7 +120,7 @@ public class Parser : MonoBehaviour
         return newText;
     }
 
-    public string ParseToJson(string _textToParse)
+    public string ParseCustomToJson(string _textToParse)
     {
         string newText = "{";
 

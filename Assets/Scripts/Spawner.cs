@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
     public GameObject obst;
     public List<Vector2Int> posObst = new List<Vector2Int>(0);
 
-    public void LoadSpawner(NewSpawner _spawner)
+    public void LoadSpawner(NewMap _spawner)
     {
         player.GetComponent<PlayerCtrl>().startPos = _spawner.startPos;
         posKing = _spawner.kingPos;

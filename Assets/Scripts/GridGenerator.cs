@@ -26,9 +26,6 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private Animator LevelTransitorAnim;
     [SerializeField] private GameObject[] currentLevelCounterGO;
 
-    public Parser parser;
-    public ServerCtrl server;
-
     public bool finishedGen;
 
     public IEnumerator ResetMap()
@@ -51,7 +48,6 @@ public class GridGenerator : MonoBehaviour
 
     public void Start()
     {
-        if (parser == null) parser = GetComponent<Parser>();
         spawner._gridGen = this;
         LoadMapByIndx(0);
         //LoadNewMap(SystemInfo.deviceUniqueIdentifier);
@@ -258,17 +254,17 @@ public class GridGenerator : MonoBehaviour
     public IEnumerator LoadingMap(string id)
     {
         finishedGen = false;
-        server.LoadMapId(id);
-        //server.LoadMapId(id);
-        yield return new WaitWhile(() => server.serviceFinish == false);
-        string response = server.server.response.response;
+        ServerCtrl.Instance.LoadMapId(id);
+        //ServerCtrl.Instance.LoadMapId(id);
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+        string response = ServerCtrl.Instance.server.response.response;
         Debug.Log("Cargado  preParse" + response);
-        response = parser.ParseToJson(response);
+        response = Parser.instance.ParseCustomToJson(response);
         Debug.Log("Cargado  postParse" + response);
         
-        if (JsonUtility.FromJson<NewSpawner>(response) != null)
+        if (JsonUtility.FromJson<NewMap>(response) != null)
         {
-            NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(response);
+            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(response);
             spawner.LoadSpawner(_newSpawner);
             spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
             size = _newSpawner.size;
@@ -289,10 +285,16 @@ public class GridGenerator : MonoBehaviour
 
     public IEnumerator LoadCountTotalGallery()
     {
-        server.GetCountTotal();
-        yield return new WaitWhile(() => server.serviceFinish == false);
-        string response = server.server.response.response;
+        ServerCtrl.Instance.GetCountTotal();
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+        string response = ServerCtrl.Instance.server.response.response;
         Debug.Log("Total hay " + response);
+        string[] _newMapsPParse = response.Split("+");
+        string[] _newMaps = new string[_newMapsPParse.Length];
+        for (int i = 0; i < _newMapsPParse.Length -1; i++)
+        {
+            _newMaps[i] = Parser.instance.ParseCustomToJson(_newMapsPParse[i]);
+        }
     }
 
     /*public void LoadNewMap(string path)

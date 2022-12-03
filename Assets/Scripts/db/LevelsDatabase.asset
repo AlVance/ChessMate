@@ -30,7 +30,7 @@ MonoBehaviour:
     parameters:
     - user_id
     - map
-    - preview
+    - code
   - name: editMap
     URL: edit_map.php
     parameters:
@@ -40,9 +40,16 @@ MonoBehaviour:
   - name: getCountId
     URL: get_count_id.php
     parameters: []
+  - name: getTotalCount
+    URL: get_total_count_id.php
+    parameters: []
+  - name: checkCode
+    URL: check_code.php
+    parameters:
+    - code
   ocupied: 0
   response:
     code: 202
     message: Se han cargado estos mapas
-    response: 19
+    response: 11
   parser: {fileID: 0}

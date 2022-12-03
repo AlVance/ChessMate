@@ -5,6 +5,8 @@ using TMPro;
 
 public class ServerCtrl : MonoBehaviour
 {
+    public static ServerCtrl Instance { get; private set; }
+
     public Server server;
     public TMP_InputField inpId;
     public TMP_InputField inpMap;
@@ -12,13 +14,25 @@ public class ServerCtrl : MonoBehaviour
 
     public GameObject loading;
 
-    public void Start()
+    public void Awake()
     {
-        
-        
+        Instance = this;        
+    }
+
+    public void CheckCode(string code)
+    {
+        string[] data = new string[1];
+        data[0] = code;
+        StartCoroutine(UseService("checkCode",data));
     }
 
     public void GetCountTotal()
+    {
+        string[] data = new string[0];
+        StartCoroutine(UseService("getTotalCount", data));
+    }
+
+    public void GetMapsById()
     {
         string[] data = new string[0];
         StartCoroutine(UseService("getCountId", data));

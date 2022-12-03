@@ -1464,7 +1464,6 @@ MonoBehaviour:
   - {fileID: 1877909310}
   - {fileID: 1860255063}
   loadPanel: {fileID: 114499186}
-  server: {fileID: 1102833605}
   user_idTxt: {fileID: 1523421388}
   gridGenerated: 0
   _tmp: {fileID: 0}
@@ -5526,8 +5525,6 @@ MonoBehaviour:
   - {fileID: 1479479269}
   - {fileID: 2134444819}
   - {fileID: 565613852}
-  parser: {fileID: 1102833604}
-  server: {fileID: 1102833605}
   finishedGen: 0
   onStepped: 0
 --- !u!4 &1102833603
@@ -8755,7 +8752,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1102833602}
         m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyActive
+        m_MethodName: ActiveInvert
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 163174478}
@@ -10192,7 +10189,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1936808272}
   - component: {fileID: 1936808274}
-  - component: {fileID: 1936808273}
   - component: {fileID: 1936808275}
   m_Layer: 0
   m_Name: PhotoCam
@@ -10216,14 +10212,6 @@ Transform:
   m_Father: {fileID: 1518435665}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
---- !u!81 &1936808273
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936808271}
-  m_Enabled: 1
 --- !u!20 &1936808274
 Camera:
   m_ObjectHideFlags: 0
@@ -10279,10 +10267,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b8b4d29a7052249b4e267b36e30bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  url: http://kiwiteam.es/upload_image.php
   myCamera: {fileID: 0}
   takeScreenshotOnNextFrame: 0
   lastScreenshot: 
   lastScreenStr: 
+  newCode: 
 --- !u!1 &1943301678
 GameObject:
   m_ObjectHideFlags: 0

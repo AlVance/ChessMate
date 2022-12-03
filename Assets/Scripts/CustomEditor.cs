@@ -25,7 +25,7 @@ public class CustomEditor : MonoBehaviour
     public GameObject rootEnemies;
     public GameObject btnAddEnemy;
     GameObject _enemy;
-    NewSpawner newSpawner;
+    NewMap newSpawner;
 
     List<Button> btns = new List<Button>(0);
 
@@ -53,8 +53,6 @@ public class CustomEditor : MonoBehaviour
     public GameObject enemiesScroll;
     public GameObject[] slctEnemy;
     public GameObject loadPanel;
-
-    public ServerCtrl server;
 
     public TextMeshProUGUI user_idTxt;
 
@@ -480,7 +478,7 @@ public class CustomEditor : MonoBehaviour
         //actualMap = files.Length;
 
 
-        newSpawner = new NewSpawner();
+        newSpawner = new NewMap();
         newSpawner.size = size;
         newSpawner.startPos = new Vector2Int(0,0);
         newSpawner.enemyRoute00 = new List<Vector2Int>(0);
@@ -517,9 +515,9 @@ public class CustomEditor : MonoBehaviour
         {
             string fileContents = File.ReadAllText(path);
 
-            NewSpawner _newSpawner = JsonUtility.FromJson<NewSpawner>(fileContents);
+            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(fileContents);
 
-            newSpawner = new NewSpawner();
+            newSpawner = new NewMap();
             size = _newSpawner.size;
             newSpawner.size = _newSpawner.size;
             newSpawner.startPos = _newSpawner.startPos;
@@ -560,46 +558,24 @@ public class CustomEditor : MonoBehaviour
         if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
         
-        /*
-        string saveFile = path + "/map_" + actualMap + ".json";
-        string jsonString = JsonUtility.ToJson(newSpawner);
-        if (File.Exists(saveFile))
-        {
-            File.WriteAllText(saveFile, jsonString);
-        }
-        else
-        {
-            File.Create(saveFile);
-            yield return new WaitForSeconds(1f);
-            File.WriteAllText(saveFile, jsonString);
-        }*/
         yield return new WaitForSeconds(1f);
 
-
-        server.GetCountTotal();
-        yield return new WaitWhile(() => server.serviceFinish == false);
-        string response = server.server.response.response;
+        ServerCtrl.Instance.GetCountTotal();
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+        string response = ServerCtrl.Instance.server.response.response;
         Debug.Log("Total hay " + response);
         int _indx = int.Parse(response) - 1;
         gridGen.LoadNewMap(_indx.ToString());
         yield return new WaitWhile(() => gridGen.finishedGen == false);
         ScreenshotHandler.TakeScreenshot_Static(128, 128);
         yield return new WaitForSeconds(1f);
-        
-
-        byte[] previewByte = ScreenshotHandler.instance.lastScreenshot;
-        string resultByte = System.Text.Encoding.UTF8.GetString(previewByte);
 
         string[] data = new string[3];
         data[0] = SystemInfo.deviceUniqueIdentifier;
-        data[1] = gridGen.parser.ParseCustomMap(newSpawner);
-        data[2] = resultByte;
-        server.SaveMap(data);
-        for (int i = 0; i < data.Length; i++)
-        {
-            Debug.Log("Data " + i + " | " + data[i]);
-        }
-        yield return new WaitWhile(() => server.serviceFinish == false);
+        data[1] = Parser.instance.ParseJsonToCustom(newSpawner);
+        data[2] = Parser.instance.GenerationCode();
+        ServerCtrl.Instance.SaveMap(data);
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
 
         CloseEditor();
     }
@@ -613,7 +589,7 @@ public class CustomEditor : MonoBehaviour
                 title_txt.text = "Mapa de Jugador";
                 break;
             case 1:
-                title_txt.text = "Mapa de Cartas";
+                title_txt.text = "Mapa de Cartas de Torre";
                 actualCard = 0;
                 break;
             case 2:
@@ -660,7 +636,7 @@ public class CustomEditor : MonoBehaviour
 }
 
 [System.Serializable]
-public class NewSpawner
+public class NewMap
 {
     public Vector2Int size;
     public Vector2Int startPos = new Vector2Int(0, 0);

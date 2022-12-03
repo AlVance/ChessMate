@@ -7,12 +7,13 @@ using UnityEngine;
 public class ScreenshotHandler : MonoBehaviour
 {
     public static ScreenshotHandler instance;
+    public string url;
 
     public Camera myCamera;
     public bool takeScreenshotOnNextFrame;
 
-    int _width = 128;
-    int _height = 128;
+    int _width = 256;
+    int _height = 256;
 
     private void Awake()
     {
@@ -36,13 +37,35 @@ public class ScreenshotHandler : MonoBehaviour
             lastScreenStr = renderResult.ToString();
             lastScreenshot = renderResult.EncodeToPNG();
             string result = String.Join(" ", lastScreenshot);
+            StartCoroutine(StartUploading(lastScreenshot));
             Debug.Log("photoSTR " + result);
-            System.IO.File.WriteAllBytes(Application.dataPath + "/Screenshot.png", lastScreenshot);
-            Debug.Log("Saved Screenshot " + Application.dataPath);
 
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
         }
+    }
+    public string newCode;
+    IEnumerator StartUploading(byte[] newTexture)
+    {
+        WWWForm form = new WWWForm();
+        byte[] textureBytes = null;
+
+        textureBytes = newTexture;
+
+        form.AddBinaryData("myimage", textureBytes, newCode + "_prev.png", "image/png");
+
+        WWW w = new WWW(url, form);
+
+        yield return w;
+        if (w.error != null)
+        {
+            Debug.Log("error : " + w.error);
+        }
+        else
+        {
+            Debug.Log(w.text);
+        }
+        w.Dispose();
     }
 
     public byte[] GetScreenshot()
