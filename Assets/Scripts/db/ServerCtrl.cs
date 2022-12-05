@@ -43,18 +43,32 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("checkConn", new string[0]));
     }
 
-    public void LoadMapId()
+    public void LoadMapById()
     {
         string[] data = new string[1];
         data[0] = inpId.text;
         StartCoroutine(UseService("loadMapId", data));
     }
 
-    public void LoadMapId(string _id)
+    public void LoadMapById(string _id)
     {
         string[] data = new string[1];
         data[0] = _id;
         StartCoroutine(UseService("loadMapId", data));
+    }
+
+    public void LoadMapByCode(string _code)
+    {
+        string[] data = new string[1];
+        data[0] = _code;
+        StartCoroutine(UseService("loadMapCode", data));
+    }
+
+    public void LoadCodeId(string _id)
+    {
+        string[] data = new string[1];
+        data[0] = _id;
+        StartCoroutine(UseService("loadCodeId", data));
     }
 
     public void LoadMapUserid(string _userid)

@@ -239,22 +239,24 @@ public class GridGenerator : MonoBehaviour
     }
 
     string lastMap;
+    bool byCode;
 
     public void LoadMapByString(string path)
     {
 
     } 
 
+
     public void LoadNewMap(string id)
     {
         //lastMap = id;
-        StartCoroutine(LoadingMap(id));
+        StartCoroutine(LoadingMapById(id));
     }
 
-    public IEnumerator LoadingMap(string id)
+    public IEnumerator LoadingMapById(string id)
     {
         finishedGen = false;
-        ServerCtrl.Instance.LoadMapId(id);
+        ServerCtrl.Instance.LoadMapById(id);
         //ServerCtrl.Instance.LoadMapId(id);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
@@ -272,30 +274,41 @@ public class GridGenerator : MonoBehaviour
                 transform.position.x + (size.x /2) - .5f + size.x,
                 transform.position.y + 15,
                 transform.position.z + (size.x / 2) - .5f);
+            byCode = false;
             lastMap = id;
         }
         StopAllCoroutines();
         StartCoroutine(ResetMap());
     }
 
-    public void GetCountTotal()
+    public IEnumerator LoadingMapByCode(string code)
     {
-        StartCoroutine(LoadCountTotalGallery());
-    }
-
-    public IEnumerator LoadCountTotalGallery()
-    {
-        ServerCtrl.Instance.GetCountTotal();
+        finishedGen = false;
+        ServerCtrl.Instance.LoadMapByCode(code);
+        //ServerCtrl.Instance.LoadMapId(id);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
-        Debug.Log("Total hay " + response);
-        string[] _newMapsPParse = response.Split("+");
-        string[] _newMaps = new string[_newMapsPParse.Length];
-        for (int i = 0; i < _newMapsPParse.Length -1; i++)
+        Debug.Log("Cargado  preParse" + response);
+        response = Parser.instance.ParseCustomToJson(response);
+        Debug.Log("Cargado  postParse" + response);
+
+        if (JsonUtility.FromJson<NewMap>(response) != null)
         {
-            _newMaps[i] = Parser.instance.ParseCustomToJson(_newMapsPParse[i]);
+            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(response);
+            spawner.LoadSpawner(_newSpawner);
+            spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
+            size = _newSpawner.size;
+            Camera.main.transform.position = new Vector3(
+                transform.position.x + (size.x / 2) - .5f + size.x,
+                transform.position.y + 15,
+                transform.position.z + (size.x / 2) - .5f);
+            byCode = true;
+            lastMap = code;
         }
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());
     }
+
 
     /*public void LoadNewMap(string path)
     {
@@ -343,7 +356,8 @@ public class GridGenerator : MonoBehaviour
 
     public void ReloadMap()
     {
-        LoadNewMap(lastMap);
+        if (!byCode) StartCoroutine(LoadingMapById(lastMap));
+        else StartCoroutine(LoadingMapByCode(lastMap));
     }
 
     public IEnumerator ChangeToNextLevel()

@@ -535,12 +535,19 @@ public class CustomEditor : MonoBehaviour
         }
     }
 
-    public void LoadMap(TextMeshProUGUI _text)
+    public void LoadMapId(TextMeshProUGUI _text)
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);
         int indx = int.Parse(newTxt);
 
             gridGen.LoadMapByIndx(indx);
+            CloseEditor();
+    }
+    public void LoadMapCode(TextMeshProUGUI _text)
+    {
+        string newTxt = _text.text.Remove(_text.text.Length - 1);
+
+            StartCoroutine(gridGen.LoadingMapByCode(newTxt));
             CloseEditor();
     }
 
@@ -560,22 +567,24 @@ public class CustomEditor : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
 
-        ServerCtrl.Instance.GetCountTotal();
-        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
-        string response = ServerCtrl.Instance.server.response.response;
-        Debug.Log("Total hay " + response);
-        int _indx = int.Parse(response) - 1;
-        gridGen.LoadNewMap(_indx.ToString());
-        yield return new WaitWhile(() => gridGen.finishedGen == false);
-        ScreenshotHandler.TakeScreenshot_Static(128, 128);
-        yield return new WaitForSeconds(1f);
-
+        string code = Parser.instance.GenerationCode();
         string[] data = new string[3];
         data[0] = SystemInfo.deviceUniqueIdentifier;
         data[1] = Parser.instance.ParseJsonToCustom(newSpawner);
-        data[2] = Parser.instance.GenerationCode();
+        data[2] = code;
         ServerCtrl.Instance.SaveMap(data);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+
+        ServerCtrl.Instance.GetCountTotal();
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+        string response = ServerCtrl.Instance.server.response.response;
+        string[] str = response.Split("+");
+        Debug.Log("Total hay " + (str.Length - 1));
+        int _indx = str.Length - 2;
+        gridGen.LoadNewMap(_indx.ToString());
+        yield return new WaitWhile(() => gridGen.finishedGen == false);
+        ScreenshotHandler.instance.TakeScreenshot(128, 128, code);
+        yield return new WaitForSeconds(.01f);
 
         CloseEditor();
     }

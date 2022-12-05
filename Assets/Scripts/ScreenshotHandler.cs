@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ScreenshotHandler : MonoBehaviour
 {
-    public static ScreenshotHandler instance;
+    public static ScreenshotHandler instance { get; private set; }
     public string url;
 
     public Camera myCamera;
@@ -45,7 +46,7 @@ public class ScreenshotHandler : MonoBehaviour
         }
     }
     public string newCode;
-    IEnumerator StartUploading(byte[] newTexture)
+    public IEnumerator StartUploading(byte[] newTexture)
     {
         WWWForm form = new WWWForm();
         byte[] textureBytes = null;
@@ -66,6 +67,33 @@ public class ScreenshotHandler : MonoBehaviour
             Debug.Log(w.text);
         }
         w.Dispose();
+    }
+
+    public Texture finishTxtr = null;
+    public bool finishLoadImage = false;
+
+    public void GetTextureStart(string code)
+    {
+        StartCoroutine(GetTexture(code));
+    }
+
+    public IEnumerator GetTexture(string code)
+    {
+        finishTxtr = null;
+        finishLoadImage = false;
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("http://kiwiteam.es/gallery/" + code + "_prev.png");
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            finishLoadImage = true;
+        }
+        else
+        {
+            finishTxtr = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            finishLoadImage = true;
+        }
     }
 
     public byte[] GetScreenshot()
@@ -95,10 +123,11 @@ public class ScreenshotHandler : MonoBehaviour
         takeScreenshotOnNextFrame = true;
     }
 
-    public void TakeScreenshot(int width, int height)
+    public void TakeScreenshot(int width, int height, string _code = "")
     {
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
+        newCode = _code;
     }
 
     public static byte[] GetScreen()

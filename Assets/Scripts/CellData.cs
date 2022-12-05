@@ -121,7 +121,10 @@ public class CellData : MonoBehaviour
     {
         _enemy = null;
         isEnemy = false;
-        mark.SetActive(false);
+        for (int i = 0; i < marks.Length; i++)
+        {
+            marks[i].SetActive(false);
+        }
         isFutureEnemy = false;
     }
 

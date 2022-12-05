@@ -18,6 +18,14 @@ MonoBehaviour:
     URL: load_map_id.php
     parameters:
     - id
+  - name: loadMapCode
+    URL: load_map_code.php
+    parameters:
+    - code
+  - name: loadCodeId
+    URL: load_code_id.php
+    parameters:
+    - id
   - name: loadMapUserid
     URL: load_map_userid.php
     parameters:
@@ -50,6 +58,6 @@ MonoBehaviour:
   ocupied: 0
   response:
     code: 202
-    message: Se han cargado estos mapas
-    response: 11
+    message: Mapa existe en el sistema
+    response: s55|p21|k20|ea14-13-12-11-10-20|eb24-34-33-32-31-30-20|ec|ed|ee|t00|c23|a04-44|o
   parser: {fileID: 0}
