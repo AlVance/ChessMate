@@ -24,29 +24,25 @@ public class Gallery : MonoBehaviour
         }
 
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,0);
-        ServerCtrl.Instance.GetCountTotal();
+        ServerCtrl.Instance.GetAllMaps();
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string totalCount = ServerCtrl.Instance.server.response.response;
+        string[] items = totalCount.Split("/");
         Debug.Log("Total hay " + totalCount);
-
-        string[] _newIds = totalCount.Split("+");
-        for (int i = 0; i < _newIds.Length; i++)
+        for (int i = 0; i < items.Length; i++)
         {
+            string[] data = items[i].Split("+");
             GameObject newItem = Instantiate(itemGallery, contentGallery);
+            newItem.transform.Find("Code").GetComponent<TextMeshProUGUI>().text = data[2];
 
-            ServerCtrl.Instance.LoadCodeId(_newIds[i]);
-            yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
-            string newCode = ServerCtrl.Instance.server.response.response;
-            newItem.transform.Find("Code").GetComponent<TextMeshProUGUI>().text = newCode;
-
-            ScreenshotHandler.instance.GetTextureStart(newCode);
+            ScreenshotHandler.instance.GetTextureStart(data[2]);
             yield return new WaitWhile(() => ScreenshotHandler.instance.finishLoadImage == false);
             if(ScreenshotHandler.instance.finishTxtr != null)
             {
                 newItem.transform.Find("Preview").GetComponent<RawImage>().texture = ScreenshotHandler.instance.finishTxtr;
             }
 
-            string _ni = _newIds[i];
+            string _ni = data[0];
             newItem.transform.Find("PlayBtn").GetComponent<Button>().onClick.AddListener(() => LoadMapById(_ni));
         }
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, (contentGallery.childCount / 3) * 220);

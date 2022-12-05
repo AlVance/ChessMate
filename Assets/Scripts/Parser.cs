@@ -44,16 +44,16 @@ public class Parser : MonoBehaviour
 
 
     //size - startpos - kingpos - eneRo00 - eneRo01 - eneRo02 - eneRo03 - eneRo04 - posTrr - posCab - posAlf - posObst
-    public string ParseJsonToCustom(NewMap _newSpawner)
+    public string ParseNewMapJsonToCustom(NewMap _newSpawner)
     {
         string newText = "";
-
+        //Size
         newText += "s" +_newSpawner.size.x + _newSpawner.size.y + "|";
-
+        //Player Start Pos
         newText += "p" + _newSpawner.startPos.x + _newSpawner.startPos.y + "|";
-
+        //King Pos
         newText += "k" + _newSpawner.kingPos.x + _newSpawner.kingPos.y + "|";
-
+        //Enemy Route 01
         newText += "ea";
         for (int i = 0; i < _newSpawner.enemyRoute00.Count; i++)
         {
@@ -61,6 +61,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.enemyRoute00[i].x + "" + _newSpawner.enemyRoute00[i].y;
         }
         newText += "|";
+        //Enemy Route 02
         newText += "eb";
         for (int i = 0; i < _newSpawner.enemyRoute01.Count; i++)
         {
@@ -68,6 +69,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.enemyRoute01[i].x + "" + _newSpawner.enemyRoute01[i].y;
         }
         newText += "|";
+        //Enemy Route 03
         newText += "ec";
         for (int i = 0; i < _newSpawner.enemyRoute02.Count; i++)
         {
@@ -75,6 +77,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.enemyRoute02[i].x + "" + _newSpawner.enemyRoute02[i].y;
         }
         newText += "|";
+        //Enemy Route 04
         newText += "ed";
         for (int i = 0; i < _newSpawner.enemyRoute03.Count; i++)
         {
@@ -82,6 +85,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.enemyRoute03[i].x + "" + _newSpawner.enemyRoute03[i].y;
         }
         newText += "|";
+        //Enemy Route 05
         newText += "ee";
         for (int i = 0; i < _newSpawner.enemyRoute04.Count; i++)
         {
@@ -89,6 +93,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.enemyRoute04[i].x + "" + _newSpawner.enemyRoute04[i].y;
         }
         newText += "|";
+        //Cartas de torre
         newText += "t";
         for (int i = 0; i < _newSpawner.posTrr_crd.Count; i++)
         {
@@ -96,6 +101,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.posTrr_crd[i].x + "" + _newSpawner.posTrr_crd[i].y;
         }
         newText += "|";
+        //Cartas de Caballo
         newText += "c";
         for (int i = 0; i < _newSpawner.posCab_crd.Count; i++)
         {
@@ -103,6 +109,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.posCab_crd[i].x + "" + _newSpawner.posCab_crd[i].y;
         }
         newText += "|";
+        //Cartas de Alfil
         newText += "a";
         for (int i = 0; i < _newSpawner.posAlf_crd.Count; i++)
         {
@@ -110,6 +117,7 @@ public class Parser : MonoBehaviour
             newText += _newSpawner.posAlf_crd[i].x + "" + _newSpawner.posAlf_crd[i].y;
         }
         newText += "|";
+        //Obstaculos
         newText += "o";
         for (int i = 0; i < _newSpawner.posObst.Count; i++)
         {
@@ -120,7 +128,7 @@ public class Parser : MonoBehaviour
         return newText;
     }
 
-    public string ParseCustomToJson(string _textToParse)
+    public string ParseNewMapCustomToJson(string _textToParse)
     {
         string newText = "{";
 
@@ -155,9 +163,9 @@ public class Parser : MonoBehaviour
 
 
         }
-
+        
         newText += "\"size\":{\"x\":" + _sz[0] + ",\"y\":" + _sz[1] + "}";
-
+        
         newText += ",\"startPos\":{\"x\":" + _pjpos[0] + ",\"y\":" + _pjpos[1] + "}";
 
         newText += ",\"kingPos\":{\"x\":" + _kingpos[0] + ",\"y\":" + _kingpos[1] + "}";

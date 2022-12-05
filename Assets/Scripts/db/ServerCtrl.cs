@@ -38,6 +38,12 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("getCountId", data));
     }
 
+    public void GetAllMaps()
+    {
+        string[] data = new string[0];
+        StartCoroutine(UseService("getAllMaps", data));
+    }
+
     public void CheckConnection()
     {
         StartCoroutine(UseService("checkConn", new string[0]));

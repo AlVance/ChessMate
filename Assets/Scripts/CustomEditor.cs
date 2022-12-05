@@ -551,6 +551,22 @@ public class CustomEditor : MonoBehaviour
             CloseEditor();
     }
 
+    public void LoadRandomMap()
+    {
+        StartCoroutine(LoadingRandomMap());
+    }
+
+    IEnumerator LoadingRandomMap()
+    {
+        ServerCtrl.Instance.GetCountTotal();
+        yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
+        string[] responses = ServerCtrl.Instance.server.response.response.Split("+");
+        int rnd = Random.Range(0, responses.Length);
+        Debug.Log("Rand0m " + responses.Length + "  |  " + rnd);
+        gridGen.LoadNewMap(rnd.ToString());
+        CloseEditor();
+    }
+
 
     public void SaveMap()
     {
@@ -570,7 +586,7 @@ public class CustomEditor : MonoBehaviour
         string code = Parser.instance.GenerationCode();
         string[] data = new string[3];
         data[0] = SystemInfo.deviceUniqueIdentifier;
-        data[1] = Parser.instance.ParseJsonToCustom(newSpawner);
+        data[1] = Parser.instance.ParseNewMapJsonToCustom(newSpawner);
         data[2] = code;
         ServerCtrl.Instance.SaveMap(data);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
@@ -659,4 +675,19 @@ public class NewMap
     public List<Vector2Int> posCab_crd = new List<Vector2Int>(0);
     public List<Vector2Int> posAlf_crd = new List<Vector2Int>(0);
     public List<Vector2Int> posObst = new List<Vector2Int>(0);
+}
+
+[System.Serializable]
+public class Map
+{
+    string id;
+    string userid;
+    string code;
+    string map;
+}
+
+[System.Serializable]
+public class Maps
+{
+    public Map[] maps;
 }

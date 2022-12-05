@@ -241,11 +241,6 @@ public class GridGenerator : MonoBehaviour
     string lastMap;
     bool byCode;
 
-    public void LoadMapByString(string path)
-    {
-
-    } 
-
 
     public void LoadNewMap(string id)
     {
@@ -261,12 +256,12 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
         Debug.Log("Cargado  preParse" + response);
-        response = Parser.instance.ParseCustomToJson(response);
-        Debug.Log("Cargado  postParse" + response);
+        string[] data = response.Split("+");
+        data[3] = Parser.instance.ParseNewMapCustomToJson(data[3]);
         
-        if (JsonUtility.FromJson<NewMap>(response) != null)
+        if (data != null)
         {
-            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(response);
+            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(data[3]);
             spawner.LoadSpawner(_newSpawner);
             spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
             size = _newSpawner.size;
@@ -289,7 +284,7 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
         Debug.Log("Cargado  preParse" + response);
-        response = Parser.instance.ParseCustomToJson(response);
+        response = Parser.instance.ParseNewMapCustomToJson(response);
         Debug.Log("Cargado  postParse" + response);
 
         if (JsonUtility.FromJson<NewMap>(response) != null)
