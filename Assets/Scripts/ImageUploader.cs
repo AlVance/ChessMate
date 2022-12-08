@@ -7,10 +7,6 @@ public class ImageUploader : MonoBehaviour
     [SerializeField] SpriteRenderer spriteImage;
     [SerializeField] string url;
 
-    void Start()
-    {
-
-    }
 
     IEnumerator StartUploading(byte[] newTexture)
     {
