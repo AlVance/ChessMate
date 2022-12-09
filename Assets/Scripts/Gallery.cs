@@ -50,7 +50,7 @@ public class Gallery : MonoBehaviour
             string _ni = data[0];
             newItem.transform.Find("PlayBtn").GetComponent<Button>().onClick.AddListener(() => LoadMapById(_ni));
         }
-        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, (contentGallery.childCount / 3) * 220);
+        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, ((contentGallery.childCount / 3) +1 )* 220);
     }
 
     public IEnumerator SetTexture(string code, RawImage finishTxtr)

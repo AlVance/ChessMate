@@ -48,11 +48,12 @@ public class GridGenerator : MonoBehaviour
 
     public void Start()
     {
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
         spawner._gridGen = this;
-        LoadMapByIndx(0);
+        //LoadMapByIndx(0);
         //LoadNewMap(SystemInfo.deviceUniqueIdentifier);
 
-        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
+        //LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
 
     public IEnumerator GenGrid()
@@ -250,6 +251,7 @@ public class GridGenerator : MonoBehaviour
 
     public IEnumerator LoadingMapById(string id)
     {
+        LevelTransitorAnim.SetBool("IsLoadingLevel", true);
         finishedGen = false;
         ServerCtrl.Instance.LoadMapById(id);
         //ServerCtrl.Instance.LoadMapId(id);
@@ -274,6 +276,7 @@ public class GridGenerator : MonoBehaviour
         }
         StopAllCoroutines();
         StartCoroutine(ResetMap());
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
 
     public IEnumerator LoadingMapByCode(string code)
@@ -329,6 +332,7 @@ public class GridGenerator : MonoBehaviour
 
     public void LoadMapByIndx(int _level)
     {
+        LevelTransitorAnim.SetBool("IsLoadingLevel", true);
         if (_level < 4)
         {
             currrentLevelIndex = _level;
