@@ -37,7 +37,7 @@ public class EditorCell : MonoBehaviour
         _img.sprite = typeImg[indx];
     }
 
-    public void SetRoute(int _indx)
+    public void SetRoute(int _indx, bool start = false)
     {
         if (typeEnemy == "") typeEnemy = _indx.ToString();
         else typeEnemy += _indx.ToString();
@@ -50,7 +50,8 @@ public class EditorCell : MonoBehaviour
             _tmp.gameObject.SetActive(true);
             _tmp.text = typeEnemy.ToString();
         }
-        onRoute = true;
+        if (start) isEnemy = true;
+        else onRoute = true;
     }
 
     public void ClearRoute(int _indx)
