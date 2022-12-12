@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class ScreenshotHandler : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class ScreenshotHandler : MonoBehaviour
             lastScreenStr = renderResult.ToString();
             lastScreenshot = renderResult.EncodeToPNG();
             string result = String.Join(" ", lastScreenshot);
-            StartCoroutine(StartUploading(lastScreenshot));
+            //StartCoroutine(StartUploading(lastScreenshot));
             Debug.Log("photoSTR " + result);
 
             RenderTexture.ReleaseTemporary(renderTexture);
@@ -46,14 +47,12 @@ public class ScreenshotHandler : MonoBehaviour
         }
     }
     public string newCode;
-    public IEnumerator StartUploading(byte[] newTexture)
+    public IEnumerator StartUploading(string code = "")
     {
+        if (code != "") newCode = code;
         WWWForm form = new WWWForm();
-        byte[] textureBytes = null;
 
-        textureBytes = newTexture;
-
-        form.AddBinaryData("myimage", textureBytes, newCode + "_prev.png", "image/png");
+        form.AddBinaryData("myimage", lastScreenshot, newCode + "_prev.png", "image/png");
 
         WWW w = new WWW(url, form);
 

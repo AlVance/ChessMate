@@ -14,6 +14,7 @@ public class GridGenerator : MonoBehaviour
 
     public List<GameObject> cells = new List<GameObject>(0);
 
+    public CustomEditor customEditor;
     public Spawner spawner;
     public Transform rootAll;
 
@@ -164,6 +165,7 @@ public class GridGenerator : MonoBehaviour
         onStepped = false;
     }
 
+    public bool onTesting;
     public void DestroyEnemy(EnemyCtrl _enemy)
     {
         if(_enemy.futureCell != null) _enemy.futureCell.ClearEnemy();
@@ -173,7 +175,12 @@ public class GridGenerator : MonoBehaviour
 
         if (_enemies.Count == 0)
         {
-            StartCoroutine(ChangeToNextLevel());
+            if (!onTesting) StartCoroutine(ChangeToNextLevel());
+            else
+            {
+                StartCoroutine(customEditor.SaveMapRoutine());
+                onTesting = false;
+            }
         }
     }
 
@@ -247,6 +254,29 @@ public class GridGenerator : MonoBehaviour
     {
         //lastMap = id;
         StartCoroutine(LoadingMapById(id));
+    }
+
+    public IEnumerator LoadingMapBySpawner(NewMap _newSpawner)
+    {
+        onTesting = true;
+        LevelTransitorAnim.SetBool("IsLoadingLevel", true);
+        finishedGen = false;
+
+        if (_newSpawner != null)
+        {
+            spawner.LoadSpawner(_newSpawner);
+            spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
+            size = _newSpawner.size;
+            Camera.main.transform.position = new Vector3(
+                transform.position.x + (size.x / 2) - .5f + size.x,
+                transform.position.y + 15,
+                transform.position.z + (size.x / 2) - .5f);
+            byCode = false;
+        }
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false); ScreenshotHandler.instance.TakeScreenshot(128, 128);
     }
 
     public IEnumerator LoadingMapById(string id)

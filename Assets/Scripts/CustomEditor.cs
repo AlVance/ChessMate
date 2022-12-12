@@ -570,16 +570,18 @@ public class CustomEditor : MonoBehaviour
 
     public void SaveMap()
     {
-        StartCoroutine(SaveMapRoutine());
+        if (newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
+        StartCoroutine(gridGen.LoadingMapBySpawner(newSpawner));
+        CloseEditor();
+        //StartCoroutine(SaveMapRoutine());
     }
 
     public IEnumerator SaveMapRoutine()
     {
-        if(newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.Add(newSpawner.kingPos);
-        if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.Add(newSpawner.kingPos);
-        if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
-        if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
-        if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
         
         yield return new WaitForSeconds(1f);
 
@@ -590,7 +592,7 @@ public class CustomEditor : MonoBehaviour
         data[2] = code;
         ServerCtrl.Instance.SaveMap(data);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
-
+        /*
         ServerCtrl.Instance.GetCountTotal();
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
@@ -599,8 +601,9 @@ public class CustomEditor : MonoBehaviour
         int _indx = str.Length - 2;
         gridGen.LoadNewMap(_indx.ToString());
         yield return new WaitWhile(() => gridGen.finishedGen == false);
-        ScreenshotHandler.instance.TakeScreenshot(128, 128, code);
-        yield return new WaitForSeconds(.01f);
+        */
+        StartCoroutine(ScreenshotHandler.instance.StartUploading(code));
+        //yield return new WaitForSeconds(.01f);
 
         CloseEditor();
     }
