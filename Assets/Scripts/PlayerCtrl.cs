@@ -268,8 +268,8 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeLU = Type.Peon;
             List<CellData> cellsLU = new List<CellData>(0);
 
-            if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; Debug.Log("X urDiago " + lu_stp); }
-            else { lu_stp = (int)_GridGen.size.y - actualPos.y; Debug.Log("Y urDiago " + lu_stp); }
+            if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; }
+            else { lu_stp = (int)_GridGen.size.y - actualPos.y; }
 
             StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, enemLU, _newTypeLU, cellsLU));
         }

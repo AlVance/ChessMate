@@ -27,6 +27,9 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private Animator LevelTransitorAnim;
     [SerializeField] private GameObject[] currentLevelCounterGO;
 
+    public GameObject succesTest;
+    public GameObject failTest;
+
     public bool finishedGen;
 
     public IEnumerator ResetMap()
@@ -51,6 +54,8 @@ public class GridGenerator : MonoBehaviour
     {
         LevelTransitorAnim.SetBool("IsLoadingLevel", false);
         spawner._gridGen = this;
+        succesTest.SetActive(false);
+        failTest.SetActive(false);
         //LoadMapByIndx(0);
         //LoadNewMap(SystemInfo.deviceUniqueIdentifier);
 
@@ -178,10 +183,17 @@ public class GridGenerator : MonoBehaviour
             if (!onTesting) StartCoroutine(ChangeToNextLevel());
             else
             {
-                StartCoroutine(customEditor.SaveMapRoutine());
-                onTesting = false;
+                succesTest.SetActive(true);
+                //StartCoroutine(customEditor.SaveMapRoutine());
+                //onTesting = false;
             }
         }
+    }
+
+    public void SaveMapEditor()
+    {
+        StartCoroutine(customEditor.SaveMapRoutine());
+        onTesting = false;
     }
 
     public bool onStepped = false;
@@ -249,7 +261,6 @@ public class GridGenerator : MonoBehaviour
     string lastMap;
     bool byCode;
 
-
     public void LoadNewMap(string id)
     {
         //lastMap = id;
@@ -276,7 +287,7 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitForSeconds(.01f);
         StopAllCoroutines();
         StartCoroutine(ResetMap());
-        LevelTransitorAnim.SetBool("IsLoadingLevel", false); ScreenshotHandler.instance.TakeScreenshot(128, 128);
+        LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
 
     public IEnumerator LoadingMapById(string id)
@@ -385,8 +396,17 @@ public class GridGenerator : MonoBehaviour
 
     public void ReloadMap()
     {
-        if (!byCode) StartCoroutine(LoadingMapById(lastMap));
-        else StartCoroutine(LoadingMapByCode(lastMap));
+        if (!onTesting)
+        {
+            if (!byCode) StartCoroutine(LoadingMapById(lastMap));
+            else StartCoroutine(LoadingMapByCode(lastMap));
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(ResetMap());
+            LevelTransitorAnim.SetBool("IsLoadingLevel", false); 
+        }
     }
 
     public IEnumerator ChangeToNextLevel()
@@ -416,6 +436,7 @@ public class GridGenerator : MonoBehaviour
             _enemies[e].SetInCell();
         }
         _player.SetInCell();
+        if(onTesting && finishedGen ==false) ScreenshotHandler.instance.TakeScreenshot(256, 256);
         finishedGen = true;
     }
 

@@ -53,6 +53,7 @@ public class CustomEditor : MonoBehaviour
     public GameObject enemiesScroll;
     public GameObject[] slctEnemy;
     public GameObject loadPanel;
+    public GameObject inTesting;
 
     public TextMeshProUGUI user_idTxt;
 
@@ -161,7 +162,7 @@ public class CustomEditor : MonoBehaviour
     public void OnClickBtn(int _indx)
     {
         EditorCell _cell = btns[_indx].GetComponent<EditorCell>();
-        Debug.Log("Indx btn " + _indx);
+        //Debug.Log("Indx btn " + _indx + " X " + _cell.ids.x + " Z " + _cell.ids.y);
         switch (actualTypeMap)
         {
             case 0: // Player 
@@ -185,7 +186,7 @@ public class CustomEditor : MonoBehaviour
                     case 0:
                         if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posTrr_crd.Add(gridGen.CellById(_indx).ids);
+                            newSpawner.posTrr_crd.Add(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[0]);
                             btns[_indx].GetComponent<EditorCell>().ChangeImage(2);
                             _cell.isCard = true;
@@ -193,7 +194,7 @@ public class CustomEditor : MonoBehaviour
                         }
                         else if (!_cell.isPlayer && !_cell.isEnemy && _cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posTrr_crd.Remove(gridGen.CellById(_indx).ids);
+                            newSpawner.posTrr_crd.Remove(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
                             btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                             _cell.isCard = false;
@@ -203,7 +204,7 @@ public class CustomEditor : MonoBehaviour
                     case 1:
                         if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posCab_crd.Add(gridGen.CellById(_indx).ids);
+                            newSpawner.posCab_crd.Add(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[1]);
                             btns[_indx].GetComponent<EditorCell>().ChangeImage(3);
                             _cell.isCard = true;
@@ -211,7 +212,7 @@ public class CustomEditor : MonoBehaviour
                         }
                         else if (!_cell.isPlayer && !_cell.isEnemy && _cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posCab_crd.Remove(gridGen.CellById(_indx).ids);
+                            newSpawner.posCab_crd.Remove(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
                             btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
                             _cell.isCard = false;
@@ -221,7 +222,7 @@ public class CustomEditor : MonoBehaviour
                     case 2:
                         if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posAlf_crd.Add(gridGen.CellById(_indx).ids);
+                            newSpawner.posAlf_crd.Add(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colorsCard[2]);
                             btns[_indx].GetComponent<EditorCell>().ChangeImage(4);
                             _cell.isCard = true;
@@ -229,9 +230,9 @@ public class CustomEditor : MonoBehaviour
                         }
                         else if (!_cell.isPlayer && !_cell.isEnemy && _cell.isCard && !_cell.isObstacle && !_cell.isKing)
                         {
-                            newSpawner.posAlf_crd.Remove(gridGen.CellById(_indx).ids);
+                            newSpawner.posAlf_crd.Remove(_cell.ids);
                             //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
+                            _cell.ChangeImage(0);
                             _cell.isCard = false;
                             _cell.typeCard = 0;
                         }
@@ -241,16 +242,16 @@ public class CustomEditor : MonoBehaviour
             case 2: // Obstaculos 
                 if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                 {
-                    newSpawner.posObst.Add(gridGen.CellById(_indx).ids);
+                    newSpawner.posObst.Add(_cell.ids);
                     //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[2]);
-                    btns[_indx].GetComponent<EditorCell>().ChangeImage(5);
+                    _cell.ChangeImage(5);
                     _cell.isObstacle = true;
                 }
                 else if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && _cell.isObstacle && !_cell.isKing)
                 {
-                    newSpawner.posObst.Remove(gridGen.CellById(_indx).ids);
+                    newSpawner.posObst.Remove(_cell.ids);
                     //btns[gridGen.CellById(_indx).idTotal].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                    btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
+                    _cell.ChangeImage(0);
                     _cell.isObstacle = false;
                 }
                 break;
@@ -262,16 +263,16 @@ public class CustomEditor : MonoBehaviour
                         if (newSpawner.enemyRoute00.Count == 0)
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[3]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(6);
+                            _cell.ChangeImage(6);
                             _cell.SetRoute(1);
                         }
                         else
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[4]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(7);
+                            _cell.ChangeImage(7);
                             _cell.SetRoute(1);
                         }
-                        newSpawner.enemyRoute00.Add(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute00.Add(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute00.Count.ToString();
                     }
                     else if (2 == actualEnemySlct)
@@ -279,16 +280,16 @@ public class CustomEditor : MonoBehaviour
                         if (newSpawner.enemyRoute01.Count == 0)
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[3]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(6);
+                            _cell.ChangeImage(6);
                             _cell.SetRoute(2);
                         }
                         else
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[4]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(7);
+                            _cell.ChangeImage(7);
                             _cell.SetRoute(2);
                         }
-                        newSpawner.enemyRoute01.Add(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute01.Add(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute01.Count.ToString();
                     }
                     else if (3 == actualEnemySlct)
@@ -296,16 +297,16 @@ public class CustomEditor : MonoBehaviour
                         if (newSpawner.enemyRoute02.Count == 0)
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[3]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(6);
+                            _cell.ChangeImage(6);
                             _cell.SetRoute(3);
                         }
                         else
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[4]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(7);
+                            _cell.ChangeImage(7);
                             _cell.SetRoute(3);
                         }
-                        newSpawner.enemyRoute02.Add(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute02.Add(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute02.Count.ToString();
                     }
                     else if (4 == actualEnemySlct)
@@ -313,16 +314,16 @@ public class CustomEditor : MonoBehaviour
                         if (newSpawner.enemyRoute03.Count == 0)
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[3]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(6);
+                            _cell.ChangeImage(6);
                             _cell.SetRoute(4);
                         }
                         else
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[4]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(7);
+                            _cell.ChangeImage(7);
                             _cell.SetRoute(4);
                         }
-                        newSpawner.enemyRoute03.Add(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute03.Add(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute03.Count.ToString();
                     }
                     else if (5 == actualEnemySlct)
@@ -330,16 +331,16 @@ public class CustomEditor : MonoBehaviour
                         if (newSpawner.enemyRoute04.Count == 0)
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[3]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(6);
+                            _cell.ChangeImage(6);
                             _cell.SetRoute(5);
                         }
                         else
                         {
                             //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[4]);
-                            btns[_indx].GetComponent<EditorCell>().ChangeImage(7);
+                            _cell.ChangeImage(7);
                             _cell.SetRoute(5);
                         }
-                        newSpawner.enemyRoute04.Add(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute04.Add(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute04.Count.ToString();
                     }
                 }
@@ -373,35 +374,36 @@ public class CustomEditor : MonoBehaviour
                     }
 
                     //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[0]);
-                    btns[_indx].GetComponent<EditorCell>().ChangeImage(0);
+                    _cell.ChangeImage(0);
                     _cell.isEnemy = false;
                 }
                 else if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing && _cell.onRoute)
                 {
+                    Debug.Log("Se va a borrar " + _indx + " con X " + _cell.ids.x + " Z " + _cell.ids.y);
                     _cell.ClearRoute(actualEnemySlct);
                     if (actualEnemySlct == 1)
                     {
-                        newSpawner.enemyRoute00.Remove(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute00.Remove(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute00.Count.ToString();
                     }
                     else if (actualEnemySlct == 2)
                     {
-                        newSpawner.enemyRoute01.Remove(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute01.Remove(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute01.Count.ToString();
                     }
                     else if (actualEnemySlct == 3)
                     {
-                        newSpawner.enemyRoute02.Remove(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute02.Remove(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute02.Count.ToString();
                     }
                     else if (actualEnemySlct == 4)
                     {
-                        newSpawner.enemyRoute03.Remove(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute03.Remove(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute03.Count.ToString();
                     }
                     else if (actualEnemySlct == 5)
                     {
-                        newSpawner.enemyRoute01.Remove(gridGen.CellById(_indx).ids);
+                        newSpawner.enemyRoute01.Remove(_cell.ids);
                         _tmp.text = newSpawner.enemyRoute04.Count.ToString();
                     }
                 }
@@ -415,9 +417,9 @@ public class CustomEditor : MonoBehaviour
                         btns[gridGen.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().ChangeImage(0);
                         btns[gridGen.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().isKing = false;
                     }
-                    newSpawner.kingPos = gridGen.CellById(_indx).ids;
+                    newSpawner.kingPos = _cell.ids;
                     //btns[_indx].GetComponent<EditorCell>().ChangeColor(colors[5]);
-                    btns[_indx].GetComponent<EditorCell>().ChangeImage(8);
+                    _cell.ChangeImage(8);
                     _cell.isKing = true;
                 }
             break;
@@ -570,6 +572,7 @@ public class CustomEditor : MonoBehaviour
 
     public void SaveMap()
     {
+        inTesting.SetActive(true);
         if (newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
@@ -582,7 +585,6 @@ public class CustomEditor : MonoBehaviour
 
     public IEnumerator SaveMapRoutine()
     {
-        
         yield return new WaitForSeconds(1f);
 
         string code = Parser.instance.GenerationCode();
@@ -592,7 +594,10 @@ public class CustomEditor : MonoBehaviour
         data[2] = code;
         ServerCtrl.Instance.SaveMap(data);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
-        /*
+
+        StartCoroutine(ScreenshotHandler.instance.StartUploading(code));
+
+        
         ServerCtrl.Instance.GetCountTotal();
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
@@ -600,12 +605,33 @@ public class CustomEditor : MonoBehaviour
         Debug.Log("Total hay " + (str.Length - 1));
         int _indx = str.Length - 2;
         gridGen.LoadNewMap(_indx.ToString());
+        inTesting.SetActive(false); 
         yield return new WaitWhile(() => gridGen.finishedGen == false);
-        */
-        StartCoroutine(ScreenshotHandler.instance.StartUploading(code));
+        
         //yield return new WaitForSeconds(.01f);
-
         CloseEditor();
+    }
+
+    public void ContinueEditing()
+    {
+        if(newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.RemoveAt(newSpawner.enemyRoute00.Count - 1);
+        if(newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.RemoveAt(newSpawner.enemyRoute01.Count - 1);
+        if(newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.RemoveAt(newSpawner.enemyRoute02.Count - 1);
+        if(newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.RemoveAt(newSpawner.enemyRoute03.Count - 1);
+        if(newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.RemoveAt(newSpawner.enemyRoute04.Count - 1);
+
+        for (int i = 0; i < gridParent.childCount; i++)
+        {
+            int indx = i;
+            Debug.Log("Btn edit " + indx);
+            gridParent.GetChild(indx).GetComponent<Button>().onClick.RemoveAllListeners();
+            gridParent.GetChild(indx).gameObject.name += " ||| " + indx;
+            gridParent.GetChild(indx).GetComponent<Button>().onClick.AddListener(() => OnClickBtn(indx));
+        }
+        
+        gridGen.succesTest.SetActive(false);
+        gridGen.failTest.SetActive(false);
+        OpenEditor();
     }
 
     public void ChangeTypeMap(int _newTypeMap)
@@ -625,6 +651,7 @@ public class CustomEditor : MonoBehaviour
                 break;
             case 3:
                 title_txt.text = "Mapa de Enemigos";
+                actualEnemySlct = 1;
                 break;
             case 4:
                 title_txt.text = "Mapa de Rey";
@@ -657,6 +684,18 @@ public class CustomEditor : MonoBehaviour
         gridPanel.SetActive(false);
         create.SetActive(true);
         changeType.SetActive(false);
+        changeCard.SetActive(false);
+        enemiesScroll.SetActive(false);
+        loadPanel.SetActive(false);
+    }
+    public void OpenEditor()
+    {
+        ingame.SetActive(false);
+        titleMap.SetActive(true);
+        fullEditor.SetActive(true);
+        gridPanel.SetActive(true);
+        create.SetActive(false);
+        changeType.SetActive(true);
         changeCard.SetActive(false);
         enemiesScroll.SetActive(false);
         loadPanel.SetActive(false);

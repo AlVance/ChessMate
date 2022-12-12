@@ -12,6 +12,7 @@ public class ScreenshotHandler : MonoBehaviour
     public string url;
 
     public Camera myCamera;
+    public RawImage _rwImg;
     public bool takeScreenshotOnNextFrame;
 
     int _width = 256;
@@ -24,7 +25,6 @@ public class ScreenshotHandler : MonoBehaviour
     }
 
     public byte[] lastScreenshot = new byte[0];
-    public string lastScreenStr;
 
     private void OnPostRender()
     {
@@ -36,23 +36,22 @@ public class ScreenshotHandler : MonoBehaviour
             Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
             Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
             renderResult.ReadPixels(rect, 0, 0);
-            lastScreenStr = renderResult.ToString();
+            _rwImg.texture = renderResult;
             lastScreenshot = renderResult.EncodeToPNG();
             string result = String.Join(" ", lastScreenshot);
-            //StartCoroutine(StartUploading(lastScreenshot));
             Debug.Log("photoSTR " + result);
-
-            RenderTexture.ReleaseTemporary(renderTexture);
-            myCamera.targetTexture = null;
+            //StartCoroutine(StartUploading(lastScreenshot));
         }
     }
+
     public string newCode;
     public IEnumerator StartUploading(string code = "")
     {
         if (code != "") newCode = code;
         WWWForm form = new WWWForm();
+        byte[] textureBytes = lastScreenshot;
 
-        form.AddBinaryData("myimage", lastScreenshot, newCode + "_prev.png", "image/png");
+        form.AddBinaryData("myimage", textureBytes, newCode + "_prev.png", "image/png");
 
         WWW w = new WWW(url, form);
 
@@ -66,6 +65,10 @@ public class ScreenshotHandler : MonoBehaviour
             Debug.Log(w.text);
         }
         w.Dispose();
+
+
+        RenderTexture.ReleaseTemporary(myCamera.targetTexture);
+        myCamera.targetTexture = null;
     }
 
     public Texture finishTxtr = null;
@@ -127,15 +130,5 @@ public class ScreenshotHandler : MonoBehaviour
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenshotOnNextFrame = true;
         newCode = _code;
-    }
-
-    public static byte[] GetScreen()
-    {
-        return ScreenshotHandler.instance.GetScreenshot();
-    }
-
-    public static void TakeScreenshot_Static(int width, int height)
-    {
-        instance.TakeScreenshot(width, height);
     }
 }

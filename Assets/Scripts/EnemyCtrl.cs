@@ -105,7 +105,11 @@ public class EnemyCtrl : MonoBehaviour
         if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
         else
         {
-            if(finishRoute || _GridGen.CellById(actualPos).isPlayer)_GridGen.ReloadMap();
+            if (finishRoute || _GridGen.CellById(actualPos).isPlayer)
+            {
+                _GridGen.failTest.SetActive(true);
+                //_GridGen.ReloadMap();
+            }
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;
             isMoving = false;
