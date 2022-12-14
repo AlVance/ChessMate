@@ -13,6 +13,7 @@ public class ServerCtrl : MonoBehaviour
     public TMP_InputField inpPreview;
 
     public GameObject loading;
+    public bool serviceFinish = false;
 
     public void Awake()
     {
@@ -97,6 +98,11 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("saveMap", _data));
     }
 
+    public void EditMapByCode(string[] _data)
+    {
+        StartCoroutine(UseService("editMapByCode", _data));
+    }
+
     public void EditMap()
     {
         string[] data = new string[3];
@@ -106,15 +112,13 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(UseService("editMap", data));
     }
 
-    public bool serviceFinish = false;
     IEnumerator UseService(string _service, string[] _data)
     {
-        serviceFinish = false;
         loading.SetActive(true);
         StartCoroutine(server.UseService(_service, _data));
         yield return new WaitForSeconds(.5f);
-        yield return new WaitUntil(() => !server.ocupied);
+        yield return new WaitUntil(() => serviceFinish);
         loading.SetActive(false);
-        serviceFinish = true; 
+        serviceFinish = false;
     }
 }

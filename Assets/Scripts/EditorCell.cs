@@ -34,6 +34,7 @@ public class EditorCell : MonoBehaviour
 
     public void ChangeImage(int indx)
     {
+        if(_img ==null) _img = transform.Find("Image").GetComponent<Image>();
         _img.sprite = typeImg[indx];
     }
 
@@ -41,14 +42,17 @@ public class EditorCell : MonoBehaviour
     {
         if (typeEnemy == "") typeEnemy = _indx.ToString();
         else typeEnemy += _indx.ToString();
-        if (_tmp.gameObject.activeInHierarchy)
+        if (_tmp != null)
         {
-            _tmp.text = typeEnemy;
-        }
-        else
-        {
-            _tmp.gameObject.SetActive(true);
-            _tmp.text = typeEnemy.ToString();
+            if (_tmp.gameObject.activeInHierarchy)
+            {
+                _tmp.text = typeEnemy;
+            }
+            else
+            {
+                _tmp.gameObject.SetActive(true);
+                _tmp.text = typeEnemy.ToString();
+            }
         }
         if (start) isEnemy = true;
         else onRoute = true;

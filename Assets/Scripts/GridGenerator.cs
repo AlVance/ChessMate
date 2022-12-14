@@ -41,7 +41,6 @@ public class GridGenerator : MonoBehaviour
         onStepped = false;
         for (int i = 0; i < rootAll.childCount; i++)
         {
-
             Destroy(rootAll.GetChild(i).gameObject);
         }
         yield return new WaitUntil(() => rootAll.childCount == 0);
@@ -302,7 +301,7 @@ public class GridGenerator : MonoBehaviour
         string[] data = response.Split("+");
         data[3] = Parser.instance.ParseNewMapCustomToJson(data[3]);
         
-        if (data != null)
+        if (JsonUtility.FromJson<NewMap>(data[3]) != null)
         {
             NewMap _newSpawner = JsonUtility.FromJson<NewMap>(data[3]);
             spawner.LoadSpawner(_newSpawner);
@@ -324,16 +323,15 @@ public class GridGenerator : MonoBehaviour
     {
         finishedGen = false;
         ServerCtrl.Instance.LoadMapByCode(code);
-        //ServerCtrl.Instance.LoadMapId(id);
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
-        Debug.Log("Cargado  preParse" + response);
-        response = Parser.instance.ParseNewMapCustomToJson(response);
-        Debug.Log("Cargado  postParse" + response);
+        string[] data = response.Split("+");
+        data[3] = Parser.instance.ParseNewMapCustomToJson(data[3]);
+        Debug.Log("Mapa cargado " + data[3]);
 
-        if (JsonUtility.FromJson<NewMap>(response) != null)
+        if (JsonUtility.FromJson<NewMap>(data[3]) != null)
         {
-            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(response);
+            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(data[3]);
             spawner.LoadSpawner(_newSpawner);
             spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
             size = _newSpawner.size;
@@ -390,7 +388,6 @@ public class GridGenerator : MonoBehaviour
             }
         }
         string path = Application.persistentDataPath + "/Maps/";
-        //LoadNewMap(path + "map_" + _level +".json");
         LoadNewMap(_level.ToString());
     }
 

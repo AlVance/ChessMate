@@ -10,13 +10,12 @@ public class Server : ScriptableObject
     public string server;
     public Service[] services;
 
-    public bool ocupied = false;
     public Response response;
     public Parser parser;
 
     public IEnumerator UseService(string _name, string[] _data)
     {
-        ocupied = true;
+        ServerCtrl.Instance.serviceFinish = false;
         WWWForm form = new WWWForm();
         Service s = new Service();
         for (int i = 0; i < services.Length; i++)
@@ -26,13 +25,15 @@ public class Server : ScriptableObject
                 s = services[i];
             }
         }
+        Debug.Log(server + "/" + s.URL);
         for (int i = 0; i < s.parameters.Length; i++)
         {
+            Debug.Log("Params " + s.parameters[i]);
+            Debug.Log("Data " + _data[i]);
             form.AddField(s.parameters[i], _data[i]);
         }
 
         UnityWebRequest www = UnityWebRequest.Post(server + "/" + s.URL, form);
-        Debug.Log(server + "/" + s.URL);
         yield return www.SendWebRequest();
         if(www.result != UnityWebRequest.Result.Success)
         {
@@ -44,7 +45,7 @@ public class Server : ScriptableObject
             
             response = JsonUtility.FromJson<Response>(www.downloadHandler.text);
         }
-        ocupied = false;
+        ServerCtrl.Instance.serviceFinish = true;
     }
 }
 
