@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class AnimLoading : MonoBehaviour
 {
@@ -14,11 +15,13 @@ public class AnimLoading : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < stones.Length; i++)
-        {
-            stones[i].SetActive(false);
-        }
-        StartCoroutine(Spawning(true));
+        //for (int i = 0; i < stones.Length; i++)
+        //{
+        //    stones[i].SetActive(false);
+        //}
+        //StartCoroutine(Spawning(true));
+
+        ChargeAnim();
     }
 
     public IEnumerator Spawning(bool _active)
@@ -41,5 +44,14 @@ public class AnimLoading : MonoBehaviour
         }
 
         StartCoroutine(Spawning(!_active));
+    }
+
+    private void ChargeAnim()
+    {
+        var sequence = DOTween.Sequence();
+        foreach (var shape in stones)
+        {
+            sequence.Append(shape.transform.DOMoveY(-5, 0.09f)).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        }      
     }
 }
