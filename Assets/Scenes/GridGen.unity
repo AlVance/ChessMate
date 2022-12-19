@@ -828,7 +828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.70980394}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2406,7 +2406,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1814355121}
         m_TargetAssemblyTypeName: Gallery, Assembly-CSharp
         m_MethodName: SetEditing
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14876,6 +14876,10 @@ MonoBehaviour:
   contentGallery: {fileID: 2145475005}
   _gridGen: {fileID: 1102833602}
   _customEditor: {fileID: 368237478}
+  _scrollImg: {fileID: 73469080}
+  _colors:
+  - {r: 1, g: 1, b: 1, a: 0.78431374}
+  - {r: 0.4481132, g: 0.47808662, b: 1, a: 0.78431374}
 --- !u!1 &1822354203
 GameObject:
   m_ObjectHideFlags: 0

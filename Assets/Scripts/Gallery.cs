@@ -14,6 +14,9 @@ public class Gallery : MonoBehaviour
     public GridGenerator _gridGen;
     public CustomEditor _customEditor;
 
+    public Image _scrollImg;
+    public Color[] _colors;
+
     public void GetCountTotal()
     {
         StartCoroutine(LoadCountTotalGallery());
@@ -57,9 +60,11 @@ public class Gallery : MonoBehaviour
     }
 
     bool editing;
-    public void SetEditing(bool _onEdit)
+    public void SetEditing()
     {
-        editing = _onEdit;
+        editing = !editing;
+        if (editing) _scrollImg.color = _colors[1];
+        else _scrollImg.color = _colors[0];
     }
 
     public IEnumerator SetTexture(string code, RawImage finishTxtr)
