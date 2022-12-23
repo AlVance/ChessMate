@@ -11,6 +11,8 @@ public class Gallery : MonoBehaviour
     public GameObject itemGallery;
     public Transform contentGallery;
 
+    public GameObject galleryPanel;
+
     public GridGenerator _gridGen;
     public CustomEditor _customEditor;
 
@@ -41,22 +43,39 @@ public class Gallery : MonoBehaviour
             string[] data = items[i].Split("+");
             string _id = data[0];
             string _code = data[2];
+            NewMap _newMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
             GameObject newItem = Instantiate(itemGallery, contentGallery);
-            newItem.transform.Find("Code").GetComponent<TextMeshProUGUI>().text = _code;
+            ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
+            Debug.Log("item de gallery " + _newMap.size);
 
-            StartCoroutine(SetTexture(data[2], newItem.transform.Find("Preview").GetComponent<RawImage>()));
+            itemGllr.SetAuthor("Nombre");
+            itemGllr.SetCode(_code);
+            itemGllr.SetSize(_newMap.size.x + "x" + _newMap.size.y);
+            int countEnem = 0;
+            if (_newMap.enemyRoute00.Count != 0) countEnem++;
+            if (_newMap.enemyRoute01.Count != 0) countEnem++;
+            if (_newMap.enemyRoute02.Count != 0) countEnem++;
+            if (_newMap.enemyRoute03.Count != 0) countEnem++;
+            if (_newMap.enemyRoute04.Count != 0) countEnem++;
+            itemGllr.SetEnemies(countEnem.ToString());
+            itemGllr.SetPercent("27%");
+            itemGllr.SetVisits("27k");
+            itemGllr.SetLikes("2727");
+            StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
+            itemGllr.SetTower(_newMap.posTrr_crd.Count != 0);
+            itemGllr.SetHorse(_newMap.posCab_crd.Count != 0);
+            itemGllr.SetBishop(_newMap.posAlf_crd.Count != 0);
+            
 
-            /*
-            ScreenshotHandler.instance.GetTextureStart(data[2]);
-            yield return new WaitWhile(() => ScreenshotHandler.instance.finishLoadImage == false);
-            if(ScreenshotHandler.instance.finishTxtr != null)
-            {
-                newItem.transform.Find("Preview").GetComponent<RawImage>().texture = ScreenshotHandler.instance.finishTxtr;
-            }
-            */
-            newItem.transform.Find("PlayBtn").GetComponent<Button>().onClick.AddListener(() => LoadMapById(_id, _code));
+            itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _code));
+            itemGllr.btn.onLongPress.AddListener(() => CopyCode(_code));
         }
-        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, ((contentGallery.childCount / 3) +1 )* 220);
+        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, contentGallery.childCount * 300);
+    }
+
+    public void CopyCode(string code)
+    {
+        Debug.Log("El codigo copiado es " + code);
     }
 
     bool editing;
@@ -87,12 +106,12 @@ public class Gallery : MonoBehaviour
         if (!editing)
         {
             _gridGen.LoadNewMap(id);
-            gameObject.SetActive(false);
+            galleryPanel.SetActive(false);
         }
         else
         {
             _customEditor.StartEdit(code);
-            gameObject.SetActive(false);
+            galleryPanel.SetActive(false);
             editing = false;
         }
     }

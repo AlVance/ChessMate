@@ -14,6 +14,7 @@ public class GridGenerator : MonoBehaviour
 
     public List<GameObject> cells = new List<GameObject>(0);
 
+    public WindowController _windowCtrl;
     public CustomEditor customEditor;
     public Spawner spawner;
     public Transform rootAll;
@@ -63,6 +64,7 @@ public class GridGenerator : MonoBehaviour
 
     public IEnumerator GenGrid()
     {
+
         for (int xSz = 0; xSz < size.x; xSz++)
         {
             for (int zSz = 0; zSz < size.y; zSz++)
@@ -93,6 +95,7 @@ public class GridGenerator : MonoBehaviour
         yield return new WaitForSeconds(.1f);
 
         StartCoroutine(spawner.StartSpawn());
+        _windowCtrl.OpenInGameCanvas();
     }
 
     public IEnumerator RegenGridEditor(int xIndx, int zIndx, CustomEditor _editor)

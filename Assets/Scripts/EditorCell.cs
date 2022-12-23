@@ -54,8 +54,65 @@ public class EditorCell : MonoBehaviour
                 _tmp.text = typeEnemy.ToString();
             }
         }
-        if (start) isEnemy = true;
-        else onRoute = true;
+        if (start)
+        {
+            ChangeImage(6);
+            isEnemy = true;
+        }
+        else
+        {
+            ChangeImage(7);
+            onRoute = true;
+        }
+    }
+
+    public void SetKing()
+    {
+        ChangeImage(8);
+        isKing = true;
+    }
+
+    public void SetPlayer()
+    {
+        ChangeImage(1);
+        isPlayer = true;
+    }
+
+    public void RemovePlayer()
+    {
+        ChangeImage(0);
+        isPlayer = false;
+    }
+
+    public void SetCard(int value)
+    {
+        ChangeImage(value + 2);
+        isCard = true;
+        typeCard = value;
+    }
+
+    public void RemoveCard()
+    {
+        ChangeImage(0);
+        isCard = false;
+        typeCard = 0;
+    }
+
+    public void SetObstacle()
+    {
+        ChangeImage(5);
+        isObstacle = true;
+    }
+
+    public void RemoveObstacle()
+    {
+        ChangeImage(0);
+        isObstacle = false;
+    }
+
+    public void RemoveEnemy()
+    {
+
     }
 
     public void ClearRoute(int _indx)
