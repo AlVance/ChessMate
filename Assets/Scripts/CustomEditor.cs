@@ -47,7 +47,6 @@ public class CustomEditor : MonoBehaviour
     public TextMeshProUGUI user_idTxt;
 
 
-
     public void Start()
     {
         user_idTxt.text = SystemInfo.deviceUniqueIdentifier;
