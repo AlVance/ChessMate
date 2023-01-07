@@ -8,7 +8,7 @@ public class MainMenusManager : MonoBehaviour
     [Header("TAP")]
     public RectTransform TAPtransform;
     public float TAPTimeMoving;
-    public int TAP_Y;
+    public float TAP_Y;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class MainMenusManager : MonoBehaviour
 
     public void TAPStart()
     {
-        TAPtransform.DOMoveY(TAP_Y, TAPTimeMoving).SetEase(Ease.InOutBack);
+        TAPtransform.DOMoveY(TAP_Y * Screen.height, TAPTimeMoving).SetEase(Ease.InOutBack);
 
     }
 }
