@@ -197,10 +197,8 @@ public class MapManager : MonoBehaviour
         
         if (JsonUtility.FromJson<NewMap>(_map) != null)
         {
-            NewMap _newSpawner = JsonUtility.FromJson<NewMap>(_map);
-            spawner.LoadSpawner(_newSpawner);
-            spawner.player.GetComponent<PlayerCtrl>().startPos = _newSpawner.startPos;
-            size = _newSpawner.size;
+            currentMap = JsonUtility.FromJson<NewMap>(_map);
+            size = currentMap.size;
             Camera.main.transform.position = new Vector3(
                 transform.position.x + (size.x / 2) - .5f + size.x,
                 transform.position.y + 15,
