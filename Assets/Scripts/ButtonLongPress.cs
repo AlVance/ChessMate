@@ -13,19 +13,23 @@ public class ButtonLongPress : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public UnityEvent onClick = new UnityEvent();
 
     public UnityEvent onLongPress = new UnityEvent();
+    Vector2 startPos;
 
     public void OnPointerDown(PointerEventData eventData)
     {
         held = false;
+        startPos = eventData.position;
         Invoke("OnLongPress", holdTime);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         CancelInvoke("OnLongPress");
-
-        if (!held)
-            onClick.Invoke();
+        if (eventData.position == startPos)
+        {
+            if (!held)
+                onClick.Invoke();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

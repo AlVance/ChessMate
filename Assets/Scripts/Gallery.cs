@@ -68,14 +68,9 @@ public class Gallery : MonoBehaviour
             
 
             itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _code));
-            itemGllr.btn.onLongPress.AddListener(() => CopyCode(_code));
+            itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
         }
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, contentGallery.childCount * 300);
-    }
-
-    public void CopyCode(string code)
-    {
-        Debug.Log("El codigo copiado es " + code);
     }
 
     bool editing;

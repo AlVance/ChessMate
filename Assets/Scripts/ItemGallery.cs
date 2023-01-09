@@ -20,7 +20,26 @@ public class ItemGallery : MonoBehaviour
     public GameObject horseCrd_obj;
     public GameObject bishopCrd_obj;
 
+    public GameObject alertTxt;
+
     public ButtonLongPress btn;
+
+    private void Start()
+    {
+        alertTxt.SetActive(false);   
+    }
+
+    public void CopyCode()
+    {
+        alertTxt.SetActive(true);
+        Debug.Log("El codigo copiado es " + code_txt.text);
+        Invoke("OffAlert", 1f);
+    }
+
+    public void OffAlert()
+    {
+        alertTxt.SetActive(false);
+    }
 
 
     public void SetAuthor(string _author){ author_txt.text = _author; }
