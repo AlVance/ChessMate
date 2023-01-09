@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    public GridGenerator _GridGen;
+    public MapManager _mapMngr;
 
     public Vector2Int startPos;
     public Vector2Int actualPos;
@@ -25,9 +25,9 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Start()
     {
-        actualPos = startPos; 
-        _GridGen.CellById(actualPos).isPlayer = true;
-        cellTargetPos = _GridGen.CellById(actualPos).transform.position;
+        actualPos = startPos;
+        _mapMngr.CellById(actualPos).isPlayer = true;
+        cellTargetPos = _mapMngr.CellById(actualPos).transform.position;
         playerAnim = this.GetComponent<Animator>();        
     }
 
@@ -51,84 +51,84 @@ public class PlayerCtrl : MonoBehaviour
             Vector2 up_c = new Vector2(actualPos.x, actualPos.y + 1);
 
 
-            if (actualPos.x + 1 < _GridGen.size.x) //Right
+            if (actualPos.x + 1 < _mapMngr.size.x) //Right
             {
-                if (!_GridGen.CellById(right_c).isEnemy)
+                if (!_mapMngr.CellById(right_c).isEnemy)
                 {
-                    if (!_GridGen.CellById(right_c).isKing)
+                    if (!_mapMngr.CellById(right_c).isKing)
                     {
-                        _GridGen.ActiveCellBtn(_GridGen.CellById(right_c));
-                        _GridGen.CellById(right_c).prevStep.Add(_GridGen.CellById(right_c));
+                        _mapMngr.ActiveCellBtn(_mapMngr.CellById(right_c));
+                        _mapMngr.CellById(right_c).prevStep.Add(_mapMngr.CellById(right_c));
                     }
                 }
             }
             if (actualPos.x - 1 >= 0) //Left
             {
-                if (!_GridGen.CellById(left_c).isEnemy)
+                if (!_mapMngr.CellById(left_c).isEnemy)
                 {
-                    if (!_GridGen.CellById(left_c).isKing)
+                    if (!_mapMngr.CellById(left_c).isKing)
                     {
-                        _GridGen.ActiveCellBtn(_GridGen.CellById(left_c));
-                        _GridGen.CellById(left_c).prevStep.Add(_GridGen.CellById(left_c));
+                        _mapMngr.ActiveCellBtn(_mapMngr.CellById(left_c));
+                        _mapMngr.CellById(left_c).prevStep.Add(_mapMngr.CellById(left_c));
                     }
                 }
             }
-            if (actualPos.y + 1 < _GridGen.size.y) //Up
+            if (actualPos.y + 1 < _mapMngr.size.y) //Up
             {
-                if (!_GridGen.CellById(up_c).isEnemy)
+                if (!_mapMngr.CellById(up_c).isEnemy)
                 {
-                    if (!_GridGen.CellById(up_c).isKing)
+                    if (!_mapMngr.CellById(up_c).isKing)
                     {
-                        _GridGen.ActiveCellBtn(_GridGen.CellById(up_c));
-                        _GridGen.CellById(up_c).prevStep.Add(_GridGen.CellById(up_c));
+                        _mapMngr.ActiveCellBtn(_mapMngr.CellById(up_c));
+                        _mapMngr.CellById(up_c).prevStep.Add(_mapMngr.CellById(up_c));
                     }
                 }
             }
             if (actualPos.y - 1 >= 0) //Down
             {
-                if (!_GridGen.CellById(down_c).isEnemy)
+                if (!_mapMngr.CellById(down_c).isEnemy)
                 {
-                    if (!_GridGen.CellById(down_c).isKing)
+                    if (!_mapMngr.CellById(down_c).isKing)
                     {
-                        _GridGen.ActiveCellBtn(_GridGen.CellById(down_c));
-                        _GridGen.CellById(down_c).prevStep.Add(_GridGen.CellById(down_c));
+                        _mapMngr.ActiveCellBtn(_mapMngr.CellById(down_c));
+                        _mapMngr.CellById(down_c).prevStep.Add(_mapMngr.CellById(down_c));
                     }
                 }
             }
 
-            if (actualPos.x + 1 < _GridGen.size.x && actualPos.y + 1 < _GridGen.size.y) //Right-Up
+            if (actualPos.x + 1 < _mapMngr.size.x && actualPos.y + 1 < _mapMngr.size.y) //Right-Up
             {
-                if (_GridGen.CellById(right_up_c).isEnemy)
+                if (_mapMngr.CellById(right_up_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(right_up_c), 1);
-                    _GridGen.CellById(right_up_c).prevStep.Add(_GridGen.CellById(right_up_c));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(right_up_c), 1);
+                    _mapMngr.CellById(right_up_c).prevStep.Add(_mapMngr.CellById(right_up_c));
                 }
             }
 
-            if (actualPos.x + 1 < _GridGen.size.x && actualPos.y - 1 >= 0) //Right-Down
+            if (actualPos.x + 1 < _mapMngr.size.x && actualPos.y - 1 >= 0) //Right-Down
             {
-                if (_GridGen.CellById(down_right_c).isEnemy)
+                if (_mapMngr.CellById(down_right_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(down_right_c), 1);
-                    _GridGen.CellById(down_right_c).prevStep.Add(_GridGen.CellById(down_right_c));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(down_right_c), 1);
+                    _mapMngr.CellById(down_right_c).prevStep.Add(_mapMngr.CellById(down_right_c));
                 }
             }
 
             if (actualPos.x - 1 >= 0 && actualPos.y - 1 >= 0) //Left-Down
             {
-                if (_GridGen.CellById(left_down_c).isEnemy)
+                if (_mapMngr.CellById(left_down_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(left_down_c), 1);
-                    _GridGen.CellById(left_down_c).prevStep.Add(_GridGen.CellById(left_down_c));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(left_down_c), 1);
+                    _mapMngr.CellById(left_down_c).prevStep.Add(_mapMngr.CellById(left_down_c));
                 }
             }
 
-            if (actualPos.x - 1 >= 0 && actualPos.y + 1 < _GridGen.size.y) //Left-Up
+            if (actualPos.x - 1 >= 0 && actualPos.y + 1 < _mapMngr.size.y) //Left-Up
             {
-                if (_GridGen.CellById(up_left_c).isEnemy)
+                if (_mapMngr.CellById(up_left_c).isEnemy)
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(up_left_c), 1);
-                    _GridGen.CellById(up_left_c).prevStep.Add(_GridGen.CellById(up_left_c));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(up_left_c), 1);
+                    _mapMngr.CellById(up_left_c).prevStep.Add(_mapMngr.CellById(up_left_c));
                 }
             }
         }
@@ -140,7 +140,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeR = Type.Peon;
             List<CellData> cellsR = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(1, 0, (int)_GridGen.size.x - actualPos.x, obstR, enemR, _newTypeR, cellsR));
+            StartCoroutine(CellsDelay(1, 0, (int)_mapMngr.size.x - actualPos.x, obstR, enemR, _newTypeR, cellsR));
 
             bool obstL = false;
             bool enemL = false;
@@ -154,7 +154,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeU = Type.Peon;
             List<CellData> cellsU = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(0, 1, (int)_GridGen.size.y - actualPos.y, obstU,enemU, _newTypeU, cellsU));
+            StartCoroutine(CellsDelay(0, 1, (int)_mapMngr.size.y - actualPos.y, obstU,enemU, _newTypeU, cellsU));
 
             bool obstD = false;
             bool enemD = false;
@@ -166,59 +166,59 @@ public class PlayerCtrl : MonoBehaviour
 
         else if (actualType == Type.Caballo)
         {
-            if (actualPos.x + 2 < _GridGen.size.x) //Right
+            if (actualPos.x + 2 < _mapMngr.size.x) //Right
             {
-                if (actualPos.y + 1 < _GridGen.size.y) //Up
+                if (actualPos.y + 1 < _mapMngr.size.y) //Up
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + 2, actualPos.y + 1));
-                    _GridGen.CellById(actualPos.x + 2, actualPos.y + 1).prevStep.Add(_GridGen.CellById(actualPos.x + 2, actualPos.y + 1));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 2, actualPos.y + 1));
+                    _mapMngr.CellById(actualPos.x + 2, actualPos.y + 1).prevStep.Add(_mapMngr.CellById(actualPos.x + 2, actualPos.y + 1));
                 }
                 if (actualPos.y - 1 >= 0) //Down
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + 2, actualPos.y - 1));
-                    _GridGen.CellById(actualPos.x + 2, actualPos.y - 1).prevStep.Add(_GridGen.CellById(actualPos.x + 2, actualPos.y - 1));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 2, actualPos.y - 1));
+                    _mapMngr.CellById(actualPos.x + 2, actualPos.y - 1).prevStep.Add(_mapMngr.CellById(actualPos.x + 2, actualPos.y - 1));
                 }
             }
 
             if (actualPos.x - 2 >= 0) //Left
             {
-                if (actualPos.y + 1 < _GridGen.size.y) //Up
+                if (actualPos.y + 1 < _mapMngr.size.y) //Up
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - 2, actualPos.y + 1));
-                    _GridGen.CellById(actualPos.x - 2, actualPos.y + 1).prevStep.Add(_GridGen.CellById(actualPos.x - 2, actualPos.y + 1));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x - 2, actualPos.y + 1));
+                    _mapMngr.CellById(actualPos.x - 2, actualPos.y + 1).prevStep.Add(_mapMngr.CellById(actualPos.x - 2, actualPos.y + 1));
                 }
                 if (actualPos.y - 1 >= 0) //Down
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - 2, actualPos.y - 1));
-                    _GridGen.CellById(actualPos.x - 2, actualPos.y - 1).prevStep.Add(_GridGen.CellById(actualPos.x - 2, actualPos.y - 1));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x - 2, actualPos.y - 1));
+                    _mapMngr.CellById(actualPos.x - 2, actualPos.y - 1).prevStep.Add(_mapMngr.CellById(actualPos.x - 2, actualPos.y - 1));
                 }
             }
 
-            if (actualPos.y + 2 < _GridGen.size.y) //Up
+            if (actualPos.y + 2 < _mapMngr.size.y) //Up
             {
-                if (actualPos.x + 1 < _GridGen.size.x) //Right
+                if (actualPos.x + 1 < _mapMngr.size.x) //Right
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + 1, actualPos.y + 2));
-                    _GridGen.CellById(actualPos.x + 1, actualPos.y + 2).prevStep.Add(_GridGen.CellById(actualPos.x + 1, actualPos.y + 2));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 1, actualPos.y + 2));
+                    _mapMngr.CellById(actualPos.x + 1, actualPos.y + 2).prevStep.Add(_mapMngr.CellById(actualPos.x + 1, actualPos.y + 2));
                 }
                 if (actualPos.x - 1 >= 0) //Left
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - 1, actualPos.y + 2));
-                    _GridGen.CellById(actualPos.x - 1, actualPos.y + 2).prevStep.Add(_GridGen.CellById(actualPos.x - 1, actualPos.y + 2));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x - 1, actualPos.y + 2));
+                    _mapMngr.CellById(actualPos.x - 1, actualPos.y + 2).prevStep.Add(_mapMngr.CellById(actualPos.x - 1, actualPos.y + 2));
                 }
             }
 
             if (actualPos.y - 2 >= 0) //Down
             {
-                if (actualPos.x + 1 < _GridGen.size.x) //Right
+                if (actualPos.x + 1 < _mapMngr.size.x) //Right
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x + 1, actualPos.y - 2));
-                    _GridGen.CellById(actualPos.x + 1, actualPos.y - 2).prevStep.Add(_GridGen.CellById(actualPos.x + 1, actualPos.y - 2));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 1, actualPos.y - 2));
+                    _mapMngr.CellById(actualPos.x + 1, actualPos.y - 2).prevStep.Add(_mapMngr.CellById(actualPos.x + 1, actualPos.y - 2));
                 }
                 if (actualPos.x - 1 >= 0) //Left
                 {
-                    _GridGen.ActiveCellBtn(_GridGen.CellById(actualPos.x - 1, actualPos.y - 2));
-                    _GridGen.CellById(actualPos.x - 1, actualPos.y - 2).prevStep.Add(_GridGen.CellById(actualPos.x - 1, actualPos.y - 2));
+                    _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x - 1, actualPos.y - 2));
+                    _mapMngr.CellById(actualPos.x - 1, actualPos.y - 2).prevStep.Add(_mapMngr.CellById(actualPos.x - 1, actualPos.y - 2));
                 }
             }
         }
@@ -232,8 +232,8 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeUR = Type.Peon;
             List<CellData> cellsUR = new List<CellData>(0);
 
-            if (_GridGen.size.x - actualPos.x < _GridGen.size.y - actualPos.y) { ur_stp = (int)_GridGen.size.x - actualPos.x; }
-            else { ur_stp = (int)_GridGen.size.y - actualPos.y; }
+            if (_mapMngr.size.x - actualPos.x < _mapMngr.size.y - actualPos.y) { ur_stp = (int)_mapMngr.size.x - actualPos.x; }
+            else { ur_stp = (int)_mapMngr.size.y - actualPos.y; }
 
             StartCoroutine(CellsDelay(1, 1, ur_stp, obstUR,enemUR, _newTypeUR, cellsUR));
 
@@ -244,7 +244,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeRD = Type.Peon;
             List<CellData> cellsRD = new List<CellData>(0);
 
-            if (_GridGen.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_GridGen.size.x - actualPos.x; }
+            if (_mapMngr.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_mapMngr.size.x - actualPos.x; }
             else { rd_stp = actualPos.y + 1; }
 
             StartCoroutine(CellsDelay(1, -1, rd_stp, obstRD, enemRD, _newTypeRD, cellsRD));
@@ -268,8 +268,8 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeLU = Type.Peon;
             List<CellData> cellsLU = new List<CellData>(0);
 
-            if (actualPos.x + 1 < _GridGen.size.y - actualPos.y) { lu_stp = actualPos.x + 1; }
-            else { lu_stp = (int)_GridGen.size.y - actualPos.y; }
+            if (actualPos.x + 1 < _mapMngr.size.y - actualPos.y) { lu_stp = actualPos.x + 1; }
+            else { lu_stp = (int)_mapMngr.size.y - actualPos.y; }
 
             StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, enemLU, _newTypeLU, cellsLU));
         }
@@ -281,7 +281,7 @@ public class PlayerCtrl : MonoBehaviour
         for (int i = 1; i < _stp; i++)
         {
 
-            CellData newCell = _GridGen.CellById(actualPos.x + (i * _frst), actualPos.y + (i * _scnd));
+            CellData newCell = _mapMngr.CellById(actualPos.x + (i * _frst), actualPos.y + (i * _scnd));
 
             if (newCell.obstacle) _obst = true;
 
@@ -304,7 +304,7 @@ public class PlayerCtrl : MonoBehaviour
                 newCell.prevStep.Add(_cells[e]);
             }
 
-            _GridGen.ActiveCellBtn(newCell);
+            _mapMngr.ActiveCellBtn(newCell);
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -313,7 +313,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         finishWalk = false;
         stepsToWalk.Clear();
-        _GridGen.CellById(actualPos).isPlayer = false;
+        _mapMngr.CellById(actualPos).isPlayer = false;
         for (int i = 0; i < _cellTarget.prevStep.Count; i++)
         {
             stepsToWalk.Add(_cellTarget.prevStep[i]);
@@ -332,13 +332,13 @@ public class PlayerCtrl : MonoBehaviour
     {
         actualType = _newType;
         AnimatePlayerSpriteChange(actualType);
-        _GridGen.ResetBtnsPlayer();
+        _mapMngr.ResetBtnsPlayer();
         CheckCells();
     }
 
     public void SetInCell()
     {
-        _GridGen.CellById(actualPos).isPlayer = true;
+        _mapMngr.CellById(actualPos).isPlayer = true;
         CheckCells();
     }
 
@@ -356,12 +356,12 @@ public class PlayerCtrl : MonoBehaviour
             cellTargetPos = stepsToWalk[i].pos;
         }
         yield return new WaitUntil(() => isMoving == false);
-        _GridGen.CellById(actualPos).isPlayer = true;
+        _mapMngr.CellById(actualPos).isPlayer = true;
         AnimatePlayerSpriteChange(actualType);
         //yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
         if (_cellTarget._enemy != null)
         {
-            _GridGen.DestroyEnemy(_cellTarget._enemy);
+            _mapMngr.DestroyEnemy(_cellTarget._enemy);
         }
         finishWalk = true;
     }

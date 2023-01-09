@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Spawner : MonoBehaviour
 {
-    public GridGenerator _gridGen;
+    public MapManager _gridGen;
 
     public GameObject player;
 
@@ -82,7 +82,7 @@ public class Spawner : MonoBehaviour
             _newEnCt._enemColor = enemiesColor[0];
             _newEnCt.startPos = enemiesRoute00[0];
             _newEnCt.routePoints = enemiesRoute00;
-            _newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
         if (enemiesRoute01.Count > 0)
@@ -92,7 +92,7 @@ public class Spawner : MonoBehaviour
             _newEnCt._enemColor = enemiesColor[1];
             _newEnCt.startPos = enemiesRoute01[0];
             _newEnCt.routePoints = enemiesRoute01;
-            _newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
         if (enemiesRoute02.Count > 0)
@@ -102,7 +102,7 @@ public class Spawner : MonoBehaviour
             _newEnCt._enemColor = enemiesColor[2];
             _newEnCt.startPos = enemiesRoute02[0];
             _newEnCt.routePoints = enemiesRoute02;
-            _newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
         if (enemiesRoute03.Count > 0)
@@ -112,7 +112,7 @@ public class Spawner : MonoBehaviour
             _newEnCt._enemColor = enemiesColor[3];
             _newEnCt.startPos = enemiesRoute03[0];
             _newEnCt.routePoints = enemiesRoute03;
-            _newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
         if (enemiesRoute04.Count > 0)
@@ -122,7 +122,7 @@ public class Spawner : MonoBehaviour
             _newEnCt._enemColor = enemiesColor[4];
             _newEnCt.startPos = enemiesRoute04[0];
             _newEnCt.routePoints = enemiesRoute04;
-            _newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = _gridGen;
             _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
         }
     }
@@ -130,7 +130,7 @@ public class Spawner : MonoBehaviour
     public void GenPlayer()
     {
         PlayerCtrl _newPlayCt = player.GetComponent<PlayerCtrl>();
-        _newPlayCt._GridGen = _gridGen;
+        _newPlayCt._mapMngr = _gridGen;
         GameObject newPla = Instantiate(player, _gridGen.FindByID(_newPlayCt.startPos).transform.position, transform.rotation, _gridGen.rootAll);
         _gridGen.SetPlayer(newPla.GetComponent<PlayerCtrl>());
     }

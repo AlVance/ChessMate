@@ -13,7 +13,7 @@ public class CustomEditor : MonoBehaviour
 
     public GameObject cellBtn;
 
-    public GridGenerator gridGen;
+    public MapManager _mapMngr;
     public Transform gridParent;
     public GameObject editor;
     public Spawner template;
@@ -49,9 +49,9 @@ public class CustomEditor : MonoBehaviour
 
     public void Start()
     {
-        user_idTxt.text = SystemInfo.deviceUniqueIdentifier;
-        xInput.text = gridGen.size.x.ToString();
-        zInput.text = gridGen.size.y.ToString();
+        //user_idTxt.text = SystemInfo.deviceUniqueIdentifier;
+        xInput.text = _mapMngr.size.x.ToString();
+        zInput.text = _mapMngr.size.y.ToString();
         //path = Application.persistentDataPath + "/Maps";
         //Debug.Log("Ruta Mapas " + path);
         for (int i = 0; i < gridParent.childCount; i++)
@@ -124,8 +124,8 @@ public class CustomEditor : MonoBehaviour
             Destroy(gridParent.GetChild(e).gameObject);
         }
         size = new Vector2Int(System.Int32.Parse(xInput.text), System.Int32.Parse(zInput.text));
-        gridGenerated = false;
-        StartCoroutine(gridGen.RegenGridEditor(size.x, size.y, this));
+        gridGenerated = true;
+        //StartCoroutine(_mapMngr.RegenGridEditor(size.x, size.y, this));
         yield return new WaitUntil(() => gridGenerated == true);
         gridParent.GetComponent<GridLayoutGroup>().constraintCount = size.x;
         gridParent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(800 / size.x, 800 / size.y);
@@ -137,11 +137,11 @@ public class CustomEditor : MonoBehaviour
 
                 int _x = x;
                 int _z = z;
-                newBtn.name = (gridGen.CellById(_x, _z).idTotal + " | " + _x + " | " + _z).ToString();
-                newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = gridGen.CellById(_x, _z).idTotal.ToString();
+                newBtn.name = (_mapMngr.CellById(_x, _z).idTotal + " | " + _x + " | " + _z).ToString();
+                newBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = _mapMngr.CellById(_x, _z).idTotal.ToString();
                 Button _newBtn = newBtn.GetComponent<Button>();
                 _newBtn.GetComponent<EditorCell>().ids = new Vector2Int(_x, _z);
-                _newBtn.onClick.AddListener(() => OnClickBtn(gridGen.CellById(_x, _z).idTotal));
+                _newBtn.onClick.AddListener(() => OnClickBtn(_mapMngr.CellById(_x, _z).idTotal));
                 btns.Add(_newBtn);
             }
         }
@@ -278,9 +278,9 @@ public class CustomEditor : MonoBehaviour
             case 0: // Player 
                 if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                 {
-                    if (btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().isPlayer)
+                    if (btns[_mapMngr.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().isPlayer)
                     {
-                        btns[gridGen.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().RemovePlayer();
+                        btns[_mapMngr.CellById(newSpawner.startPos).idTotal].GetComponent<EditorCell>().RemovePlayer();
                     }
                     newSpawner.startPos = _cell.ids;
                     _cell.SetPlayer();
@@ -489,10 +489,10 @@ public class CustomEditor : MonoBehaviour
             case 4:
                 if (!_cell.isPlayer && !_cell.isEnemy && !_cell.isCard && !_cell.isObstacle && !_cell.isKing)
                 {
-                    if (btns[gridGen.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().isKing)
+                    if (btns[_mapMngr.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().isKing)
                     {
-                        btns[gridGen.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().ChangeImage(0);
-                        btns[gridGen.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().isKing = false;
+                        btns[_mapMngr.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().ChangeImage(0);
+                        btns[_mapMngr.CellById(newSpawner.kingPos).idTotal].GetComponent<EditorCell>().isKing = false;
                     }
                     newSpawner.kingPos = _cell.ids;
                     _cell.ChangeImage(8);
@@ -592,7 +592,7 @@ public class CustomEditor : MonoBehaviour
 
         if (JsonUtility.FromJson<NewMap>(data[3]) != null)
         {
-            gridGen._windowCtrl.OpenEditorCanvas();
+            _mapMngr._windowCtrl.OpenEditorCanvas();
             newSpawner = JsonUtility.FromJson<NewMap>(data[3]);
             if (newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.RemoveAt(newSpawner.enemyRoute00.Count - 1);
             if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.RemoveAt(newSpawner.enemyRoute01.Count - 1);
@@ -608,14 +608,14 @@ public class CustomEditor : MonoBehaviour
         string newTxt = _text.text.Remove(_text.text.Length - 1);
         int indx = int.Parse(newTxt);
 
-        gridGen.LoadMapByIndx(indx);
+        //_mapMngr.LoadMapByIndx(indx);
     }
 
     public void LoadMapCode(TextMeshProUGUI _text)
     {
         string newTxt = _text.text.Remove(_text.text.Length - 1);
 
-        StartCoroutine(gridGen.LoadingMapByCode(newTxt));
+        //StartCoroutine(_mapMngr.LoadingMapByCode(newTxt));
     }
 
     public void LoadRandomMap()
@@ -625,31 +625,35 @@ public class CustomEditor : MonoBehaviour
 
     IEnumerator LoadingRandomMap()
     {
-        ServerCtrl.Instance.GetCountTotal();
+        /*ServerCtrl.Instance.GetCountTotal();
+
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string[] responses = ServerCtrl.Instance.server.response.response.Split("+");
         int rnd = Random.Range(0, responses.Length);
         Debug.Log("Rand0m " + responses.Length + "  |  " + rnd);
-        gridGen.LoadNewMap(rnd.ToString());
+        _mapMngr.ChangeScene(rnd.ToString());*/
+        yield return null;
     }
 
 
     public void SaveMap()
     {
+        /*
         if (newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
         if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
-        StartCoroutine(gridGen.LoadingMapBySpawner(newSpawner));
-        gridGen._windowCtrl.OpenOnTestCanvas();
-        //StartCoroutine(SaveMapRoutine());
+        StartCoroutine(_mapMngr.LoadingMapBySpawner(newSpawner));
+        _mapMngr._windowCtrl.OpenOnTestCanvas();
+        //StartCoroutine(SaveMapRoutine());*/
     }
 
     public bool onEdit;
     string codeMap;
     public IEnumerator SaveMapRoutine()
     {
+        /*
         yield return new WaitForSeconds(1f);
 
         if (!onEdit)
@@ -678,11 +682,13 @@ public class CustomEditor : MonoBehaviour
         string[] str = response.Split("+");
         Debug.Log("Total hay " + (str.Length - 2));
         int _indx = str.Length - 2;
-        gridGen.LoadNewMap(_indx.ToString());
-        yield return new WaitWhile(() => gridGen.finishedGen == false);
+        _mapMngr.LoadNewMap(_indx.ToString());
+        yield return new WaitWhile(() => _mapMngr.finishedGen == false);
 
         //yield return new WaitForSeconds(.01f);
-        gridGen._windowCtrl.OpenInGameCanvas();
+        _mapMngr._windowCtrl.OpenInGameCanvas();
+        */
+        yield return null;
     }
 
     public void ContinueEditing()
@@ -702,9 +708,9 @@ public class CustomEditor : MonoBehaviour
             gridParent.GetChild(indx).GetComponent<Button>().onClick.AddListener(() => OnClickBtn(indx));
         }
         
-        gridGen.succesTest.SetActive(false);
-        gridGen.failTest.SetActive(false);
-        gridGen._windowCtrl.OpenEditorCanvas();
+        //_mapMngr.succesTest.SetActive(false);
+        //_mapMngr.failTest.SetActive(false);
+        _mapMngr._windowCtrl.OpenEditorCanvas();
     }
 
     public void ChangeTypeMap(int _newTypeMap)

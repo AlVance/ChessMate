@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyCtrl : MonoBehaviour
 {
-    public GridGenerator _GridGen;
+    public MapManager _mapMngr;
 
     public Vector2Int startPos;
     public int actualPos;
@@ -23,7 +23,7 @@ public class EnemyCtrl : MonoBehaviour
     public void Start()
     {
         _sprite.color = _enemColor;
-        _GridGen.CellById(startPos).SetEnemy(this);
+        _mapMngr.CellById(startPos).SetEnemy(this);
         StartCoroutine(ShowWay(true,true));
     }
 
@@ -49,7 +49,7 @@ public class EnemyCtrl : MonoBehaviour
                 else if (routePoints[i + 1].y < routePoints[i].y) dir = 3;
             }
             else dir = -1;
-            _GridGen.CellById(routePoints[i]).SetMark(_active, dir, _enemColor);
+            _mapMngr.CellById(routePoints[i]).SetMark(_active, dir, _enemColor);
             yield return new WaitForSeconds(.01f);
         }
         yield return new WaitForSeconds(.1f);
@@ -67,14 +67,14 @@ public class EnemyCtrl : MonoBehaviour
             step = i;
             if (step + 1 < routePoints.Count)
             {
-                futureCell = _GridGen.CellById(routePoints[step + 1]);
-                _GridGen.CellById(routePoints[step]).SetEnemy(this);
+                futureCell = _mapMngr.CellById(routePoints[step + 1]);
+                _mapMngr.CellById(routePoints[step]).SetEnemy(this);
                 //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
                 //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
             }
-            _GridGen.CellById(routePoints[step - 1]).ClearEnemy();
-            _GridGen.CellById(routePoints[step]).SetEnemy(this);
-            cellTarget = _GridGen.CellById(routePoints[i]).pos;
+            _mapMngr.CellById(routePoints[step - 1]).ClearEnemy();
+            _mapMngr.CellById(routePoints[step]).SetEnemy(this);
+            cellTarget = _mapMngr.CellById(routePoints[i]).pos;
             isMoving = true;
         }
         finishRoute = true;
@@ -82,7 +82,7 @@ public class EnemyCtrl : MonoBehaviour
 
     public void SetInCell()
     {
-        _GridGen.CellById(actualPos).SetEnemy(this);
+        _mapMngr.CellById(actualPos).SetEnemy(this);
 
         int dir = 0;
         if (step + 2 < routePoints.Count)
@@ -96,7 +96,11 @@ public class EnemyCtrl : MonoBehaviour
 
         if (step + 1 < routePoints.Count)
         {
-            _GridGen.CellById(routePoints[step + 1]).SetMark(true, dir, _enemColor);
+
+            CellData _cellFtr = null;
+            if (_mapMngr != null) _cellFtr = _mapMngr.CellById(routePoints[step + 1]);
+            else _cellFtr = _mapMngr.CellById(routePoints[step + 1]);
+            _cellFtr.SetMark(true, dir, _enemColor);
         }
     }
 
@@ -105,15 +109,17 @@ public class EnemyCtrl : MonoBehaviour
         if (Vector3.Distance(this.transform.position, cellTarget) > 0.1f) this.transform.position = Vector3.Lerp(this.transform.position, cellTarget, 10f * Time.deltaTime);
         else
         {
-            if (finishRoute || _GridGen.CellById(actualPos).isPlayer)
+            if (finishRoute || _mapMngr.CellById(actualPos).isPlayer)
             {
-                _GridGen.failTest.SetActive(true);
+                //_mapMngr.failTest.SetActive(true);
                 //_GridGen.ReloadMap();
-                if (_GridGen.onTesting) _GridGen.failTest.SetActive(true);
-                else _GridGen.ReloadMap();
+                //if (_mapMngr.onTesting) _mapMngr.failTest.SetActive(true);
+                //_mapMngr.ReloadMap();
+                _mapMngr.StopAllCoroutines();
+                _mapMngr.StartCoroutine(_mapMngr.ResetMap());
             }
             this.transform.position = cellTarget;
-            _GridGen._enemiesFinishWalk++;
+            _mapMngr._enemiesFinishWalk++;
             isMoving = false;
         }
     }

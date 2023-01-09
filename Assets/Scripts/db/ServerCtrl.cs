@@ -14,6 +14,8 @@ public class ServerCtrl : MonoBehaviour
 
     public GameObject loading;
     public bool serviceFinish = false;
+    public string _map;
+    public bool _getMap;
 
     public void Awake()
     {
@@ -118,6 +120,11 @@ public class ServerCtrl : MonoBehaviour
         StartCoroutine(server.UseService(_service, _data));
         yield return new WaitForSeconds(.5f);
         yield return new WaitUntil(() => serviceFinish);
+        if (_getMap)
+        {
+            _map = server.response.response;
+            _getMap = false;
+        }
         loading.SetActive(false);
         serviceFinish = false;
     }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Gallery : MonoBehaviour
 {
@@ -13,13 +14,11 @@ public class Gallery : MonoBehaviour
 
     public GameObject galleryPanel;
 
-    public GridGenerator _gridGen;
-    public CustomEditor _customEditor;
-
     public Image _scrollImg;
     public Color[] _colors;
 
-    public void GetCountTotal()
+
+    public void Start()
     {
         StartCoroutine(LoadCountTotalGallery());
     }
@@ -43,6 +42,7 @@ public class Gallery : MonoBehaviour
             string[] data = items[i].Split("+");
             string _id = data[0];
             string _code = data[2];
+            string _map = Parser.instance.ParseNewMapCustomToJson(data[3]);
             NewMap _newMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
             GameObject newItem = Instantiate(itemGallery, contentGallery);
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
@@ -67,7 +67,7 @@ public class Gallery : MonoBehaviour
             itemGllr.SetBishop(_newMap.posAlf_crd.Count != 0);
             
 
-            itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _code));
+            itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map));
             itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
         }
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, contentGallery.childCount * 300);
@@ -96,16 +96,17 @@ public class Gallery : MonoBehaviour
         }
     }
 
-    public void LoadMapById(string id, string code)
+    public void LoadMapById(string id, string map)
     {
+        PlayerPrefs.SetString("currentMap",map);
         if (!editing)
         {
-            _gridGen.LoadNewMap(id);
+            SceneManager.LoadScene("PlayScene");
             galleryPanel.SetActive(false);
         }
         else
         {
-            _customEditor.StartEdit(code);
+            SceneManager.LoadScene("PlayScene");
             galleryPanel.SetActive(false);
             editing = false;
         }

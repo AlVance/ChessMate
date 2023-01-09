@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -28,12 +29,27 @@ public class MapManager : MonoBehaviour
     public bool finishedGen;
 
     NewMap currentMap;
+    [Space]
+    public GameObject player;
+    [Space]
+    public GameObject king;
+    [Space]
+    public GameObject enemy;
+    public Color[] enemiesColor;
+    [Space]
+    public GameObject torre_crd;
+    [Space]
+    public GameObject caballo_crd;
+    [Space]
+    public GameObject alfil_crd;
+    [Space]
+    public GameObject obst;
 
     private void Start()
     {
         if(PlayerPrefs.GetString("currentMap") != "")
         {
-            StartCoroutine(LoadingMapById(PlayerPrefs.GetString("currentMap")));
+            StartCoroutine(LoadingMap(PlayerPrefs.GetString("currentMap")));
         }
     }
 
@@ -86,8 +102,127 @@ public class MapManager : MonoBehaviour
 
         yield return new WaitForSeconds(.1f);
 
-        StartCoroutine(spawner.StartSpawn());
-        _windowCtrl.OpenInGameCanvas();
+        StartCoroutine(GenMap());
+        //_windowCtrl.OpenInGameCanvas();
+    }
+
+    public IEnumerator GenMap()
+    {
+        GenKing();
+        yield return new WaitForSeconds(.1f);
+        GenPlayer();
+        yield return new WaitForSeconds(.1f);
+        GenEnemy();
+        yield return new WaitForSeconds(.1f);
+        GenCards();
+        yield return new WaitForSeconds(.1f);
+        GenObstacles();
+        yield return new WaitForSeconds(.1f);
+        SetPositions();
+    }
+
+    public void GenKing()
+    {
+        GameObject _king = Instantiate(king, FindByID(currentMap.kingPos).transform.position, transform.rotation, rootAll);
+        CellById(currentMap.kingPos).isKing = true;
+    }
+    public void GenPlayer()
+    {
+        PlayerCtrl _newPlayCt = player.GetComponent<PlayerCtrl>();
+        _newPlayCt.startPos = currentMap.startPos;
+        //_newPlayCt._GridGen = _gridGen;
+        _newPlayCt._mapMngr = this;
+        GameObject newPla = Instantiate(player, FindByID(_newPlayCt.startPos).transform.position, transform.rotation, rootAll);
+        SetPlayer(newPla.GetComponent<PlayerCtrl>());
+    }
+    public void GenEnemy()
+    {
+        if (currentMap.enemyRoute00.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, FindByID(currentMap.enemyRoute00[0]).transform.position, transform.rotation, rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[0];
+            _newEnCt.startPos = currentMap.enemyRoute00[0];
+            _newEnCt.routePoints = currentMap.enemyRoute00;
+            //_newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = this;
+            SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (currentMap.enemyRoute01.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, FindByID(currentMap.enemyRoute01[0]).transform.position, transform.rotation, rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[1];
+            _newEnCt.startPos = currentMap.enemyRoute01[0];
+            _newEnCt.routePoints = currentMap.enemyRoute01;
+            //_newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = this;
+            SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (currentMap.enemyRoute02.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, FindByID(currentMap.enemyRoute02[0]).transform.position, transform.rotation, rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[2];
+            _newEnCt.startPos = currentMap.enemyRoute02[0];
+            _newEnCt.routePoints = currentMap.enemyRoute02;
+            //_newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = this;
+            SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (currentMap.enemyRoute03.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, FindByID(currentMap.enemyRoute03[0]).transform.position, transform.rotation, rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[3];
+            _newEnCt.startPos = currentMap.enemyRoute03[0];
+            _newEnCt.routePoints = currentMap.enemyRoute03;
+            //_newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = this;
+            SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+        if (currentMap.enemyRoute04.Count > 0)
+        {
+            GameObject newEne = Instantiate(enemy, FindByID(currentMap.enemyRoute04[0]).transform.position, transform.rotation, rootAll);
+            EnemyCtrl _newEnCt = newEne.GetComponent<EnemyCtrl>();
+            _newEnCt._enemColor = enemiesColor[4];
+            _newEnCt.startPos = currentMap.enemyRoute04[0];
+            _newEnCt.routePoints = currentMap.enemyRoute04;
+            //_newEnCt._GridGen = _gridGen;
+            _newEnCt._mapMngr = this;
+            SetEnemy(newEne.GetComponent<EnemyCtrl>());
+        }
+    }
+
+    public void GenCards()
+    {
+        for (int tc = 0; tc < currentMap.posTrr_crd.Count; tc++)
+        {
+            CellById(currentMap.posTrr_crd[tc]).typeCard = PlayerCtrl.Type.Torre;
+            CellById(currentMap.posTrr_crd[tc]).card = Instantiate(torre_crd, FindByID(currentMap.posTrr_crd[tc]).transform);
+        }
+
+        for (int cc = 0; cc < currentMap.posCab_crd.Count; cc++)
+        {
+            CellById(currentMap.posCab_crd[cc]).typeCard = PlayerCtrl.Type.Caballo;
+            CellById(currentMap.posCab_crd[cc]).card = Instantiate(caballo_crd, FindByID(currentMap.posCab_crd[cc]).transform);
+        }
+
+        for (int ac = 0; ac < currentMap.posAlf_crd.Count; ac++)
+        {
+            CellById(currentMap.posAlf_crd[ac]).typeCard = PlayerCtrl.Type.Alfil;
+            CellById(currentMap.posAlf_crd[ac]).card = Instantiate(alfil_crd, FindByID(currentMap.posAlf_crd[ac]).transform);
+        }
+    }
+    public void GenObstacles()
+    {
+        for (int i = 0; i < currentMap.posObst.Count; i++)
+        {
+            Vector2Int indx = CellById(currentMap.posObst[i]).ids;
+            //Vector2Int indx = new Vector2Int((int)Random.Range(0, _gridGen.size.x), (int)Random.Range(0, _gridGen.size.y));
+            CellById(indx).obstacle = true;
+            CellById(indx).obst = Instantiate(obst, FindByID(indx).transform);
+        }
     }
 
     public void ResetBtns()
@@ -129,23 +264,27 @@ public class MapManager : MonoBehaviour
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
+        /*
         if (!recentEat)
         {
+        */
             for (int i = 0; i < _enemies.Count; i++)
             {
                 StartCoroutine(_enemies[i].ShowWay(false, false));
                 yield return new WaitForSeconds(.1f);
                 _enemies[i].stepOn = true;
             }
+        /*
         }
         else
         {
             recentEat = false;
             _enemiesFinishWalk = _enemies.Count;
         }
+        */
 
         yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
-
+        
         ResetBtns();
         yield return new WaitUntil(() => resetBtnsFinish == true);
         if (steps % 3 == 0)
@@ -189,7 +328,7 @@ public class MapManager : MonoBehaviour
         finishedGen = true;
     }
 
-    public IEnumerator LoadingMapById(string _map)
+    public IEnumerator LoadingMap(string _map)
     {
         //LevelTransitorAnim.SetBool("IsLoadingLevel", true);
         yield return new WaitForSeconds(.1f);
@@ -208,4 +347,94 @@ public class MapManager : MonoBehaviour
         StartCoroutine(ResetMap());
         //LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
+
+
+
+    public void ActiveCellBtn(CellData _cell)
+    {
+        _cell.ActiveBtn(true);
+        _cell.canMove = true;
+
+    }
+
+    public void ActiveCellBtn(CellData _cell, int _indx)
+    {
+        _cell.ActiveBtn(true, _indx);
+        _cell.canMove = true;
+
+    }
+
+    public void ActiveCellBtn(CellData _cell, bool _active)
+    {
+        _cell.ActiveBtn(_active);
+        _cell.canMove = _active;
+
+    }
+
+    public void DestroyEnemy(EnemyCtrl _enemy)
+    {
+        if (_enemy.futureCell != null) _enemy.futureCell.ClearEnemy();
+        _enemies.Remove(_enemy);
+        Destroy(_enemy.gameObject);
+        recentEat = true;
+
+        if (_enemies.Count == 0)
+        {
+            if (!onTesting)
+            {
+                //StartCoroutine(ChangeToNextLevel());
+                ChangeScene("LevelsScene");
+            }
+            else
+            {
+                ChangeScene("LevelsScene");
+                //succesTest.SetActive(true);
+                //StartCoroutine(customEditor.SaveMapRoutine());
+                //onTesting = false;
+            }
+        }
+    }
+
+
+
+    public void ResetBtnsPlayer()
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            CellData cellToCheck = cells[i].GetComponent<CellData>();
+            if (cellToCheck.btn.gameObject.activeInHierarchy || cellToCheck.isPlayer || cellToCheck.isEnemy || cellToCheck.typeCard != PlayerCtrl.Type.Peon && cellToCheck.card == null || cellToCheck.prevStep.Count != 0)
+            {
+                cellToCheck.ActiveBtn(false, 0);
+                cellToCheck.canMove = false;
+                cellToCheck.isPlayer = false;
+            }
+        }
+    }
+
+    public void ChangeScene(string _scene) { SceneManager.LoadScene(_scene); }
+
+
+    GameObject GameObjectFindByID(int _x, int _z)
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            CellData cellCheck = cells[i].GetComponent<CellData>();
+            //Debug.Log("Buscas " + _x + " | " + _z + " encuentras " +cellCheck);
+            if (cellCheck.ids.x == _x && cellCheck.ids.y == _z)
+            {
+                return cells[i];
+            }
+        }
+        return null;
+    }
+    public GameObject FindByID(int _xID, int _zID) { return GameObjectFindByID(_xID, _zID); }
+    public GameObject FindByID(Vector2 ids) { return GameObjectFindByID((int)ids.x, (int)ids.y); }
+    public GameObject FindByID(int cell) { return GameObjectFindByID(cells[cell].GetComponent<CellData>().ids.x, cells[cell].GetComponent<CellData>().ids.y); }
+    public CellData CellById(int _x, int _z) { return GameObjectFindByID(_x, _z).GetComponent<CellData>(); }
+    public CellData CellById(Vector2 ids) { return GameObjectFindByID((int)ids.x, (int)ids.y).GetComponent<CellData>(); }
+    public CellData CellById(int _cell) { return GameObjectFindByID(cells[_cell].GetComponent<CellData>().ids.x, cells[_cell].GetComponent<CellData>().ids.y).GetComponent<CellData>(); }
+    public PlayerCtrl GetPlayer() { return _player; }
+    public void SetPlayer(PlayerCtrl _newPlayer) { _player = _newPlayer; }
+    public EnemyCtrl GetEnemy(int indx) { return _enemies[indx]; }
+    public void SetEnemy(EnemyCtrl _newEnemy) { _enemies.Add(_newEnemy); }
 }
