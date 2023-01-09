@@ -51,14 +51,14 @@ public class Spawner : MonoBehaviour
         posAlf_crd = _spawner.posAlf_crd;
         posObst = _spawner.posObst;
     }
-
+    
     public IEnumerator StartSpawn()
     {
         GenKing();
         yield return new WaitForSeconds(.1f);
-        GenEnemy();
-        yield return new WaitForSeconds(.1f);
         GenPlayer();
+        yield return new WaitForSeconds(.1f);
+        GenEnemy();
         yield return new WaitForSeconds(.1f);
         GenCards();
         yield return new WaitForSeconds(.1f);

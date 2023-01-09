@@ -109,6 +109,8 @@ public class EnemyCtrl : MonoBehaviour
             {
                 _GridGen.failTest.SetActive(true);
                 //_GridGen.ReloadMap();
+                if (_GridGen.onTesting) _GridGen.failTest.SetActive(true);
+                else _GridGen.ReloadMap();
             }
             this.transform.position = cellTarget;
             _GridGen._enemiesFinishWalk++;

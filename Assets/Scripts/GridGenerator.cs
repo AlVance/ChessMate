@@ -23,6 +23,7 @@ public class GridGenerator : MonoBehaviour
     public List<EnemyCtrl> _enemies = new List<EnemyCtrl>(0);
     public int _enemiesFinishWalk = 0;
     bool recentEat;
+    public bool onStepped = false;
 
     private int currrentLevelIndex = 0;
     [SerializeField] private Animator LevelTransitorAnim;
@@ -52,6 +53,7 @@ public class GridGenerator : MonoBehaviour
 
     public void Start()
     {
+        Debug.Log(PlayerPrefs.GetString("currentMap"));
         LevelTransitorAnim.SetBool("IsLoadingLevel", false);
         spawner._gridGen = this;
         succesTest.SetActive(false);
@@ -198,7 +200,6 @@ public class GridGenerator : MonoBehaviour
         onTesting = false;
     }
 
-    public bool onStepped = false;
     public void CallPlayer(CellData _cellTarget)
     {
         if (!onStepped)
@@ -303,6 +304,7 @@ public class GridGenerator : MonoBehaviour
         Debug.Log("Cargado  preParse" + response);
         string[] data = response.Split("+");
         data[3] = Parser.instance.ParseNewMapCustomToJson(data[3]);
+        PlayerPrefs.SetString("currentMap", data[3]);
         
         if (JsonUtility.FromJson<NewMap>(data[3]) != null)
         {

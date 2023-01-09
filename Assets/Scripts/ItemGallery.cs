@@ -32,6 +32,7 @@ public class ItemGallery : MonoBehaviour
     public void CopyCode()
     {
         alertTxt.SetActive(true);
+        GUIUtility.systemCopyBuffer = code_txt.text;
         Debug.Log("El codigo copiado es " + code_txt.text);
         Invoke("OffAlert", 1f);
     }
