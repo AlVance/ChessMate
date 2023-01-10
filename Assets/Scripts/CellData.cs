@@ -113,7 +113,6 @@ public class CellData : MonoBehaviour
             marks[_dir].SetActive(_active);
             marks[_dir].GetComponent<SpriteRenderer>().color = _color;
         }
-        //mark.SetActive(_active);
         isFutureEnemy = _active;
     }
 

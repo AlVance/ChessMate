@@ -51,7 +51,7 @@ public class PlayerCtrl : MonoBehaviour
             Vector2 up_c = new Vector2(actualPos.x, actualPos.y + 1);
 
 
-            if (actualPos.x + 1 < _mapMngr.size.x) //Right
+            if (actualPos.x + 1 < _mapMngr.currentMap.size.x) //Right
             {
                 if (!_mapMngr.CellById(right_c).isEnemy)
                 {
@@ -73,7 +73,7 @@ public class PlayerCtrl : MonoBehaviour
                     }
                 }
             }
-            if (actualPos.y + 1 < _mapMngr.size.y) //Up
+            if (actualPos.y + 1 < _mapMngr.currentMap.size.y) //Up
             {
                 if (!_mapMngr.CellById(up_c).isEnemy)
                 {
@@ -96,7 +96,7 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
 
-            if (actualPos.x + 1 < _mapMngr.size.x && actualPos.y + 1 < _mapMngr.size.y) //Right-Up
+            if (actualPos.x + 1 < _mapMngr.currentMap.size.x && actualPos.y + 1 < _mapMngr.currentMap.size.y) //Right-Up
             {
                 if (_mapMngr.CellById(right_up_c).isEnemy)
                 {
@@ -105,7 +105,7 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
 
-            if (actualPos.x + 1 < _mapMngr.size.x && actualPos.y - 1 >= 0) //Right-Down
+            if (actualPos.x + 1 < _mapMngr.currentMap.size.x && actualPos.y - 1 >= 0) //Right-Down
             {
                 if (_mapMngr.CellById(down_right_c).isEnemy)
                 {
@@ -123,7 +123,7 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
 
-            if (actualPos.x - 1 >= 0 && actualPos.y + 1 < _mapMngr.size.y) //Left-Up
+            if (actualPos.x - 1 >= 0 && actualPos.y + 1 < _mapMngr.currentMap.size.y) //Left-Up
             {
                 if (_mapMngr.CellById(up_left_c).isEnemy)
                 {
@@ -140,7 +140,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeR = Type.Peon;
             List<CellData> cellsR = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(1, 0, (int)_mapMngr.size.x - actualPos.x, obstR, enemR, _newTypeR, cellsR));
+            StartCoroutine(CellsDelay(1, 0, (int)_mapMngr.currentMap.size.x - actualPos.x, obstR, enemR, _newTypeR, cellsR));
 
             bool obstL = false;
             bool enemL = false;
@@ -154,7 +154,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeU = Type.Peon;
             List<CellData> cellsU = new List<CellData>(0);
 
-            StartCoroutine(CellsDelay(0, 1, (int)_mapMngr.size.y - actualPos.y, obstU,enemU, _newTypeU, cellsU));
+            StartCoroutine(CellsDelay(0, 1, (int)_mapMngr.currentMap.size.y - actualPos.y, obstU,enemU, _newTypeU, cellsU));
 
             bool obstD = false;
             bool enemD = false;
@@ -166,9 +166,9 @@ public class PlayerCtrl : MonoBehaviour
 
         else if (actualType == Type.Caballo)
         {
-            if (actualPos.x + 2 < _mapMngr.size.x) //Right
+            if (actualPos.x + 2 < _mapMngr.currentMap.size.x) //Right
             {
-                if (actualPos.y + 1 < _mapMngr.size.y) //Up
+                if (actualPos.y + 1 < _mapMngr.currentMap.size.y) //Up
                 {
                     _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 2, actualPos.y + 1));
                     _mapMngr.CellById(actualPos.x + 2, actualPos.y + 1).prevStep.Add(_mapMngr.CellById(actualPos.x + 2, actualPos.y + 1));
@@ -182,7 +182,7 @@ public class PlayerCtrl : MonoBehaviour
 
             if (actualPos.x - 2 >= 0) //Left
             {
-                if (actualPos.y + 1 < _mapMngr.size.y) //Up
+                if (actualPos.y + 1 < _mapMngr.currentMap.size.y) //Up
                 {
                     _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x - 2, actualPos.y + 1));
                     _mapMngr.CellById(actualPos.x - 2, actualPos.y + 1).prevStep.Add(_mapMngr.CellById(actualPos.x - 2, actualPos.y + 1));
@@ -194,9 +194,9 @@ public class PlayerCtrl : MonoBehaviour
                 }
             }
 
-            if (actualPos.y + 2 < _mapMngr.size.y) //Up
+            if (actualPos.y + 2 < _mapMngr.currentMap.size.y) //Up
             {
-                if (actualPos.x + 1 < _mapMngr.size.x) //Right
+                if (actualPos.x + 1 < _mapMngr.currentMap.size.x) //Right
                 {
                     _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 1, actualPos.y + 2));
                     _mapMngr.CellById(actualPos.x + 1, actualPos.y + 2).prevStep.Add(_mapMngr.CellById(actualPos.x + 1, actualPos.y + 2));
@@ -210,7 +210,7 @@ public class PlayerCtrl : MonoBehaviour
 
             if (actualPos.y - 2 >= 0) //Down
             {
-                if (actualPos.x + 1 < _mapMngr.size.x) //Right
+                if (actualPos.x + 1 < _mapMngr.currentMap.size.x) //Right
                 {
                     _mapMngr.ActiveCellBtn(_mapMngr.CellById(actualPos.x + 1, actualPos.y - 2));
                     _mapMngr.CellById(actualPos.x + 1, actualPos.y - 2).prevStep.Add(_mapMngr.CellById(actualPos.x + 1, actualPos.y - 2));
@@ -232,8 +232,8 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeUR = Type.Peon;
             List<CellData> cellsUR = new List<CellData>(0);
 
-            if (_mapMngr.size.x - actualPos.x < _mapMngr.size.y - actualPos.y) { ur_stp = (int)_mapMngr.size.x - actualPos.x; }
-            else { ur_stp = (int)_mapMngr.size.y - actualPos.y; }
+            if (_mapMngr.currentMap.size.x - actualPos.x < _mapMngr.currentMap.size.y - actualPos.y) { ur_stp = (int)_mapMngr.currentMap.size.x - actualPos.x; }
+            else { ur_stp = (int)_mapMngr.currentMap.size.y - actualPos.y; }
 
             StartCoroutine(CellsDelay(1, 1, ur_stp, obstUR,enemUR, _newTypeUR, cellsUR));
 
@@ -244,7 +244,7 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeRD = Type.Peon;
             List<CellData> cellsRD = new List<CellData>(0);
 
-            if (_mapMngr.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_mapMngr.size.x - actualPos.x; }
+            if (_mapMngr.currentMap.size.x - actualPos.x < actualPos.y + 1) { rd_stp = (int)_mapMngr.currentMap.size.x - actualPos.x; }
             else { rd_stp = actualPos.y + 1; }
 
             StartCoroutine(CellsDelay(1, -1, rd_stp, obstRD, enemRD, _newTypeRD, cellsRD));
@@ -268,8 +268,8 @@ public class PlayerCtrl : MonoBehaviour
             Type _newTypeLU = Type.Peon;
             List<CellData> cellsLU = new List<CellData>(0);
 
-            if (actualPos.x + 1 < _mapMngr.size.y - actualPos.y) { lu_stp = actualPos.x + 1; }
-            else { lu_stp = (int)_mapMngr.size.y - actualPos.y; }
+            if (actualPos.x + 1 < _mapMngr.currentMap.size.y - actualPos.y) { lu_stp = actualPos.x + 1; }
+            else { lu_stp = (int)_mapMngr.currentMap.size.y - actualPos.y; }
 
             StartCoroutine(CellsDelay(-1, 1, lu_stp, obstLU, enemLU, _newTypeLU, cellsLU));
         }

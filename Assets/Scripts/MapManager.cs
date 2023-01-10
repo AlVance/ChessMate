@@ -8,7 +8,6 @@ public class MapManager : MonoBehaviour
     public GameObject cell;
     public Color[] colors;
 
-    public Vector2 size;
     public Vector2 offset;
 
     public Transform rootAll;
@@ -28,7 +27,7 @@ public class MapManager : MonoBehaviour
     public bool onTesting;
     public bool finishedGen;
 
-    NewMap currentMap;
+    public NewMap currentMap;
     [Space]
     public GameObject player;
     [Space]
@@ -73,16 +72,16 @@ public class MapManager : MonoBehaviour
     public IEnumerator GenGrid()
     {
 
-        for (int xSz = 0; xSz < size.x; xSz++)
+        for (int xSz = 0; xSz < currentMap.size.x; xSz++)
         {
-            for (int zSz = 0; zSz < size.y; zSz++)
+            for (int zSz = 0; zSz < currentMap.size.y; zSz++)
             {
                 Vector3 _newPos = new Vector3(transform.position.x + (xSz * offset.x), transform.position.y, transform.position.z + (zSz * offset.y));
                 GameObject newCell = Instantiate(cell, _newPos, transform.rotation, rootAll);
                 CellData newCellData = newCell.GetComponent<CellData>();
 
-                newCellData.ids.x = zSz;
-                newCellData.ids.y = xSz;
+                newCellData.ids.x = xSz;
+                newCellData.ids.y = zSz;
                 newCellData.idTotal = cells.Count;
                 newCellData.pos = _newPos;
                 newCellData.ResetCell();
@@ -331,17 +330,16 @@ public class MapManager : MonoBehaviour
     public IEnumerator LoadingMap(string _map)
     {
         //LevelTransitorAnim.SetBool("IsLoadingLevel", true);
-        yield return new WaitForSeconds(.1f);
         finishedGen = false;
+        yield return new WaitForSeconds(.1f);
         
         if (JsonUtility.FromJson<NewMap>(_map) != null)
         {
             currentMap = JsonUtility.FromJson<NewMap>(_map);
-            size = currentMap.size;
             Camera.main.transform.position = new Vector3(
-                transform.position.x + (size.x / 2) - .5f + size.x,
+                transform.position.x + (currentMap.size.x / 2) - .5f + currentMap.size.x,
                 transform.position.y + 15,
-                transform.position.z + (size.x / 2) - .5f);
+                transform.position.z + (currentMap.size.x / 2) - .5f);
         }
         StopAllCoroutines();
         StartCoroutine(ResetMap());

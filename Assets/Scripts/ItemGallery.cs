@@ -24,8 +24,13 @@ public class ItemGallery : MonoBehaviour
 
     public ButtonLongPress btn;
 
+    public GameObject masks;
+    public GameObject data;
+
     private void Start()
     {
+        //data.SetActive(false);
+        //masks.SetActive(true);
         alertTxt.SetActive(false);   
     }
 
@@ -42,7 +47,6 @@ public class ItemGallery : MonoBehaviour
         alertTxt.SetActive(false);
     }
 
-
     public void SetAuthor(string _author){ author_txt.text = _author; }
     public void SetCode(string _code){ code_txt.text = _code; }
     public void SetSize(string _size) { size_txt.text = _size; }
@@ -54,4 +58,17 @@ public class ItemGallery : MonoBehaviour
     public void SetTower(bool _act) { towerCrd_obj.SetActive(_act); }
     public void SetHorse(bool _act) { horseCrd_obj.SetActive(_act); }
     public void SetBishop(bool _act) { bishopCrd_obj.SetActive(_act); }
+
+    public void FinishLoad()
+    {
+        masks.SetActive(false);
+        data.SetActive(true);
+        Debug.Log("Cell terminada de cargar" + masks.activeSelf);
+    }
+
+    private void Update()
+    {
+        Debug.Log("Cell terminada de cargar" + masks.activeSelf);
+
+    }
 }

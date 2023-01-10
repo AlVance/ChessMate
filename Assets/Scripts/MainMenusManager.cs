@@ -25,6 +25,6 @@ public class MainMenusManager : MonoBehaviour
     public void TAPStart()
     {
         TAPtransform.DOMoveY(TAP_Y * Screen.height, TAPTimeMoving).SetEase(Ease.InOutBack);
-
+        GameManager.Instance.ChangeSceneDelay("LevelsScene", TAPTimeMoving/2);
     }
 }

@@ -19,7 +19,9 @@ public class CustomEditor : MonoBehaviour
     public Spawner template;
     public TextMeshProUGUI title_txt;
     public TextMeshProUGUI plchldr_load;
-
+    [Space]
+    public GameObject typesCards;
+    public GameObject enemiesSelector;
     [Space]
     public GameObject enemyBtn;
     public GameObject rootEnemies;
@@ -49,9 +51,8 @@ public class CustomEditor : MonoBehaviour
 
     public void Start()
     {
-        //user_idTxt.text = SystemInfo.deviceUniqueIdentifier;
-        xInput.text = _mapMngr.size.x.ToString();
-        zInput.text = _mapMngr.size.y.ToString();
+        xInput.text = 5.ToString();
+        zInput.text = 5.ToString();
         //path = Application.persistentDataPath + "/Maps";
         //Debug.Log("Ruta Mapas " + path);
         for (int i = 0; i < gridParent.childCount; i++)
@@ -124,6 +125,7 @@ public class CustomEditor : MonoBehaviour
             Destroy(gridParent.GetChild(e).gameObject);
         }
         size = new Vector2Int(System.Int32.Parse(xInput.text), System.Int32.Parse(zInput.text));
+        
         gridGenerated = true;
         //StartCoroutine(_mapMngr.RegenGridEditor(size.x, size.y, this));
         yield return new WaitUntil(() => gridGenerated == true);
@@ -547,6 +549,7 @@ public class CustomEditor : MonoBehaviour
     public void SelectEnemy(int _select)
     {
         actualEnemySlct = _select;
+        SelectActiveEnemy(actualEnemySlct - 1);
     }
 
     public void NewMap()
@@ -715,6 +718,8 @@ public class CustomEditor : MonoBehaviour
 
     public void ChangeTypeMap(int _newTypeMap)
     {
+        typesCards.SetActive(false);
+        enemiesSelector.SetActive(false);
         actualTypeMap = _newTypeMap;
         switch (_newTypeMap)
         {
@@ -724,6 +729,8 @@ public class CustomEditor : MonoBehaviour
             case 1:
                 title_txt.text = "Mapa de Cartas de Torre";
                 actualCard = 0;
+                SelectCard(actualCard);
+                typesCards.SetActive(true);
                 break;
             case 2:
                 title_txt.text = "Mapa de Obstaculos";
@@ -731,17 +738,21 @@ public class CustomEditor : MonoBehaviour
             case 3:
                 title_txt.text = "Mapa de Enemigos";
                 actualEnemySlct = 1;
+                SelectActiveEnemy(actualEnemySlct - 1);
+                enemiesSelector.SetActive(true);
                 break;
             case 4:
                 title_txt.text = "Mapa de Rey";
                 break;
         }
+        SelectType(_newTypeMap);
         ReloadMap();
     }
 
     public void ChangeTypeCard(int _newTypeCard)
     {
         actualCard = _newTypeCard;
+        SelectCard(_newTypeCard);
         switch (_newTypeCard)
         {
             case 0:

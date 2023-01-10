@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -237,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 814823852}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -408,21 +408,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -536,7 +524,7 @@ GameObject:
   - component: {fileID: 72624376}
   - component: {fileID: 72624375}
   m_Layer: 5
-  m_Name: Jugador
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,45 +595,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1872424932}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1424540631}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1038,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1055,7 +1007,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 814823852}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1746,7 +1698,7 @@ GameObject:
   - component: {fileID: 536532281}
   - component: {fileID: 536532280}
   m_Layer: 5
-  m_Name: Obstaculos
+  m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1817,45 +1769,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1872424932}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1424540631}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectType
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1916,7 +1832,7 @@ GameObject:
   - component: {fileID: 586595510}
   - component: {fileID: 586595509}
   m_Layer: 5
-  m_Name: Enemigos
+  m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1987,7 +1903,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -1995,54 +1911,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1872424932}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyActive
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1424540631}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectType
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectActiveEnemy
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2293,8 +2161,8 @@ Camera:
   m_GameObject: {fileID: 656298481}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2376,7 +2244,6 @@ MonoBehaviour:
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
-  size: {x: 0, y: 0}
   offset: {x: 1, y: 1}
   rootAll: {fileID: 492631480}
   _enemiesFinishWalk: 0
@@ -2384,6 +2251,19 @@ MonoBehaviour:
   _windowCtrl: {fileID: 0}
   onTesting: 0
   finishedGen: 0
+  currentMap:
+    size: {x: 0, y: 0}
+    startPos: {x: 0, y: 0}
+    kingPos: {x: 0, y: 0}
+    enemyRoute00: []
+    enemyRoute01: []
+    enemyRoute02: []
+    enemyRoute03: []
+    enemyRoute04: []
+    posTrr_crd: []
+    posCab_crd: []
+    posAlf_crd: []
+    posObst: []
   player: {fileID: 6803507758537238771, guid: 580b8070fc19a524fbebcdebb1590edd, type: 3}
   king: {fileID: 6803507758537238771, guid: 36993cd368ecac24690990afb83d5cc4, type: 3}
   enemy: {fileID: 8535303172965156408, guid: 2ca6ead9969a9fa498e1fd9015762c67, type: 3}
@@ -2669,8 +2549,10 @@ MonoBehaviour:
   gridParent: {fileID: 935431306}
   editor: {fileID: 2071375525}
   template: {fileID: 0}
-  title_txt: {fileID: 0}
+  title_txt: {fileID: 1301026780}
   plchldr_load: {fileID: 0}
+  typesCards: {fileID: 1872424932}
+  enemiesSelector: {fileID: 1424540631}
   enemyBtn: {fileID: 7412934843983104241, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
   rootEnemies: {fileID: 0}
   btnAddEnemy: {fileID: 0}
@@ -2687,21 +2569,21 @@ MonoBehaviour:
   - {r: 1, g: 0.5254902, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.105882354, a: 1}
   slctType:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1305351967}
+  - {fileID: 341803760}
+  - {fileID: 142537646}
+  - {fileID: 439064029}
+  - {fileID: 1287185091}
   slctCard:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 211727525}
+  - {fileID: 318949624}
+  - {fileID: 251682475}
   slctEnemy:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1998879439}
+  - {fileID: 1848957705}
+  - {fileID: 1464962117}
+  - {fileID: 1345218612}
+  - {fileID: 434113829}
   user_idTxt: {fileID: 0}
   gridGenerated: 0
   _tmp: {fileID: 0}
@@ -2719,7 +2601,7 @@ GameObject:
   - component: {fileID: 844263803}
   - component: {fileID: 844263802}
   m_Layer: 5
-  m_Name: Cartas
+  m_Name: Cards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2790,7 +2672,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -2798,54 +2680,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyActive
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1872424932}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1424540631}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectType
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectCard
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3081,7 +2915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &935431306
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3427,21 +3261,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3789,7 +3611,7 @@ GameObject:
   - component: {fileID: 1321013980}
   - component: {fileID: 1321013979}
   m_Layer: 5
-  m_Name: Rey
+  m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3860,7 +3682,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -3868,42 +3690,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1872424932}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GridGenerator, Assembly-CSharp
-        m_MethodName: OnlyHide
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1424540631}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectType
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4090,7 +3876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -4107,7 +3893,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 814823852}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -4783,7 +4569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -4791,7 +4577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -4800,7 +4586,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 814823852}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -4827,7 +4613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetTextBtnEnemy
+      value: SelectActiveEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -4852,14 +4638,14 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1531680372}
+      objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4872,17 +4658,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7412934843983104240, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
   m_PrefabInstance: {fileID: 1531680370}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1531680372 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7412934845172069636, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
-  m_PrefabInstance: {fileID: 1531680370}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1551260372
 GameObject:
   m_ObjectHideFlags: 0
@@ -5334,21 +5109,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 814823852}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6017,7 +5780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -6034,7 +5797,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 814823852}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

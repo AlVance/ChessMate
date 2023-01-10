@@ -46,8 +46,8 @@ public class Gallery : MonoBehaviour
             NewMap _newMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
             GameObject newItem = Instantiate(itemGallery, contentGallery);
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
-            Debug.Log("item de gallery " + _newMap.size);
 
+            StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
             itemGllr.SetAuthor("Nombre");
             itemGllr.SetCode(_code);
             itemGllr.SetSize(_newMap.size.x + "x" + _newMap.size.y);
@@ -61,10 +61,10 @@ public class Gallery : MonoBehaviour
             itemGllr.SetPercent("27%");
             itemGllr.SetVisits("27k");
             itemGllr.SetLikes("2727");
-            StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
             itemGllr.SetTower(_newMap.posTrr_crd.Count != 0);
             itemGllr.SetHorse(_newMap.posCab_crd.Count != 0);
             itemGllr.SetBishop(_newMap.posAlf_crd.Count != 0);
+            itemGllr.FinishLoad();
             
 
             itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map));
