@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class ItemGallery : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ItemGallery : MonoBehaviour
     public TextMeshProUGUI visits_txt;
     public TextMeshProUGUI likes_txt;
 
+    [Space]
     public RawImage preview_rimg;
 
     public GameObject towerCrd_obj;
@@ -27,11 +29,17 @@ public class ItemGallery : MonoBehaviour
     public GameObject masks;
     public GameObject data;
 
+    [Header("Animaciones")]
+    public RectTransform infoLevelTransform;
+    public RectTransform infoCommunityTransform, nameTransform, codeTransform;
+    public float animDuration;
+
     private void Start()
     {
         //data.SetActive(false);
         //masks.SetActive(true);
-        alertTxt.SetActive(false);   
+        alertTxt.SetActive(false);
+        Animate();
     }
 
     public void CopyCode()
@@ -40,6 +48,14 @@ public class ItemGallery : MonoBehaviour
         GUIUtility.systemCopyBuffer = code_txt.text;
         Debug.Log("El codigo copiado es " + code_txt.text);
         Invoke("OffAlert", 1f);
+    }
+
+    public void Animate()
+    {
+        infoLevelTransform.DOLocalMoveX( - nameTransform.sizeDelta.x*0.5f, animDuration, true);
+        infoCommunityTransform.DOLocalMoveX(nameTransform.sizeDelta.x*0.5f, animDuration, true);
+        nameTransform.DOLocalMoveY( nameTransform.sizeDelta.y*2, animDuration, true);
+        codeTransform.DOLocalMoveY( - nameTransform.sizeDelta.y*2, animDuration, true);
     }
 
     public void OffAlert()
@@ -64,11 +80,5 @@ public class ItemGallery : MonoBehaviour
         masks.SetActive(false);
         data.SetActive(true);
         Debug.Log("Cell terminada de cargar" + masks.activeSelf);
-    }
-
-    private void Update()
-    {
-        Debug.Log("Cell terminada de cargar" + masks.activeSelf);
-
     }
 }

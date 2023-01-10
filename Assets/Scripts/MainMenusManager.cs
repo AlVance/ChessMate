@@ -10,18 +10,6 @@ public class MainMenusManager : MonoBehaviour
     public float TAPTimeMoving;
     public float TAP_Y;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void TAPStart()
     {
         TAPtransform.DOMoveY(TAP_Y * Screen.height, TAPTimeMoving).SetEase(Ease.InOutBack);
