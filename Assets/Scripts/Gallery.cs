@@ -11,6 +11,8 @@ public class Gallery : MonoBehaviour
 {
     public GameObject itemGallery;
     public Transform contentGallery;
+    List<ItemGallery> itemList = new List<ItemGallery>();
+    float startYContent;
 
     public GameObject galleryPanel;
 
@@ -65,12 +67,17 @@ public class Gallery : MonoBehaviour
             itemGllr.SetHorse(_newMap.posCab_crd.Count != 0);
             itemGllr.SetBishop(_newMap.posAlf_crd.Count != 0);
             itemGllr.FinishLoad();
+            itemGllr.onScreen = true;
             
-
             itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map));
             itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
+
+            itemList.Add(itemGllr);
         }
-        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, contentGallery.childCount * 300);
+
+        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
+            contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
+        contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - 200);
     }
 
     bool editing;
@@ -109,6 +116,36 @@ public class Gallery : MonoBehaviour
             SceneManager.LoadScene("PlayScene");
             galleryPanel.SetActive(false);
             editing = false;
+        }
+    }
+
+    public void CheckPosition()
+    {
+        float sizeItem = contentGallery.GetComponent<RectTransform>().sizeDelta.y / contentGallery.childCount;
+        int itemsInScreen = Mathf.FloorToInt(contentGallery.transform.parent.GetComponent<RectTransform>().rect.size.y / sizeItem);
+        int step = Mathf.FloorToInt(contentGallery.GetComponent<RectTransform>().anchoredPosition.y / sizeItem);
+        if (step < itemList.Count && step >= 0)
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                itemList[i].onScreen = false;
+            }
+
+
+            if (step == 0)
+            {
+                for (int i = 0; i < itemsInScreen + 1; i++)
+                {
+                    itemList[i].onScreen = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < itemsInScreen + 1; i++)
+                {
+                    if(step + i < itemList.Count) itemList[step + i].onScreen = true;
+                }
+            }
         }
     }
 }

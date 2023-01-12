@@ -123,7 +123,7 @@ public class Spawner : MonoBehaviour
             _newEnCt.startPos = enemiesRoute04[0];
             _newEnCt.routePoints = enemiesRoute04;
             _newEnCt._mapMngr = _gridGen;
-            _gridGen.SetEnemy(newEne.GetComponent<EnemyCtrl>());
+            _gridGen.SetEnemy(_newEnCt);
         }
     }
 

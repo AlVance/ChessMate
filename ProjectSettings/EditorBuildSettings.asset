@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 0f5426285973d1e43876b122acccd987
+    path: Assets/Scenes/TapToPlay.unity
+    guid: 087272d330fb103468728e3ee3a98688
   - enabled: 1
     path: Assets/Scenes/LevelsScene.unity
     guid: b1c9831f3b9a673419ae0c1c79901b0d

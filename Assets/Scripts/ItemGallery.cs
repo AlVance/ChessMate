@@ -30,16 +30,29 @@ public class ItemGallery : MonoBehaviour
     public GameObject data;
 
     [Header("Animaciones")]
-    public RectTransform infoLevelTransform;
-    public RectTransform infoCommunityTransform, nameTransform, codeTransform;
+    public RectTransform[] infoLevelTransform;
+    public RectTransform[] infoCommunityTransform, nameTransform, codeTransform;
     public float animDuration;
+
+    public bool onScreen;
+    bool opened;
 
     private void Start()
     {
         //data.SetActive(false);
         //masks.SetActive(true);
         alertTxt.SetActive(false);
-        Animate();
+    }
+    private void Update()
+    {
+        if (onScreen && !opened)
+        {
+            OpenAnim(true);
+        }
+        else if(!onScreen && opened)
+        {
+            OpenAnim(false);
+        }
     }
 
     public void CopyCode()
@@ -50,12 +63,33 @@ public class ItemGallery : MonoBehaviour
         Invoke("OffAlert", 1f);
     }
 
-    public void Animate()
+    public void OpenAnim(bool _open = true)
     {
-        infoLevelTransform.DOLocalMoveX( - nameTransform.sizeDelta.x*0.5f, animDuration, true);
-        infoCommunityTransform.DOLocalMoveX(nameTransform.sizeDelta.x*0.5f, animDuration, true);
-        nameTransform.DOLocalMoveY( nameTransform.sizeDelta.y*2, animDuration, true);
-        codeTransform.DOLocalMoveY( - nameTransform.sizeDelta.y*2, animDuration, true);
+        opened = _open;
+        int value = 0;
+        if (_open) value = 0;
+        else value = -1;
+
+        for (int iL = 0; iL < infoLevelTransform.Length; iL++)
+        {
+            Debug.Log("Size info level " + (-value * (infoLevelTransform[iL].sizeDelta.x)));
+            infoLevelTransform[iL].DOAnchorPosX(-value * (infoLevelTransform[iL].sizeDelta.x), animDuration, true);
+        }
+
+        for (int iC = 0; iC < infoCommunityTransform.Length; iC++)
+        {
+            infoCommunityTransform[iC].DOAnchorPosX(value * (infoCommunityTransform[iC].sizeDelta.x), animDuration, true);
+        }
+
+        for (int n = 0; n < nameTransform.Length; n++)
+        {
+            nameTransform[n].DOAnchorPosY(value * (nameTransform[n].sizeDelta.y), animDuration, true);
+        }
+
+        for (int c = 0; c < codeTransform.Length; c++)
+        {
+            codeTransform[c].DOAnchorPosY(-value * (codeTransform[c].sizeDelta.y), animDuration, true);
+        }
     }
 
     public void OffAlert()
@@ -79,6 +113,5 @@ public class ItemGallery : MonoBehaviour
     {
         masks.SetActive(false);
         data.SetActive(true);
-        Debug.Log("Cell terminada de cargar" + masks.activeSelf);
     }
 }
