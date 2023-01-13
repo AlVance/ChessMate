@@ -77,7 +77,7 @@ public class Gallery : MonoBehaviour
 
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
             contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
-        contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - 200);
+        contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - contentGallery.GetComponent<VerticalLayoutGroup>().padding.top);
     }
 
     bool editing;
