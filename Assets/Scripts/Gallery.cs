@@ -43,6 +43,7 @@ public class Gallery : MonoBehaviour
         {
             string[] data = items[i].Split("+");
             string _id = data[0];
+            string _author = data[1];
             string _code = data[2];
             string _map = Parser.instance.ParseNewMapCustomToJson(data[3]);
             NewMap _newMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
@@ -50,7 +51,7 @@ public class Gallery : MonoBehaviour
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
 
             StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
-            itemGllr.SetAuthor("Nombre");
+            itemGllr.SetAuthor(_author);
             itemGllr.SetCode(_code);
             itemGllr.SetSize(_newMap.size.x + "x" + _newMap.size.y);
             int countEnem = 0;
