@@ -44,6 +44,7 @@ public class MapManager : MonoBehaviour
     [Space]
     public GameObject obst;
 
+    [SerializeField] private CamerasManager camsManager;
     private void Start()
     {
         if(PlayerPrefs.GetString("currentMap") != "")
@@ -51,7 +52,6 @@ public class MapManager : MonoBehaviour
             StartCoroutine(LoadingMap(PlayerPrefs.GetString("currentMap")));
         }
     }
-
     public IEnumerator ResetMap()
     {
         cells = new List<GameObject>(0);
@@ -259,7 +259,7 @@ public class MapManager : MonoBehaviour
         resetBtnsFinish = false;
         _enemiesFinishWalk = 0;
         ++steps;
-
+        if (steps == 1) camsManager.CamTransitionToGameplay();
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
@@ -336,10 +336,7 @@ public class MapManager : MonoBehaviour
         if (JsonUtility.FromJson<NewMap>(_map) != null)
         {
             currentMap = JsonUtility.FromJson<NewMap>(_map);
-            Camera.main.transform.position = new Vector3(
-                transform.position.x + (currentMap.size.x / 2) - .5f + currentMap.size.x,
-                transform.position.y + 15,
-                transform.position.z + (currentMap.size.x / 2) - .5f);
+            camsManager.SetCamPos(currentMap);
         }
         StopAllCoroutines();
         StartCoroutine(ResetMap());
@@ -378,6 +375,7 @@ public class MapManager : MonoBehaviour
 
         if (_enemies.Count == 0)
         {
+            camsManager.CamTransitionToCloseup(GetPlayer().gameObject.transform);
             if (!onTesting)
             {
                 //StartCoroutine(ChangeToNextLevel());
