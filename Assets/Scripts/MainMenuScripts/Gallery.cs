@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
 using System;
-using UnityEngine.SceneManagement;
 
 public class Gallery : MonoBehaviour
 {
@@ -18,6 +17,8 @@ public class Gallery : MonoBehaviour
 
     public Image _scrollImg;
     public Color[] _colors;
+
+    [SerializeField] private SceneCtrl SC;
 
 
     public void Start()
@@ -109,12 +110,12 @@ public class Gallery : MonoBehaviour
         PlayerPrefs.SetString("currentMap",map);
         if (!editing)
         {
-            SceneManager.LoadScene("PlayScene");
+            SC.ChangeScene("PlayScene");
             galleryPanel.SetActive(false);
         }
         else
         {
-            SceneManager.LoadScene("PlayScene");
+            SC.ChangeScene("PlayScene");
             galleryPanel.SetActive(false);
             editing = false;
         }

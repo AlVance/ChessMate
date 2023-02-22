@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -45,6 +44,7 @@ public class MapManager : MonoBehaviour
     public GameObject obst;
 
     [SerializeField] private CamerasManager camsManager;
+    [SerializeField] private SceneCtrl SC;
     private void Start()
     {
         if(PlayerPrefs.GetString("currentMap") != "")
@@ -379,11 +379,11 @@ public class MapManager : MonoBehaviour
             if (!onTesting)
             {
                 //StartCoroutine(ChangeToNextLevel());
-                ChangeScene("LevelsScene");
+                SC.ChangeScene("LevelsScene");
             }
             else
             {
-                ChangeScene("LevelsScene");
+                SC.ChangeScene("LevelsScene");
                 //succesTest.SetActive(true);
                 //StartCoroutine(customEditor.SaveMapRoutine());
                 //onTesting = false;
@@ -406,8 +406,6 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
-    public void ChangeScene(string _scene) { SceneManager.LoadScene(_scene); }
 
 
     GameObject GameObjectFindByID(int _x, int _z)

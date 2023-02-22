@@ -1022,7 +1022,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 184999059}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 279506511}
+        m_TargetAssemblyTypeName: SceneCtrl, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LevelsScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &184999059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,6 +1426,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251682475}
   m_CullTransparentMesh: 1
+--- !u!114 &279506511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4229612417532532285, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+  m_PrefabInstance: {fileID: 4229612417257273458}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391c63495b3e19c48ba4b5f72a7ed7c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &318949624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,7 +2035,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 521682763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1063202938}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: OpenCloseOptionsMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &521682763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2723,6 +2758,7 @@ MonoBehaviour:
   alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
   obst: {fileID: 1379618049465467961, guid: 2bb1e751bdf72824d8d028fef1542126, type: 3}
   camsManager: {fileID: 1735258512}
+  SC: {fileID: 279506511}
 --- !u!4 &720291025
 Transform:
   m_ObjectHideFlags: 0
@@ -4002,6 +4038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1063202937}
+  - component: {fileID: 1063202938}
   m_Layer: 5
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -4031,6 +4068,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1063202938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063202936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c70aa35020542046ac65e243295a15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionsMenuGO: {fileID: 1290115923}
 --- !u!1 &1097292362
 GameObject:
   m_ObjectHideFlags: 0
@@ -6450,7 +6500,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1770077773}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1063202938}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: OpenCloseOptionsMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1770077773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7597,10 +7659,10 @@ RectTransform:
   m_Father: {fileID: 1290115924}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.79300004}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.0001, y: 0.000030518}
+  m_AnchorMin: {x: 0.09516847, y: 0.79300004}
+  m_AnchorMax: {x: 0.89945525, y: 1}
+  m_AnchoredPosition: {x: 3.0203857, y: 0}
+  m_SizeDelta: {x: 6.0408, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082930945
 MonoBehaviour:
@@ -8279,3 +8341,60 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!1001 &4229612417257273458
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532258, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532284, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_Name
+      value: SceneController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
