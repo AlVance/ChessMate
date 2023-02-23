@@ -115,8 +115,7 @@ public class EnemyCtrl : MonoBehaviour
                 //_GridGen.ReloadMap();
                 //if (_mapMngr.onTesting) _mapMngr.failTest.SetActive(true);
                 //_mapMngr.ReloadMap();
-                _mapMngr.StopAllCoroutines();
-                _mapMngr.StartCoroutine(_mapMngr.ResetMap());
+                _mapMngr.ResetMapOnPlay();
             }
             this.transform.position = cellTarget;
             _mapMngr._enemiesFinishWalk++;

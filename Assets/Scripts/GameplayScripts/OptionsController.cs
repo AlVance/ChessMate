@@ -22,6 +22,12 @@ public class OptionsController : MonoBehaviour
     {
         optionsMenuGO.SetActive(!optionsMenuGO.activeInHierarchy);
     }
+
+    public void CopyCodeGame()
+    {
+        GUIUtility.systemCopyBuffer = PlayerPrefs.GetString("currentMapCode");
+    }
+
     public void ShareLevelCode()
     {
         StartCoroutine(ShareLevel());

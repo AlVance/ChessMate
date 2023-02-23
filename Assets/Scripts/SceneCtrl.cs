@@ -12,10 +12,6 @@ public class SceneCtrl : MonoBehaviour
     {
         StartCoroutine(SceneChangeTransition(_scene));
     }
-    public void ChangeSceneNoTransition(string _scene)
-    {
-        SceneManager.LoadScene(_scene);
-    }
 
     private IEnumerator SceneChangeTransition(string _scene)
     {

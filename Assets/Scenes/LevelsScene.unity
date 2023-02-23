@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneController
       objectReference: {fileID: 0}
+    - target: {fileID: 4229612417532532285, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: transitionTime
+      value: 0.95
+      objectReference: {fileID: 0}
     - target: {fileID: 4229612419129588031, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2250,7 +2254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.2264151, g: 0.14182983, b: 0.22077608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

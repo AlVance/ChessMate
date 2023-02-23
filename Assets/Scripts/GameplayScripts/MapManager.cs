@@ -43,6 +43,9 @@ public class MapManager : MonoBehaviour
     [Space]
     public GameObject obst;
 
+    [Space]
+    [SerializeField] private GameObject victoryScreen;
+
     [SerializeField] private CamerasManager camsManager;
     [SerializeField] private SceneCtrl SC;
     private void Start()
@@ -379,12 +382,14 @@ public class MapManager : MonoBehaviour
             camsManager.CamTransitionToCloseup(GetPlayer().gameObject.transform);
             if (!onTesting)
             {
+                victoryScreen.SetActive(true);
                 //StartCoroutine(ChangeToNextLevel());
-                SC.ChangeScene("LevelsScene");
+                //SC.ChangeScene("LevelsScene");
             }
             else
             {
-                SC.ChangeScene("LevelsScene");
+                victoryScreen.SetActive(true);
+                //SC.ChangeScene("LevelsScene");
                 //succesTest.SetActive(true);
                 //StartCoroutine(customEditor.SaveMapRoutine());
                 //onTesting = false;
