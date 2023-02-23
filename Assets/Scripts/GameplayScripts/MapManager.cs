@@ -59,6 +59,7 @@ public class MapManager : MonoBehaviour
         _enemiesFinishWalk = 0;
         recentEat = false;
         onStepped = false;
+        steps = 0;
         for (int i = 0; i < rootAll.childCount; i++)
         {
             Destroy(rootAll.GetChild(i).gameObject);
@@ -391,7 +392,12 @@ public class MapManager : MonoBehaviour
         }
     }
 
-
+    public void ResetMapOnPlay()
+    {
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());
+        camsManager.CamTansitionToTopdown();
+    }
 
     public void ResetBtnsPlayer()
     {

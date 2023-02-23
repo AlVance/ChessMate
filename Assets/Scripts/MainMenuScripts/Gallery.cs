@@ -71,7 +71,7 @@ public class Gallery : MonoBehaviour
             itemGllr.FinishLoad();
             itemGllr.onScreen = true;
             
-            itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map));
+            itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map, _code));
             itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
 
             itemList.Add(itemGllr);
@@ -105,9 +105,10 @@ public class Gallery : MonoBehaviour
         }
     }
 
-    public void LoadMapById(string id, string map)
+    public void LoadMapById(string id, string map, string code)
     {
         PlayerPrefs.SetString("currentMap",map);
+        PlayerPrefs.SetString("currentMapCode",code);
         if (!editing)
         {
             SC.ChangeScene("PlayScene");

@@ -178,9 +178,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneController
       objectReference: {fileID: 0}
-    - target: {fileID: 4229612418448260325, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+    - target: {fileID: 4229612419129588031, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b784acc21157ef94d9877fde126a4e70, type: 3}
