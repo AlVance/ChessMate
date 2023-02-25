@@ -322,8 +322,8 @@ public class PlayerCtrl : MonoBehaviour
         //_GridGen.CellById(actualPos).isPlayer = true;
         actualType = _cellTarget.typeCard;
 
-        if (_cellTarget.transform.position.x < this.transform.position.x) playerSprite.flipX = false;
-        else playerSprite.flipX = true;
+        if (_cellTarget.transform.position.z < this.transform.position.z) playerSprite.flipX = false;
+        else if(_cellTarget.transform.position.z > this.transform.position.z) playerSprite.flipX = true;
 
         StartCoroutine(StartWalk(_cellTarget));
     }

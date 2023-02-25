@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaf9638ff9154448ae00d9291759859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _GridGen: {fileID: 0}
+  _mapMngr: {fileID: 0}
   startPos: {x: 3, y: 1}
   actualPos: {x: 0, y: 0}
   actualType: 0
