@@ -347,7 +347,16 @@ public class MapManager : MonoBehaviour
         //LevelTransitorAnim.SetBool("IsLoadingLevel", false);
     }
 
+    public IEnumerator LoadingMapByNewMap(NewMap _map)
+    {
+        finishedGen = false;
+        yield return new WaitForSeconds(.1f);
 
+        currentMap = _map;
+        camsManager.SetCamPos(currentMap);
+        StopAllCoroutines();
+        StartCoroutine(ResetMap());
+    }
 
     public void ActiveCellBtn(CellData _cell)
     {

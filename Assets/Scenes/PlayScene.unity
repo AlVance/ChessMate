@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -237,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 814823852}
+      objectReference: {fileID: 1332486926}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -548,7 +548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -74.8}
+  m_AnchoredPosition: {x: 80, y: -48.619987}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72624375
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -1141,7 +1141,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 814823852}
+      objectReference: {fileID: 1332486926}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: GenGridBtns
         m_Mode: 6
@@ -2364,7 +2364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -74.8}
+  m_AnchoredPosition: {x: 320, y: -48.619987}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &536532280
@@ -2411,7 +2411,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -2633,7 +2633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 580, y: -74.8}
+  m_AnchoredPosition: {x: 80, y: -168.62}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586595509
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -2843,7 +2843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 700, y: -74.8}
+  m_AnchoredPosition: {x: 200, y: -168.62}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &632616549
@@ -2890,9 +2890,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
-        m_MethodName: SaveMap
+        m_MethodName: TryMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3850,7 +3850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 220, y: -74.8}
+  m_AnchoredPosition: {x: 200, y: -48.619987}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &844263802
@@ -3897,7 +3897,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -4283,14 +4283,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935431305}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2071375526}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0.35951564}
   m_AnchorMax: {x: 1, y: 0.92200005}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -4314,7 +4314,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_StartCorner: 0
+  m_StartCorner: 1
   m_StartAxis: 1
   m_CellSize: {x: 90, y: 90}
   m_Spacing: {x: 0, y: 0}
@@ -4745,7 +4745,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -5171,7 +5171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 19.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5334,7 +5334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 460, y: -74.8}
+  m_AnchoredPosition: {x: 440, y: -48.619987}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321013979
@@ -5381,7 +5381,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeMap
         m_Mode: 3
@@ -5441,13 +5441,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1332486924}
   - component: {fileID: 1332486925}
+  - component: {fileID: 1332486926}
   m_Layer: 5
   m_Name: Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1332486924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5478,6 +5479,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332486923}
   m_CullTransparentMesh: 1
+--- !u!114 &1332486926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332486923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f7b276b88ad714d921d9dfe6d309e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 5, y: 5}
+  xInput: {fileID: 2145795025}
+  zInput: {fileID: 905039759}
+  cellBtn: {fileID: 1227724151235737521, guid: 873dd01f952a7a5458a517d2efb19396, type: 3}
+  _mapMngr: {fileID: 720291024}
+  gridParent: {fileID: 935431306}
+  editor: {fileID: 2071375525}
+  template: {fileID: 0}
+  title_txt: {fileID: 1301026780}
+  plchldr_load: {fileID: 0}
+  typesCards: {fileID: 1872424932}
+  enemiesSelector: {fileID: 1424540631}
+  enemyBtn: {fileID: 7412934843983104241, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
+  rootEnemies: {fileID: 0}
+  btnAddEnemy: {fileID: 0}
+  path: 
+  colors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0.59481907, b: 1, a: 1}
+  - {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.26845244, b: 0, a: 1}
+  colorsCard:
+  - {r: 0.40784314, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.5254902, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.105882354, a: 1}
+  slctType:
+  - {fileID: 1305351967}
+  - {fileID: 341803760}
+  - {fileID: 142537646}
+  - {fileID: 439064029}
+  - {fileID: 1287185091}
+  slctCard:
+  - {fileID: 211727525}
+  - {fileID: 318949624}
+  - {fileID: 251682475}
+  slctEnemy:
+  - {fileID: 1998879439}
+  - {fileID: 1848957705}
+  - {fileID: 1464962117}
+  - {fileID: 1345218612}
+  - {fileID: 434113829}
+  user_idTxt: {fileID: 0}
+  gridGenerated: 0
+  _tmp: {fileID: 0}
+  onEdit: 0
 --- !u!1001 &1343171306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5592,7 +5652,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 814823852}
+      objectReference: {fileID: 1332486926}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -6935,7 +6995,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 814823852}
+      objectReference: {fileID: 1332486926}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -7609,7 +7669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 29.936768, y: 31.299744}
+  m_AnchoredPosition: {x: 29.936798, y: 31.299744}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1770077772
@@ -8001,7 +8061,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 814823852}
+      - m_Target: {fileID: 1332486926}
         m_TargetAssemblyTypeName: CustomEditor, Assembly-CSharp
         m_MethodName: ChangeTypeCard
         m_Mode: 3
@@ -9881,7 +9941,7 @@ PrefabInstance:
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 814823852}
+      objectReference: {fileID: 1332486926}
     - target: {fileID: 7412934843983104243, guid: 0c591be01152fa1418da2ed09e039487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

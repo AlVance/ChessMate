@@ -130,7 +130,7 @@ public class CustomEditor : MonoBehaviour
         //StartCoroutine(_mapMngr.RegenGridEditor(size.x, size.y, this));
         yield return new WaitUntil(() => gridGenerated == true);
         gridParent.GetComponent<GridLayoutGroup>().constraintCount = size.x;
-        gridParent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(800 / size.x, 800 / size.y);
+        gridParent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(gridParent.GetComponent<RectTransform>().rect.size.x / size.x, gridParent.GetComponent<RectTransform>().rect.size.y / size.y);
         for (int x = 0; x < size.x; x++)
         {
             for (int z = 0; z < size.y; z++)
@@ -149,6 +149,15 @@ public class CustomEditor : MonoBehaviour
         }
         if (newMap) NewMap();
         else  RefreshData();
+    }
+    public void TryMap()
+    {
+        if (newSpawner.enemyRoute00.Count != 0) newSpawner.enemyRoute00.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute01.Count != 0) newSpawner.enemyRoute01.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute02.Count != 0) newSpawner.enemyRoute02.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute03.Count != 0) newSpawner.enemyRoute03.Add(newSpawner.kingPos);
+        if (newSpawner.enemyRoute04.Count != 0) newSpawner.enemyRoute04.Add(newSpawner.kingPos);
+        StartCoroutine(_mapMngr.LoadingMapByNewMap(newSpawner));
     }
 
     public void RefreshData()

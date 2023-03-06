@@ -33,7 +33,7 @@ public class Gallery : MonoBehaviour
             Destroy(contentGallery.GetChild(i).gameObject);
         }
 
-        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,0);
+        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, 0);
         ServerCtrl.Instance.GetAllMaps();
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string totalCount = ServerCtrl.Instance.server.response.response;
@@ -52,25 +52,26 @@ public class Gallery : MonoBehaviour
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
 
             StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
-            itemGllr.SetAuthor(_author);
-            itemGllr.SetCode(_code);
-            itemGllr.SetSize(_newMap.size.x + "x" + _newMap.size.y);
+
             int countEnem = 0;
             if (_newMap.enemyRoute00.Count != 0) countEnem++;
             if (_newMap.enemyRoute01.Count != 0) countEnem++;
             if (_newMap.enemyRoute02.Count != 0) countEnem++;
             if (_newMap.enemyRoute03.Count != 0) countEnem++;
             if (_newMap.enemyRoute04.Count != 0) countEnem++;
-            itemGllr.SetEnemies(countEnem.ToString());
-            itemGllr.SetPercent("27%");
-            itemGllr.SetVisits("27k");
-            itemGllr.SetLikes("2727");
-            itemGllr.SetTower(_newMap.posTrr_crd.Count != 0);
-            itemGllr.SetHorse(_newMap.posCab_crd.Count != 0);
-            itemGllr.SetBishop(_newMap.posAlf_crd.Count != 0);
-            itemGllr.FinishLoad();
-            itemGllr.onScreen = true;
-            
+
+            StartCoroutine(SetupItemGallery(itemGllr,
+                _author,
+                _code,
+                _newMap.size.x + "x" + _newMap.size.y,
+                countEnem.ToString(),
+                "27%",
+                "27k",
+                "2727",
+                _newMap.posTrr_crd.Count != 0,
+                _newMap.posCab_crd.Count != 0,
+                _newMap.posAlf_crd.Count != 0));
+
             itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map, _code));
             itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
 
@@ -80,6 +81,25 @@ public class Gallery : MonoBehaviour
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
             contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
         contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - contentGallery.GetComponent<VerticalLayoutGroup>().padding.top);
+    }
+
+    public IEnumerator SetupItemGallery(ItemGallery _itemGllr, string _author, string _code, string _size, string _enemiesCnt, string _percent, string _visits, string _likes, bool _tw, bool _hr, bool _bs)
+    {
+
+        _itemGllr.SetAuthor(_author);
+        _itemGllr.SetCode(_code);
+        _itemGllr.SetSize(_size);
+        _itemGllr.SetEnemies(_enemiesCnt);
+        _itemGllr.SetPercent(_percent);
+        _itemGllr.SetVisits(_visits);
+        _itemGllr.SetLikes(_likes);
+        _itemGllr.SetTower(_tw);
+        _itemGllr.SetHorse(_hr);
+        _itemGllr.SetBishop(_bs);
+        _itemGllr.FinishLoad();
+        _itemGllr.onScreen = true;
+
+        yield return new WaitForSeconds(0);
     }
 
     bool editing;
@@ -107,8 +127,8 @@ public class Gallery : MonoBehaviour
 
     public void LoadMapById(string id, string map, string code)
     {
-        PlayerPrefs.SetString("currentMap",map);
-        PlayerPrefs.SetString("currentMapCode",code);
+        PlayerPrefs.SetString("currentMap", map);
+        PlayerPrefs.SetString("currentMapCode", code);
         if (!editing)
         {
             SC.ChangeScene("PlayScene");
@@ -146,7 +166,7 @@ public class Gallery : MonoBehaviour
             {
                 for (int i = 0; i < itemsInScreen + 1; i++)
                 {
-                    if(step + i < itemList.Count) itemList[step + i].onScreen = true;
+                    if (step + i < itemList.Count) itemList[step + i].onScreen = true;
                 }
             }
         }
