@@ -1989,6 +1989,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 720291024}
+        m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+        m_MethodName: SetVisibilityOptionsScreen
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &483553439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2902,6 +2914,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 720291024}
+        m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+        m_MethodName: SetVisibilityEditorScreen
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &632616550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3344,6 +3368,8 @@ MonoBehaviour:
   caballo_crd: {fileID: 3797099992817276680, guid: b632a0d44d8703e4ea11779bc1fc9f19, type: 3}
   alfil_crd: {fileID: 6550802916920960261, guid: 724e628e655fd614aa38ca8d31bc842a, type: 3}
   obst: {fileID: 1379618049465467961, guid: 2bb1e751bdf72824d8d028fef1542126, type: 3}
+  editorScreen: {fileID: 1332486923}
+  optionsScreen: {fileID: 1063202936}
   victoryScreen: {fileID: 1275386053}
   camsManager: {fileID: 1735258512}
   SC: {fileID: 279506511}
@@ -7669,7 +7695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 29.936798, y: 31.299744}
+  m_AnchoredPosition: {x: 29.936829, y: 31.299744}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1770077772

@@ -44,6 +44,8 @@ public class MapManager : MonoBehaviour
     public GameObject obst;
 
     [Space]
+    [SerializeField] private GameObject editorScreen;
+    [SerializeField] private GameObject optionsScreen;
     [SerializeField] private GameObject victoryScreen;
 
     [SerializeField] private CamerasManager camsManager;
@@ -441,6 +443,10 @@ public class MapManager : MonoBehaviour
         }
         return null;
     }
+    public void SetVisibilityEditorScreen(bool active) { editorScreen.SetActive(active); }
+    public void OffEditorScreen(float time) { Invoke(SetVisibilityEditorScreen(false), time); }
+    public void SetVisibilityOptionsScreen(bool active) { optionsScreen.SetActive(active); }
+
     public GameObject FindByID(int _xID, int _zID) { return GameObjectFindByID(_xID, _zID); }
     public GameObject FindByID(Vector2 ids) { return GameObjectFindByID((int)ids.x, (int)ids.y); }
     public GameObject FindByID(int cell) { return GameObjectFindByID(cells[cell].GetComponent<CellData>().ids.x, cells[cell].GetComponent<CellData>().ids.y); }
