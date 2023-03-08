@@ -443,8 +443,8 @@ public class MapManager : MonoBehaviour
         }
         return null;
     }
-    public void SetVisibilityEditorScreen(bool active) { editorScreen.SetActive(active); }
-    public void OffEditorScreen(float time) { Invoke(SetVisibilityEditorScreen(false), time); }
+    public IEnumerator SetVisibilityEditorScreen(bool active, float time) { yield return new WaitForSeconds(time); editorScreen.SetActive(active); }
+    public void OffEditorScreen(float time) { StartCoroutine(SetVisibilityEditorScreen(false, time)); }
     public void SetVisibilityOptionsScreen(bool active) { optionsScreen.SetActive(active); }
 
     public GameObject FindByID(int _xID, int _zID) { return GameObjectFindByID(_xID, _zID); }
