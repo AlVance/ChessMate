@@ -6,17 +6,6 @@ using UnityEngine.Networking;
 public class OptionsController : MonoBehaviour
 {
     [SerializeField] private GameObject optionsMenuGO; 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OpenCloseOptionsMenu()
     {
@@ -58,5 +47,10 @@ public class OptionsController : MonoBehaviour
         }
 
         
+    }
+
+    public void GoToURL(string url)
+    {
+        Application.OpenURL(url);
     }
 }
