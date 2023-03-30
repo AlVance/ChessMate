@@ -5,9 +5,9 @@ using UnityEngine.Networking;
 
 public class OptionsController : MonoBehaviour
 {
-    [SerializeField] private GameObject optionsMenuGO; 
+    //[SerializeField] private GameObject optionsMenuGO; 
 
-    public void OpenCloseOptionsMenu()
+    public void OpenCloseOptionsMenu(GameObject optionsMenuGO)
     {
         optionsMenuGO.SetActive(!optionsMenuGO.activeInHierarchy);
     }
@@ -38,7 +38,7 @@ public class OptionsController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             path = Application.persistentDataPath + "/Screenshots/";
             if (!System.IO.Directory.Exists(path)) System.IO.Directory.CreateDirectory(path);
-            path += "currentmap.png";
+            path += "chessformersMap.png";
             yield return new WaitForEndOfFrame();
             byte[] imageBytes = screenImage.EncodeToPNG();
             System.IO.File.WriteAllBytes(path, imageBytes);
