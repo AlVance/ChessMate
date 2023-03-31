@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
@@ -47,6 +49,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject editorScreen;
     [SerializeField] private GameObject optionsScreen;
     [SerializeField] private GameObject victoryScreen;
+    [SerializeField] private TextMeshProUGUI gameTimerText;
+    private float gameTimer = 0;
 
     [SerializeField] private CamerasManager camsManager;
     [SerializeField] private SceneCtrl SC;
@@ -57,6 +61,11 @@ public class MapManager : MonoBehaviour
             StartCoroutine(LoadingMap(PlayerPrefs.GetString("currentMap")));
         }
     }
+    private void Update()
+    {
+        if(_enemies.Count > 0) gameTimer += Time.deltaTime;
+    }
+
     public IEnumerator ResetMap()
     {
         cells = new List<GameObject>(0);
@@ -65,6 +74,7 @@ public class MapManager : MonoBehaviour
         recentEat = false;
         onStepped = false;
         steps = 0;
+        gameTimer = 0;
         for (int i = 0; i < rootAll.childCount; i++)
         {
             Destroy(rootAll.GetChild(i).gameObject);
@@ -393,6 +403,10 @@ public class MapManager : MonoBehaviour
             camsManager.CamTransitionToCloseup(GetPlayer().gameObject.transform);
             if (!onTesting)
             {
+                string minutes = Mathf.Floor(gameTimer / 60).ToString("00");
+                string seconds = (gameTimer % 60).ToString("00");
+                gameTimerText.text = minutes + ":" + seconds;
+               
                 victoryScreen.SetActive(true);
                 //StartCoroutine(ChangeToNextLevel());
                 //SC.ChangeScene("LevelsScene");
