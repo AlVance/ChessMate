@@ -52,7 +52,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameTimerText;
     private float gameTimer = 0;
 
-    [SerializeField] private CamerasManager camsManager;
+    public CamerasManager camsManager;
     [SerializeField] private SceneCtrl SC;
     private void Start()
     {
@@ -276,6 +276,7 @@ public class MapManager : MonoBehaviour
         _enemiesFinishWalk = 0;
         ++steps;
         if (steps == 1) camsManager.CamTransitionToGameplay();
+        //if(_cellTarget.isEnemy)
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
@@ -406,14 +407,14 @@ public class MapManager : MonoBehaviour
                 string minutes = Mathf.Floor(gameTimer / 60).ToString("00");
                 string seconds = (gameTimer % 60).ToString("00");
                 gameTimerText.text = minutes + ":" + seconds;
-               
-                victoryScreen.SetActive(true);
+
+                StartCoroutine(OpenVictoryScreen());
                 //StartCoroutine(ChangeToNextLevel());
                 //SC.ChangeScene("LevelsScene");
             }
             else
             {
-                victoryScreen.SetActive(true);
+                StartCoroutine(OpenVictoryScreen());
                 //SC.ChangeScene("LevelsScene");
                 //succesTest.SetActive(true);
                 //StartCoroutine(customEditor.SaveMapRoutine());
@@ -421,7 +422,11 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
+    private IEnumerator OpenVictoryScreen()
+    {
+        yield return new WaitForSeconds(1.4f);
+        victoryScreen.SetActive(true);
+    }
     public void ResetMapOnPlay()
     {
         StopAllCoroutines();
@@ -461,6 +466,7 @@ public class MapManager : MonoBehaviour
     public void OffEditorScreen(float time) { StartCoroutine(SetVisibilityEditorScreen(false, time)); }
     public void SetVisibilityOptionsScreen(bool active) { optionsScreen.SetActive(active); }
 
+    public int GetEnemyCount() { return _enemies.Count; }
     public GameObject FindByID(int _xID, int _zID) { return GameObjectFindByID(_xID, _zID); }
     public GameObject FindByID(Vector2 ids) { return GameObjectFindByID((int)ids.x, (int)ids.y); }
     public GameObject FindByID(int cell) { return GameObjectFindByID(cells[cell].GetComponent<CellData>().ids.x, cells[cell].GetComponent<CellData>().ids.y); }

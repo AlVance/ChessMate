@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerCtrl : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerCtrl : MonoBehaviour
     public Type actualType = Type.Peon;
 
     List<CellData> stepsToWalk = new List<CellData>(0);
+    [SerializeField] private CamerasManager camsManager;
 
     #region Animation variables
     private Animator playerAnim;
@@ -354,6 +356,10 @@ public class PlayerCtrl : MonoBehaviour
             yield return new WaitUntil(() => isMoving == false);
             isMoving = true;
             cellTargetPos = stepsToWalk[i].pos;
+            if(i == stepsToWalk.Count - 1 && _cellTarget.isEnemy && _mapMngr.GetEnemyCount() == 1) {
+
+                StartCoroutine(AnimateGameEnd());
+            } 
         }
         yield return new WaitUntil(() => isMoving == false);
         _mapMngr.CellById(actualPos).isPlayer = true;
@@ -403,5 +409,20 @@ public class PlayerCtrl : MonoBehaviour
                 playerSprite.sprite = formsSprites[3];
                 break;
         }
+    }
+
+    private IEnumerator AnimateGameEnd()
+    {
+        Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 1f;
+        _mapMngr.camsManager.CamTransitionToCloseup(gameObject.transform);
+        Time.timeScale = 0.4f;
+        yield return new WaitForSeconds(0.1f);
+        Time.timeScale = 0.15f;
+        yield return new WaitForSeconds(0.35f);
+        Time.timeScale = 0.4f;
+        yield return new WaitForSeconds(0.4f);
+        Time.timeScale = 1f;
+
+        Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0.5f;
     }
 }
