@@ -65,9 +65,9 @@ public class Gallery : MonoBehaviour
                 _code,
                 _newMap.size.x + "x" + _newMap.size.y,
                 countEnem.ToString(),
-                "27%",
-                "27k",
-                "2727",
+                "50%",
+                "0",
+                "0",
                 _newMap.posTrr_crd.Count != 0,
                 _newMap.posCab_crd.Count != 0,
                 _newMap.posAlf_crd.Count != 0));

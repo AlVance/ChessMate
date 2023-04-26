@@ -3781,7 +3781,7 @@ Camera:
   m_GameObject: {fileID: 656298481}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -12706,6 +12706,34 @@ PrefabInstance:
     - target: {fileID: 4764801548925004382, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.95750004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.74670315
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.62710935
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764801548925004383, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 4764801549159319299, guid: 25cdb079ffdedc04895c6b7b7498f9ca, type: 3}
       propertyPath: m_AnchoredPosition.x
