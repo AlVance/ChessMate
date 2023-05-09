@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
 using System;
+using System.IO;
 
 public class Gallery : MonoBehaviour
 {
@@ -20,10 +21,125 @@ public class Gallery : MonoBehaviour
 
     [SerializeField] private SceneCtrl SC;
 
+    public bool onlineGame;
+    string pathLocalMaps;
 
     public void Start()
     {
-        StartCoroutine(LoadCountTotalGallery());
+        pathLocalMaps = Application.persistentDataPath + "/Maps";
+        if (onlineGame)
+        {
+            StartCoroutine(LoadCountTotalGallery());
+        }
+        else
+        {
+            ReadLocalMaps();
+        }
+    }
+
+    public void SaveMapInFile(MapInfo _newMap)
+    {
+        if (Directory.Exists(pathLocalMaps))
+        {
+            int count = Directory.GetFiles(pathLocalMaps).Length;
+            string _map = JsonUtility.ToJson(_newMap);
+            System.IO.File.WriteAllText(pathLocalMaps + "/ChessMap_" + _newMap.id + ".json", _map);
+        }
+        else
+        {
+            Directory.CreateDirectory(pathLocalMaps);
+        }
+    }
+
+    public void ReadLocalMaps()
+    {
+        Debug.Log(pathLocalMaps);
+        if (Directory.Exists(pathLocalMaps))
+        {
+            string[] files = Directory.GetFiles(pathLocalMaps);
+            MapInfo[] mapsInfo = new MapInfo[files.Length];
+
+            for (int i = 1; i < mapsInfo.Length; i++)
+            {
+                string newFile = File.ReadAllText(files[i]);
+                MapInfo _mapLoading = JsonUtility.FromJson<MapInfo>(newFile);
+                GameObject newItem = Instantiate(itemGallery, contentGallery);
+                ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
+
+                Debug.Log("Este es el mapa que se ha cargado " + _mapLoading);
+                int countEnem = 0;
+                if (_mapLoading.map.enemyRoute00.Count != 0) countEnem++;
+                if (_mapLoading.map.enemyRoute01.Count != 0) countEnem++;
+                if (_mapLoading.map.enemyRoute02.Count != 0) countEnem++;
+                if (_mapLoading.map.enemyRoute03.Count != 0) countEnem++;
+                if (_mapLoading.map.enemyRoute04.Count != 0) countEnem++;
+
+                StartCoroutine(SetupItemGallery(itemGllr,
+                _mapLoading.author,
+                _mapLoading.code,
+                _mapLoading.map.size.x + "x" + _mapLoading.map.size.y,
+                countEnem.ToString(),
+                "50%",
+                "0",
+                "0",
+                _mapLoading.map.posTrr_crd.Count != 0,
+                _mapLoading.map.posCab_crd.Count != 0,
+                _mapLoading.map.posAlf_crd.Count != 0));
+
+                itemGllr.btn.onClick.AddListener(() => LoadMapById(_mapLoading.id, Parser.instance.ParseNewMapJsonToCustom(_mapLoading.map), _mapLoading.code));
+                itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
+
+                itemList.Add(itemGllr);
+            }
+
+
+/**
+            for (int i = 0; i < files.Length; i++)
+            {
+                string newMap = files[i];
+                string[] data = newMap.Split("+");
+                maps[i]._id = data[0];
+                maps[i]._author = data[1];
+                maps[i]._code = data[2];
+                maps[i]._map = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
+                GameObject newItem = Instantiate(itemGallery, contentGallery);
+                ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
+
+                int countEnem = 0;
+                if (maps[i].enemyRoute00.Count != 0) countEnem++;
+                if (maps[i].enemyRoute01.Count != 0) countEnem++;
+                if (maps[i].enemyRoute02.Count != 0) countEnem++;
+                if (maps[i].enemyRoute03.Count != 0) countEnem++;
+                if (maps[i].enemyRoute04.Count != 0) countEnem++;
+
+                StartCoroutine(SetupItemGallery(itemGllr,
+                _author,
+                _code,
+                maps[i].size.x + "x" + maps[i].size.y,
+                countEnem.ToString(),
+                "50%",
+                "0",
+                "0",
+                maps[i].posTrr_crd.Count != 0,
+                maps[i].posCab_crd.Count != 0,
+                maps[i].posAlf_crd.Count != 0));
+
+                itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map, _code));
+                itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
+
+                itemList.Add(itemGllr);
+            }
+**/
+
+
+            contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
+                contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
+            contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - contentGallery.GetComponent<VerticalLayoutGroup>().padding.top);
+        }
+        else
+        {
+            Directory.CreateDirectory(pathLocalMaps);
+        }
     }
 
     public IEnumerator LoadCountTotalGallery()
@@ -34,9 +150,10 @@ public class Gallery : MonoBehaviour
         }
 
         contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x, 0);
+        string totalCount = "";
         ServerCtrl.Instance.GetAllMaps();
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
-        string totalCount = ServerCtrl.Instance.server.response.response;
+        totalCount = ServerCtrl.Instance.server.response.response;
         string[] items = totalCount.Split("/");
         Debug.Log("Total hay " + totalCount);
 
@@ -51,6 +168,13 @@ public class Gallery : MonoBehaviour
             GameObject newItem = Instantiate(itemGallery, contentGallery);
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
 
+            MapInfo _mapInfo = new MapInfo();
+            _mapInfo.id = _id;
+            _mapInfo.author = _author;
+            _mapInfo.code = _code;
+            _mapInfo.map = _newMap;
+
+            SaveMapInFile(_mapInfo);
             StartCoroutine(SetTexture(data[2], itemGllr.preview_rimg));
 
             int countEnem = 0;
@@ -124,6 +248,8 @@ public class Gallery : MonoBehaviour
             finishTxtr.texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
         }
     }
+
+
 
     public void LoadMapById(string id, string map, string code)
     {

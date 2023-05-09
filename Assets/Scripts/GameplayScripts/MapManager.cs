@@ -350,9 +350,9 @@ public class MapManager : MonoBehaviour
         finishedGen = false;
         yield return new WaitForSeconds(.1f);
         
-        if (JsonUtility.FromJson<NewMap>(_map) != null)
+        if (JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(_map)) != null)
         {
-            currentMap = JsonUtility.FromJson<NewMap>(_map);
+            currentMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(_map));
             camsManager.SetCamPos(currentMap);
         }
         StopAllCoroutines();

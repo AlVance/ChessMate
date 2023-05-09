@@ -795,16 +795,10 @@ public class NewMap
 }
 
 [System.Serializable]
-public class Map
+public class MapInfo
 {
-    string id;
-    string userid;
-    string code;
-    string map;
-}
-
-[System.Serializable]
-public class Maps
-{
-    public Map[] maps;
+    public string id;
+    public string author;
+    public string code;
+    public NewMap map;
 }
