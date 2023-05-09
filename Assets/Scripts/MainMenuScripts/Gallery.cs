@@ -37,7 +37,7 @@ public class Gallery : MonoBehaviour
         }
         else
         {
-            ReadLocalMaps();
+            StartCoroutine(ReadLocalMaps());
         }
     }
 
@@ -55,63 +55,228 @@ public class Gallery : MonoBehaviour
         }
     }
 
-    public void ReadLocalMaps()
+    private IEnumerator LoadImage(RawImage _rImg, string imageFileName)
     {
-        Debug.Log(pathLocalMaps);
-        if (Directory.Exists(pathLocalMaps))
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Previews/", imageFileName);
+
+        if (filePath.Contains("://") || filePath.Contains(":///"))
         {
-            string[] files = Directory.GetFiles(pathLocalMaps);
-            MapInfo[] mapsInfo = new MapInfo[files.Length];
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(filePath);
+            yield return www.SendWebRequest();
 
-            for (int i = 0; i < mapsInfo.Length; i++)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
-                string newFile = File.ReadAllText(files[i]);
-                MapInfo _mapLoading = JsonUtility.FromJson<MapInfo>(newFile);
-                GameObject newItem = Instantiate(itemGallery, contentGallery);
-                ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
-
-                Texture2D _prev = new Texture2D(2, 2);
-                if (_prev.LoadImage(File.ReadAllBytes(pathLocalPrevs + "/" + _mapLoading.code + "_prev.png")))
-                {
-                    itemGllr.preview_rimg.texture = _prev;
-                }
-
-
-                Debug.Log("Este es el mapa que se ha cargado " + _mapLoading);
-                int countEnem = 0;
-                if (_mapLoading.map.enemyRoute00.Count != 0) countEnem++;
-                if (_mapLoading.map.enemyRoute01.Count != 0) countEnem++;
-                if (_mapLoading.map.enemyRoute02.Count != 0) countEnem++;
-                if (_mapLoading.map.enemyRoute03.Count != 0) countEnem++;
-                if (_mapLoading.map.enemyRoute04.Count != 0) countEnem++;
-
-                StartCoroutine(SetupItemGallery(itemGllr,
-                _mapLoading.author,
-                _mapLoading.code,
-                _mapLoading.map.size.x + "x" + _mapLoading.map.size.y,
-                countEnem.ToString(),
-                "50%",
-                "0",
-                "0",
-                _mapLoading.map.posTrr_crd.Count != 0,
-                _mapLoading.map.posCab_crd.Count != 0,
-                _mapLoading.map.posAlf_crd.Count != 0));
-
-                itemGllr.btn.onClick.AddListener(() => LoadMapById(_mapLoading.id, Parser.instance.ParseNewMapJsonToCustom(_mapLoading.map), _mapLoading.code));
-                itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
-
-                itemList.Add(itemGllr);
+                Debug.LogError($"Error al cargar la imagen: {www.error}");
             }
-
-
-            contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
-                contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
-            contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - contentGallery.GetComponent<VerticalLayoutGroup>().padding.top);
+            else
+            {
+                Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                _rImg.texture = texture;
+            }
         }
         else
         {
-            Directory.CreateDirectory(pathLocalMaps);
+            byte[] imageBytes = File.ReadAllBytes(filePath);
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(imageBytes);
+
+            _rImg.texture = texture;
         }
+    }
+
+    private IEnumerator LoadJson(string jsonFileName)
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath + "/Maps/", jsonFileName);
+
+        if (filePath.Contains("://") || filePath.Contains(":///"))
+        {
+            UnityWebRequest www = UnityWebRequest.Get(filePath);
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error al cargar el JSON: {www.error}");
+            }
+            else
+            {
+                string jsonContent = www.downloadHandler.text;
+                MapInfo mapInfo = JsonUtility.FromJson<MapInfo>(jsonContent);
+                mapReaded = mapInfo;
+            }
+        }
+        else
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            MapInfo mapInfo = JsonUtility.FromJson<MapInfo>(jsonContent);
+            mapReaded = mapInfo;
+        }
+    }
+    private IEnumerator CountFiles(string directoryName)
+    {
+        string directoryPath = Path.Combine(Application.streamingAssetsPath, directoryName);
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            // En Android, los StreamingAssets están empaquetados en un archivo jar, por lo que se necesita una solicitud de listado de archivos.
+            string androidListUrl = Application.streamingAssetsPath + "/filelist.txt";
+            UnityWebRequest fileListRequest = UnityWebRequest.Get(androidListUrl);
+            yield return fileListRequest.SendWebRequest();
+
+            if (fileListRequest.result == UnityWebRequest.Result.ConnectionError || fileListRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error al cargar la lista de archivos: {fileListRequest.error}");
+            }
+            else
+            {
+                string[] files = fileListRequest.downloadHandler.text.Split('\n');
+                countFiles = files.Length;
+            }
+        }
+        else
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                string[] files = Directory.GetFiles(directoryPath);
+                countFiles = files.Length;
+            }
+            else
+            {
+                Debug.LogError($"El directorio {directoryName} no existe en StreamingAssets.");
+            }
+        }
+
+        Debug.Log($"Cantidad de archivos en {directoryName}: {countFiles}");
+    }
+
+
+    private IEnumerator LoadAllFiles(string directoryName)
+    {
+        string directoryPath = Path.Combine(Application.streamingAssetsPath, directoryName);
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            // En Android, los StreamingAssets están empaquetados en un archivo jar, por lo que se necesita una solicitud de listado de archivos.
+            string androidListUrl = Application.streamingAssetsPath + "/filelist.txt";
+            UnityWebRequest fileListRequest = UnityWebRequest.Get(androidListUrl);
+            yield return fileListRequest.SendWebRequest();
+
+            if (fileListRequest.result == UnityWebRequest.Result.ConnectionError || fileListRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error al cargar la lista de archivos: {fileListRequest.error}");
+            }
+            else
+            {
+                string[] files = fileListRequest.downloadHandler.text.Split('\n');
+
+                // Iterar sobre todos los archivos y cargarlos
+                foreach (string file in files)
+                {
+                    string fileUrl = Path.Combine(directoryPath, file);
+                    UnityWebRequest fileRequest = UnityWebRequest.Get(fileUrl);
+                    yield return fileRequest.SendWebRequest();
+
+                    if (fileRequest.result == UnityWebRequest.Result.ConnectionError || fileRequest.result == UnityWebRequest.Result.ProtocolError)
+                    {
+                        Debug.LogError($"Error al cargar el archivo {file}: {fileRequest.error}");
+                    }
+                    else
+                    {
+                        // Procesar el contenido del archivo
+                        Debug.LogError("AAAAAAAAAAAAAAAA " + fileRequest.downloadHandler.text);
+                        mapsInfoList.Add(JsonUtility.FromJson<MapInfo>(fileRequest.downloadHandler.text));
+                        countFiles = mapsInfoList.Count;
+                    //ProcessFileContent(file, fileRequest.downloadHandler.text);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                string[] files = Directory.GetFiles(directoryPath);
+                List<string> cleanfiles = new List<string>();
+                for (int i = 0; i < files.Length; i++)
+                {
+                    if (!files[i].Contains(".meta"))
+                    {
+                        string content = File.ReadAllText(files[i]);
+                        string fileName = Path.GetFileName(files[i]);
+                        if (JsonUtility.FromJson<MapInfo>(content) != null)
+                        {
+                            Debug.Log("Aaaaaaaa " + content);
+                            MapInfo newMap = JsonUtility.FromJson<MapInfo>(content);
+                            mapsInfoList.Add(newMap);
+                            countFiles = mapsInfoList.Count;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError($"El directorio {directoryName} no existe en StreamingAssets.");
+            }
+        }
+    }
+
+    public List<MapInfo> mapsInfoList = new List<MapInfo>(0);
+    MapInfo mapReaded = null;
+    int countFiles = 0;
+    public int countMapsInfo() { return mapsInfoList.Count; }
+    public IEnumerator ReadLocalMaps()
+    {
+        StartCoroutine(LoadAllFiles("Maps"));
+        yield return new WaitWhile(() => countMapsInfo() <= 0);
+        //string[] files = Directory.GetFiles(pathLocalMaps);
+        MapInfo[] mapsInfo = new MapInfo[countFiles];
+
+        for (int i = 0; i < countMapsInfo(); i++)
+        {
+            mapsInfo[i] = mapsInfoList[i];
+            StartCoroutine(LoadJson("ChessMap_" + mapsInfo[i].id + ".json"));
+            yield return new WaitWhile(() => mapReaded == null);
+            MapInfo _mapLoading = mapReaded;
+            GameObject newItem = Instantiate(itemGallery, contentGallery);
+            ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
+
+            Texture2D _prev = new Texture2D(2, 2);
+            StartCoroutine(LoadImage(itemGllr.preview_rimg, _mapLoading.code + "_prev.png"));
+            /*if (_prev.LoadImage(File.ReadAllBytes(pathLocalPrevs + "/" + _mapLoading.code + "_prev.png")))
+            {
+                itemGllr.preview_rimg.texture = _prev;
+            }*/
+
+
+            Debug.Log("Este es el mapa que se ha cargado " + _mapLoading);
+            int countEnem = 0;
+            if (_mapLoading.map.enemyRoute00.Count != 0) countEnem++;
+            if (_mapLoading.map.enemyRoute01.Count != 0) countEnem++;
+            if (_mapLoading.map.enemyRoute02.Count != 0) countEnem++;
+            if (_mapLoading.map.enemyRoute03.Count != 0) countEnem++;
+            if (_mapLoading.map.enemyRoute04.Count != 0) countEnem++;
+
+            StartCoroutine(SetupItemGallery(itemGllr,
+            _mapLoading.author,
+            _mapLoading.code,
+            _mapLoading.map.size.x + "x" + _mapLoading.map.size.y,
+            countEnem.ToString(),
+            "50%",
+            "0",
+            "0",
+            _mapLoading.map.posTrr_crd.Count != 0,
+            _mapLoading.map.posCab_crd.Count != 0,
+            _mapLoading.map.posAlf_crd.Count != 0));
+
+            itemGllr.btn.onClick.AddListener(() => LoadMapById(_mapLoading.id, Parser.instance.ParseNewMapJsonToCustom(_mapLoading.map), _mapLoading.code));
+            itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
+
+            itemList.Add(itemGllr);
+        }
+
+
+        contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
+            contentGallery.childCount * itemGallery.GetComponent<RectTransform>().sizeDelta.y + contentGallery.GetComponent<VerticalLayoutGroup>().padding.top + contentGallery.GetComponent<VerticalLayoutGroup>().padding.bottom);
+        contentGallery.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentGallery.GetComponent<RectTransform>().anchoredPosition.x, contentGallery.GetComponent<RectTransform>().anchoredPosition.y - contentGallery.GetComponent<VerticalLayoutGroup>().padding.top);
     }
 
     public IEnumerator LoadCountTotalGallery()
