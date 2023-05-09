@@ -23,10 +23,14 @@ public class Gallery : MonoBehaviour
 
     public bool onlineGame;
     string pathLocalMaps;
+    string pathLocalPrevs;
 
     public void Start()
     {
         pathLocalMaps = Application.persistentDataPath + "/Maps";
+        pathLocalPrevs = Application.persistentDataPath + "/Previews";
+        if (!Directory.Exists(pathLocalMaps)) Directory.CreateDirectory(pathLocalMaps);
+        if (!Directory.Exists(pathLocalPrevs)) Directory.CreateDirectory(pathLocalPrevs);
         if (onlineGame)
         {
             StartCoroutine(LoadCountTotalGallery());
@@ -59,12 +63,19 @@ public class Gallery : MonoBehaviour
             string[] files = Directory.GetFiles(pathLocalMaps);
             MapInfo[] mapsInfo = new MapInfo[files.Length];
 
-            for (int i = 1; i < mapsInfo.Length; i++)
+            for (int i = 0; i < mapsInfo.Length; i++)
             {
                 string newFile = File.ReadAllText(files[i]);
                 MapInfo _mapLoading = JsonUtility.FromJson<MapInfo>(newFile);
                 GameObject newItem = Instantiate(itemGallery, contentGallery);
                 ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
+
+                Texture2D _prev = new Texture2D(2, 2);
+                if (_prev.LoadImage(File.ReadAllBytes(pathLocalPrevs + "/" + _mapLoading.code + "_prev.png")))
+                {
+                    itemGllr.preview_rimg.texture = _prev;
+                }
+
 
                 Debug.Log("Este es el mapa que se ha cargado " + _mapLoading);
                 int countEnem = 0;
@@ -91,45 +102,6 @@ public class Gallery : MonoBehaviour
 
                 itemList.Add(itemGllr);
             }
-
-
-/**
-            for (int i = 0; i < files.Length; i++)
-            {
-                string newMap = files[i];
-                string[] data = newMap.Split("+");
-                maps[i]._id = data[0];
-                maps[i]._author = data[1];
-                maps[i]._code = data[2];
-                maps[i]._map = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(data[3]));
-                GameObject newItem = Instantiate(itemGallery, contentGallery);
-                ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
-
-                int countEnem = 0;
-                if (maps[i].enemyRoute00.Count != 0) countEnem++;
-                if (maps[i].enemyRoute01.Count != 0) countEnem++;
-                if (maps[i].enemyRoute02.Count != 0) countEnem++;
-                if (maps[i].enemyRoute03.Count != 0) countEnem++;
-                if (maps[i].enemyRoute04.Count != 0) countEnem++;
-
-                StartCoroutine(SetupItemGallery(itemGllr,
-                _author,
-                _code,
-                maps[i].size.x + "x" + maps[i].size.y,
-                countEnem.ToString(),
-                "50%",
-                "0",
-                "0",
-                maps[i].posTrr_crd.Count != 0,
-                maps[i].posCab_crd.Count != 0,
-                maps[i].posAlf_crd.Count != 0));
-
-                itemGllr.btn.onClick.AddListener(() => LoadMapById(_id, _map, _code));
-                itemGllr.btn.onLongPress.AddListener(() => itemGllr.CopyCode());
-
-                itemList.Add(itemGllr);
-            }
-**/
 
 
             contentGallery.GetComponent<RectTransform>().sizeDelta = new Vector2(contentGallery.GetComponent<RectTransform>().sizeDelta.x,
@@ -246,6 +218,7 @@ public class Gallery : MonoBehaviour
         else
         {
             finishTxtr.texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            ScreenshotHandler.instance.SavePicture(pathLocalPrevs + "/prevMap_" + code + ".png",  ((Texture2D)finishTxtr.texture).EncodeToPNG());
         }
     }
 

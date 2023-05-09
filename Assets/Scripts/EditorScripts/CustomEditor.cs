@@ -596,7 +596,6 @@ public class CustomEditor : MonoBehaviour
         {
             yield return null;
         }
-       // yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         string response = ServerCtrl.Instance.server.response.response;
         string[] data = response.Split("+");
         data[3] = Parser.instance.ParseNewMapCustomToJson(data[3]);

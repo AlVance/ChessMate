@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -42,6 +43,16 @@ public class ScreenshotHandler : MonoBehaviour
             //StartCoroutine(StartUploading(lastScreenshot));
         }
     }
+
+    public void SavePicture(string path, byte[] _imageLoad)
+    {
+        byte[] bytes = new byte[0];
+        if (_imageLoad.Length <= 0) { bytes = lastScreenshot; }
+        else bytes = _imageLoad;
+        File.WriteAllBytes(path, bytes);
+    }
+
+
 
     public string newCode;
     public IEnumerator StartUploading(string code = "")
