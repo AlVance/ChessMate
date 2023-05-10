@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(string name)
     {
         Sound s = Array.Find(sfxSounds, sound => sound.name == name);
-        s.audioSource.Play();
+        s.audioSource.PlayOneShot(s.clip);
     }
 
     public void PlayTheme(string name)

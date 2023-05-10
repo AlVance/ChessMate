@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using Cinemachine;
 
 public class MapManager : MonoBehaviour
 {
@@ -425,12 +426,15 @@ public class MapManager : MonoBehaviour
     private IEnumerator OpenVictoryScreen()
     {
         yield return new WaitForSeconds(1.4f);
+        AudioManager.instance.PlaySound("Victory");
         victoryScreen.SetActive(true);
     }
     public void ResetMapOnPlay()
     {
         StopAllCoroutines();
         StartCoroutine(ResetMap());
+        Time.timeScale = 1f;
+        Camera.main.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0.5f;
         camsManager.CamTansitionToTopdown();
     }
 

@@ -69,6 +69,7 @@ public class EnemyCtrl : MonoBehaviour
             {
                 futureCell = _mapMngr.CellById(routePoints[step + 1]);
                 _mapMngr.CellById(routePoints[step]).SetEnemy(this);
+                AudioManager.instance.PlaySound("MoveEnem");
                 //if(i == 0) _GridGen.CellById(startPos).SetEnemy(this);
                 //else _GridGen.CellById(routePoints[i -1]).SetEnemy(this);
             }
