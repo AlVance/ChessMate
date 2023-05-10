@@ -277,6 +277,11 @@ MonoBehaviour:
   startPos: {x: 3, y: 1}
   actualPos: {x: 0, y: 0}
   actualType: 0
+  camsManager: {fileID: 0}
+  fxCards:
+  - {fileID: 100006, guid: f91383933ebf68a4cba68ac2403fbb6a, type: 3}
+  - {fileID: 100006, guid: 927d847d926fe6c47847d9f7b7504792, type: 3}
+  - {fileID: 100006, guid: 8fc06027b01064e4f885fd8dd2929310, type: 3}
   playerSprite: {fileID: 5129089982943721991}
   formsSprites:
   - {fileID: 21300000, guid: b8bed287d39f9fc44bfcb0493de93e98, type: 3}

@@ -17,6 +17,9 @@ public class PlayerCtrl : MonoBehaviour
     List<CellData> stepsToWalk = new List<CellData>(0);
     [SerializeField] private CamerasManager camsManager;
 
+    // 0 - horse    1 - tower   2 - bishop
+    public GameObject[] fxCards;
+
     #region Animation variables
     private Animator playerAnim;
     private bool isMoving = false;
@@ -296,8 +299,11 @@ public class PlayerCtrl : MonoBehaviour
                 Debug.Log("IsEnemyOnRoute " + newCell.pos);
             }
 
-
-            if (newCell.typeCard != Type.Peon) _type = newCell.typeCard;
+            // Aqui se coge las cartas 
+            if (newCell.typeCard != Type.Peon)
+            {
+                _type = newCell.typeCard;
+            }
             else newCell.typeCard = _type;
 
             _cells.Add(newCell);
@@ -333,9 +339,31 @@ public class PlayerCtrl : MonoBehaviour
     public void ChangeType(Type _newType)
     {
         actualType = _newType;
+        SpawnFx(_newType);
         AnimatePlayerSpriteChange(actualType);
         _mapMngr.ResetBtnsPlayer();
         CheckCells();
+    }
+
+    IEnumerator SpawnFx(Type _type, float _time = .5f)
+    {
+        GameObject newfx = new GameObject();
+        switch (_type)
+        {
+            case Type.Caballo:
+                newfx = fxCards[0];
+                break;
+            case Type.Torre:
+                newfx = fxCards[1];
+                break;
+            case Type.Alfil:
+                newfx = fxCards[2];
+                break;
+        }
+        GameObject _fx = Instantiate(newfx);
+
+        yield return new WaitForSeconds(_time);
+        Destroy(_fx);
     }
 
     public void SetInCell()

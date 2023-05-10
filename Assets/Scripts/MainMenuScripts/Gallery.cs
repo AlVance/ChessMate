@@ -199,7 +199,7 @@ public class Gallery : MonoBehaviour
             if (Directory.Exists(directoryPath))
             {
                 string[] files = Directory.GetFiles(directoryPath);
-                List<string> cleanfiles = new List<string>();
+                Debug.Log("aaaaaaaaaaaaaaaa");
                 for (int i = 0; i < files.Length; i++)
                 {
                     if (!files[i].Contains(".meta"))
@@ -208,6 +208,7 @@ public class Gallery : MonoBehaviour
                         string fileName = Path.GetFileName(files[i]);
                         if (JsonUtility.FromJson<MapInfo>(content) != null)
                         {
+                    Debug.Log("eee");
                             MapInfo newMap = JsonUtility.FromJson<MapInfo>(content);
                             mapsInfoList.Add(newMap);
                         }
