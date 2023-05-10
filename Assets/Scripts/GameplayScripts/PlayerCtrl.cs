@@ -338,14 +338,15 @@ public class PlayerCtrl : MonoBehaviour
 
     public void ChangeType(Type _newType)
     {
+        Debug.Log("aaaaaaaaaaaa");
         actualType = _newType;
-        SpawnFx(_newType);
+        StartCoroutine(SpawnFx(_newType));
         AnimatePlayerSpriteChange(actualType);
         _mapMngr.ResetBtnsPlayer();
         CheckCells();
     }
 
-    IEnumerator SpawnFx(Type _type, float _time = .5f)
+    IEnumerator SpawnFx(Type _type, float _time = 5f)
     {
         GameObject newfx = new GameObject();
         switch (_type)
@@ -360,8 +361,7 @@ public class PlayerCtrl : MonoBehaviour
                 newfx = fxCards[2];
                 break;
         }
-        GameObject _fx = Instantiate(newfx);
-
+        GameObject _fx = Instantiate(newfx, transform.position + Vector3.up + (Vector3.right / 3), transform.rotation, transform);
         yield return new WaitForSeconds(_time);
         Destroy(_fx);
     }
@@ -391,6 +391,7 @@ public class PlayerCtrl : MonoBehaviour
         }
         yield return new WaitUntil(() => isMoving == false);
         _mapMngr.CellById(actualPos).isPlayer = true;
+        StartCoroutine(SpawnFx(actualType));
         AnimatePlayerSpriteChange(actualType);
         //yield return new WaitUntil(() => _GridGen._enemiesFinishWalk < _GridGen._enemies.Count);
         if (_cellTarget._enemy != null)
