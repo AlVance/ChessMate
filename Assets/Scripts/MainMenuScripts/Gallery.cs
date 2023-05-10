@@ -138,7 +138,12 @@ public class Gallery : MonoBehaviour
             if (Directory.Exists(directoryPath))
             {
                 string[] files = Directory.GetFiles(directoryPath);
-                countFiles = files.Length;
+                int count = 0;
+                for (int i = 0; i < files.Length; i++)
+                {
+                    if (!files[i].Contains(".meta")) count++;
+                }
+                countFiles = count;
             }
             else
             {
@@ -208,9 +213,9 @@ public class Gallery : MonoBehaviour
                         string fileName = Path.GetFileName(files[i]);
                         if (JsonUtility.FromJson<MapInfo>(content) != null)
                         {
-                    Debug.Log("eee");
                             MapInfo newMap = JsonUtility.FromJson<MapInfo>(content);
                             mapsInfoList.Add(newMap);
+                            Debug.Log("eee " + mapsInfoList.Count);
                         }
                     }
                 }
@@ -232,6 +237,7 @@ public class Gallery : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         StartCoroutine(LoadAllFiles("Maps"));
         yield return new WaitWhile(() => mapsInfoList.Count < countFiles);
+        Debug.Log("uuuuuuuuuuuuuuuu");
         //string[] files = Directory.GetFiles(pathLocalMaps);
         MapInfo[] mapsInfo = new MapInfo[mapsInfoList.Count];
         Debug.Log("Total maps " + mapsInfoList.Count);
