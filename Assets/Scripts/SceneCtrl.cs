@@ -10,6 +10,7 @@ public class SceneCtrl : MonoBehaviour
 
     public void ChangeScene(string _scene)
     {
+        Time.timeScale = 1f;
         StartCoroutine(SceneChangeTransition(_scene));
     }
 
