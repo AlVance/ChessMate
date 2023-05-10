@@ -43,7 +43,7 @@ public class ItemGallery : MonoBehaviour
         //masks.SetActive(true);
         alertTxt.SetActive(false);
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (onScreen && !opened)
         {
