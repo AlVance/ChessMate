@@ -642,6 +642,7 @@ MonoBehaviour:
   - {r: 0.4481132, g: 0.47808662, b: 1, a: 0.78431374}
   SC: {fileID: 907349682}
   onlineGame: 0
+  mapsInfoList: []
 --- !u!1 &97174883
 GameObject:
   m_ObjectHideFlags: 0
@@ -5956,7 +5957,7 @@ GameObject:
   - component: {fileID: 1958361891}
   - component: {fileID: 1958361890}
   m_Layer: 5
-  m_Name: LevelSelectorBG (1)
+  m_Name: LevelSelectorBG_color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

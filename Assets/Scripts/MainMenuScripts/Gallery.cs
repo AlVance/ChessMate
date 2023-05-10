@@ -111,6 +111,7 @@ public class Gallery : MonoBehaviour
             mapReaded = mapInfo;
         }
     }
+
     private IEnumerator CountFiles(string directoryName)
     {
         string directoryPath = Path.Combine(Application.streamingAssetsPath, directoryName);
@@ -118,7 +119,7 @@ public class Gallery : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android)
         {
             // En Android, los StreamingAssets están empaquetados en un archivo jar, por lo que se necesita una solicitud de listado de archivos.
-            string androidListUrl = Application.streamingAssetsPath + "/filelist.txt";
+            string androidListUrl = Application.streamingAssetsPath + "/mapslist.txt";
             UnityWebRequest fileListRequest = UnityWebRequest.Get(androidListUrl);
             yield return fileListRequest.SendWebRequest();
 
@@ -156,7 +157,7 @@ public class Gallery : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android)
         {
             // En Android, los StreamingAssets están empaquetados en un archivo jar, por lo que se necesita una solicitud de listado de archivos.
-            string androidListUrl = Application.streamingAssetsPath + "/filelist.txt";
+            string androidListUrl = Application.streamingAssetsPath + "/mapslist.txt";
             UnityWebRequest fileListRequest = UnityWebRequest.Get(androidListUrl);
             yield return fileListRequest.SendWebRequest();
 
@@ -167,10 +168,15 @@ public class Gallery : MonoBehaviour
             else
             {
                 string[] files = fileListRequest.downloadHandler.text.Split('\n');
+                for (int i = 0; i < files.Length; i++)
+                {
+                    Debug.Log("Archivo " + i + " es: " + files[i]);
+                }
 
                 // Iterar sobre todos los archivos y cargarlos
                 foreach (string file in files)
                 {
+                    Debug.Log("Archivo " + " es: " + file);
                     string fileUrl = Path.Combine(directoryPath, file);
                     UnityWebRequest fileRequest = UnityWebRequest.Get(fileUrl);
                     yield return fileRequest.SendWebRequest();
@@ -182,9 +188,7 @@ public class Gallery : MonoBehaviour
                     else
                     {
                         // Procesar el contenido del archivo
-                        Debug.LogError("AAAAAAAAAAAAAAAA " + fileRequest.downloadHandler.text);
                         mapsInfoList.Add(JsonUtility.FromJson<MapInfo>(fileRequest.downloadHandler.text));
-                        countFiles = mapsInfoList.Count;
                     //ProcessFileContent(file, fileRequest.downloadHandler.text);
                     }
                 }
@@ -204,10 +208,8 @@ public class Gallery : MonoBehaviour
                         string fileName = Path.GetFileName(files[i]);
                         if (JsonUtility.FromJson<MapInfo>(content) != null)
                         {
-                            Debug.Log("Aaaaaaaa " + content);
                             MapInfo newMap = JsonUtility.FromJson<MapInfo>(content);
                             mapsInfoList.Add(newMap);
-                            countFiles = mapsInfoList.Count;
                         }
                     }
                 }
@@ -222,20 +224,22 @@ public class Gallery : MonoBehaviour
     public List<MapInfo> mapsInfoList = new List<MapInfo>(0);
     MapInfo mapReaded = null;
     int countFiles = 0;
-    public int countMapsInfo() { return mapsInfoList.Count; }
+
     public IEnumerator ReadLocalMaps()
     {
+        StartCoroutine(CountFiles("Maps"));
+        yield return new WaitForSeconds(.2f);
         StartCoroutine(LoadAllFiles("Maps"));
-        yield return new WaitWhile(() => countMapsInfo() <= 0);
+        yield return new WaitWhile(() => mapsInfoList.Count < countFiles);
         //string[] files = Directory.GetFiles(pathLocalMaps);
-        MapInfo[] mapsInfo = new MapInfo[countFiles];
-
-        for (int i = 0; i < countMapsInfo(); i++)
+        MapInfo[] mapsInfo = new MapInfo[mapsInfoList.Count];
+        Debug.Log("Total maps " + mapsInfoList.Count);
+        for (int i = 0; i < mapsInfoList.Count; i++)
         {
             mapsInfo[i] = mapsInfoList[i];
-            StartCoroutine(LoadJson("ChessMap_" + mapsInfo[i].id + ".json"));
-            yield return new WaitWhile(() => mapReaded == null);
-            MapInfo _mapLoading = mapReaded;
+            //StartCoroutine(LoadJson("ChessMap_" + mapsInfo[i].id + ".json"));
+            //yield return new WaitWhile(() => mapReaded == null);
+            MapInfo _mapLoading = mapsInfo[i];
             GameObject newItem = Instantiate(itemGallery, contentGallery);
             ItemGallery itemGllr = newItem.GetComponent<ItemGallery>();
 
@@ -247,7 +251,7 @@ public class Gallery : MonoBehaviour
             }*/
 
 
-            Debug.Log("Este es el mapa que se ha cargado " + _mapLoading);
+            Debug.Log("Este es el mapa que se ha cargado " + _mapLoading.code);
             int countEnem = 0;
             if (_mapLoading.map.enemyRoute00.Count != 0) countEnem++;
             if (_mapLoading.map.enemyRoute01.Count != 0) countEnem++;

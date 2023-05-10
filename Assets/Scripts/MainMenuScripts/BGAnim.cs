@@ -12,4 +12,9 @@ public class BGAnim : MonoBehaviour
     {
         bgMat.mainTextureOffset += new Vector2(0, bgSpeed * Time.deltaTime);
     }
+
+    private void OnApplicationQuit()
+    {
+        bgMat.mainTextureOffset = new Vector2(0, 0);
+    }
 }
