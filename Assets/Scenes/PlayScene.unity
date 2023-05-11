@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -548,7 +548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.56600004}
   m_AnchorMax: {x: 0.20875007, y: 0.938}
-  m_AnchoredPosition: {x: -4.5, y: 11}
+  m_AnchoredPosition: {x: -4.4999695, y: 11}
   m_SizeDelta: {x: -32.060593, y: -51.060593}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72624375
@@ -818,6 +818,38 @@ PrefabInstance:
     - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
       propertyPath: sfxSounds.Array.data[3].volume
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[0].maxPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[0].minPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[1].maxPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[1].minPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[2].maxPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[2].minPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[3].maxPitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369453950685445234, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
+      propertyPath: sfxSounds.Array.data[3].minPitch
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8935476223888793090, guid: 7a97b28e48b1e26489010f833a8d5478, type: 3}
       propertyPath: m_RootOrder
@@ -3222,7 +3254,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42, y: 0.08}
   m_AnchorMax: {x: 0.95, y: 0.45}
-  m_AnchoredPosition: {x: -7.076004, y: -0.5000076}
+  m_AnchoredPosition: {x: -7.076004, y: -0.5}
   m_SizeDelta: {x: 10.152, y: -20.563}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &549164481
@@ -6765,7 +6797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.1962064}
   m_AnchorMax: {x: 0.20875007, y: 0.56600004}
-  m_AnchoredPosition: {x: -4.5, y: -13.855591}
+  m_AnchoredPosition: {x: -4.4999695, y: -13.855591}
   m_SizeDelta: {x: -31.871002, y: -49.880707}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321013979
