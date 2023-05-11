@@ -23,8 +23,11 @@ public class AudioManager : MonoBehaviour
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
             s.audioSource.volume = s.volume;
-            s.audioSource.pitch = s.pitch;
             s.audioSource.loop = false;
+
+            if(s.minPitch == s.maxPitch) { s.audioSource.pitch = s.maxPitch; }
+            else { s.audioSource.pitch = RandomPitch(s.minPitch, s.maxPitch); }
+
         }
 
         foreach (Sound s in musicSounds)
@@ -32,8 +35,11 @@ public class AudioManager : MonoBehaviour
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
             s.audioSource.volume = s.volume;
-            s.audioSource.pitch = s.pitch;
             s.audioSource.loop = true;
+
+            if (s.minPitch == s.maxPitch) { s.audioSource.pitch = s.maxPitch; }
+            else { s.audioSource.pitch = RandomPitch(s.minPitch, s.maxPitch); }
+
         }
     }
 
@@ -47,6 +53,11 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(musicSounds, sound => sound.name == name);
         s.audioSource.Play();
+    }
+
+    private float RandomPitch(float min, float max)
+    {
+        return UnityEngine.Random.Range(min, max);
     }
 
 }
