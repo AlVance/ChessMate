@@ -27,6 +27,9 @@ public class Gallery : MonoBehaviour
 
     public void Start()
     {
+#if UNITY_WEBGL
+        onlineGame = true;
+#endif
         pathLocalMaps = Application.persistentDataPath + "/Maps";
         pathLocalPrevs = Application.persistentDataPath + "/Previews";
         if (!Directory.Exists(pathLocalMaps)) Directory.CreateDirectory(pathLocalMaps);
@@ -300,7 +303,7 @@ public class Gallery : MonoBehaviour
         yield return new WaitWhile(() => ServerCtrl.Instance.serviceFinish == false);
         totalCount = ServerCtrl.Instance.server.response.response;
         string[] items = totalCount.Split("/");
-        Debug.Log("Total hay " + totalCount);
+        Debug.Log("Total hay " + items.Length);
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -391,7 +394,7 @@ public class Gallery : MonoBehaviour
         else
         {
             finishTxtr.texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            ScreenshotHandler.instance.SavePicture(pathLocalPrevs + "/prevMap_" + code + ".png",  ((Texture2D)finishTxtr.texture).EncodeToPNG());
+            //ScreenshotHandler.instance.SavePicture(pathLocalPrevs + "/prevMap_" + code + ".png",  ((Texture2D)finishTxtr.texture).EncodeToPNG());
         }
     }
 
