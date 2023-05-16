@@ -350,10 +350,13 @@ public class MapManager : MonoBehaviour
         //LevelTransitorAnim.SetBool("IsLoadingLevel", true);
         finishedGen = false;
         yield return new WaitForSeconds(.1f);
-        
-        if (JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(_map)) != null)
+        string fromJson  ="";
+        if (!_map.Contains("size")) fromJson = Parser.instance.ParseNewMapCustomToJson(_map);
+        else fromJson = _map;
+
+        if (JsonUtility.FromJson<NewMap>(fromJson) != null)
         {
-            currentMap = JsonUtility.FromJson<NewMap>(Parser.instance.ParseNewMapCustomToJson(_map));
+            currentMap = JsonUtility.FromJson<NewMap>(fromJson);
             camsManager.SetCamPos(currentMap);
         }
         StopAllCoroutines();

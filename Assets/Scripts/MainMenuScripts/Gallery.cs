@@ -384,7 +384,7 @@ public class Gallery : MonoBehaviour
 
     public IEnumerator SetTexture(string code, RawImage finishTxtr)
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture("http://kiwiteam.es/gallery/" + code + "_prev.png");
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://kiwiteam.es/gallery/" + code + "_prev.png");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -404,6 +404,7 @@ public class Gallery : MonoBehaviour
     {
         PlayerPrefs.SetString("currentMap", map);
         PlayerPrefs.SetString("currentMapCode", code);
+        Debug.Log("aaaaaaaaaaaaaaaaa " + map + " ||| " + code);
         if (!editing)
         {
             SC.ChangeScene("PlayScene");
