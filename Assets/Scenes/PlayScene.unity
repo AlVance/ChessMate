@@ -1137,7 +1137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &127716717
 Transform:
   m_ObjectHideFlags: 0
@@ -1165,7 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b8b4d29a7052249b4e267b36e30bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: http://kiwiteam.es/upload_image.php
+  url: https://kiwiteam.es/upload_image.php
   myCamera: {fileID: 0}
   _rwImg: {fileID: 0}
   takeScreenshotOnNextFrame: 0
