@@ -281,24 +281,24 @@ public class MapManager : MonoBehaviour
         _player.Move(_cellTarget);
 
         yield return new WaitUntil(() => _player.finishWalk == true);
-        /*
+        
         if (!recentEat)
         {
-        */
+        
             for (int i = 0; i < _enemies.Count; i++)
             {
                 StartCoroutine(_enemies[i].ShowWay(false, false));
                 yield return new WaitForSeconds(.1f);
                 _enemies[i].stepOn = true;
             }
-        /*
+        
         }
         else
         {
             recentEat = false;
             _enemiesFinishWalk = _enemies.Count;
         }
-        */
+        
 
         yield return new WaitWhile(() => _enemiesFinishWalk < _enemies.Count);
         
